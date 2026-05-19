@@ -1,0 +1,76 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ai_rollout}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-replace-with-postgres-password}
+      POSTGRES_DB: ${POSTGRES_DB:-ai_rollout_training_os}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ai_rollout}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: ai-rollout-training-os:${IMAGE_TAG:-local}
+    build: .
+    command: ["alembic", "upgrade", "head"]
+    env_file:
+      - ${ENV_FILE:-.env.example}
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://ai_rollout:replace-with-postgres-password@postgres:5432/ai_rollout_training_os}
+      SECRET_KEY: ${SECRET_KEY:-replace-with-random-32-byte-secret}
+      AI_PROVIDER_API_KEY: ${AI_PROVIDER_API_KEY:-replace-with-provider-api-key}
+      MODEL_FAST: ${MODEL_FAST:-replace-with-fast-model}
+      MODEL_STRONG: ${MODEL_STRONG:-replace-with-strong-model}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-replace-with-embedding-model}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    image: ai-rollout-training-os:${IMAGE_TAG:-local}
+    build: .
+    command:
+      ["uvicorn", "ai_rollout_os.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    env_file:
+      - ${ENV_FILE:-.env.example}
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://ai_rollout:replace-with-postgres-password@postgres:5432/ai_rollout_training_os}
+      SECRET_KEY: ${SECRET_KEY:-replace-with-random-32-byte-secret}
+      AI_PROVIDER_API_KEY: ${AI_PROVIDER_API_KEY:-replace-with-provider-api-key}
+      MODEL_FAST: ${MODEL_FAST:-replace-with-fast-model}
+      MODEL_STRONG: ${MODEL_STRONG:-replace-with-strong-model}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-replace-with-embedding-model}
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    image: ai-rollout-training-os:${IMAGE_TAG:-local}
+    build: .
+    command: ["python", "-m", "ai_rollout_os.jobs.runner", "--run-once"]
+    env_file:
+      - ${ENV_FILE:-.env.example}
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://ai_rollout:replace-with-postgres-password@postgres:5432/ai_rollout_training_os}
+      SECRET_KEY: ${SECRET_KEY:-replace-with-random-32-byte-secret}
+      AI_PROVIDER_API_KEY: ${AI_PROVIDER_API_KEY:-replace-with-provider-api-key}
+      MODEL_FAST: ${MODEL_FAST:-replace-with-fast-model}
+      MODEL_STRONG: ${MODEL_STRONG:-replace-with-strong-model}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-replace-with-embedding-model}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:
