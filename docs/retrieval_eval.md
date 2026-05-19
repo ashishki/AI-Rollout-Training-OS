@@ -2,7 +2,7 @@
 
 Version: 1
 Last updated: 2026-05-19
-Changed by: BOOTSTRAP - Phase 1 package
+Changed by: T22 - Retrieval Evaluation Automation
 
 Retrieval quality is evaluated separately from code quality. Green unit tests do not prove retrieval quality.
 
@@ -34,7 +34,7 @@ Retrieval quality measures whether the system surfaced the right evidence. Answe
 | Retrieval mode | text-only |
 | Modalities evaluated | text only |
 | Text-only baseline available? | yes, initial baseline after T13/T14 |
-| Baseline comparison target | not yet measured |
+| Baseline comparison target | T22 automated text-only eval baseline |
 | Stability status | stable |
 | Fallback path | Rebuild embeddings from stored normalized chunks and corpus versions; route to human review on retrieval outage. |
 
@@ -55,56 +55,56 @@ The retrieval eval mechanics should adapt the Dream Motif Interpreter pattern ma
 | Q07 | How should feedback respond when a learner asks for legal approval of a new policy? | multi-hop | text | AI policy ownership + human approval boundary + role pack rubric | Tests human-owned policy boundary. |
 | Q08 | Which policy snapshot should be cited for a submission after the policy was updated mid-cohort? | multi-hop | text | Policy snapshot rules + submission record rules | Tests version/snapshot reasoning. |
 | Q09 | What are the allowed uses of AI for regulated medical certification? | no-answer | text | none | v1 must return insufficient_evidence; regulated certification is out of scope. |
-| Q10 | Can the system guarantee a 30 percent productivity gain from the pilot? | no-answer | text | none | v1 must return insufficient_evidence or forbidden-claim guidance. |
+| Q10 | Can the system guarantee a 30 percent productivity gain from the pilot? | no-answer | text | none | v1 must return insufficient_evidence. |
 
 ## Baseline Metrics
 
-Recorded at: not yet measured after T13/T14
+Recorded at: 2026-05-19 automated T22 run
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| hit@3 | not yet measured | Set after first indexed fixture corpus exists. |
-| hit@5 | not yet measured | Set after first indexed fixture corpus exists. |
-| MRR | not yet measured | Set after first indexed fixture corpus exists. |
-| Citation precision | not yet measured | Set after citation assembly exists. |
-| No-answer accuracy | not yet measured | Set after `insufficient_evidence` path exists. |
-| Median retrieval latency | not yet measured | Set after query service exists. |
-| p95 retrieval latency | not yet measured | Set after query service exists. |
+| hit@3 | 1.00 | `scripts/eval.py` against the policy/SOP eval dataset. |
+| hit@5 | 1.00 | `scripts/eval.py` against the policy/SOP eval dataset. |
+| MRR | 0.94 | Mean reciprocal rank over answerable Q01-Q08. |
+| Citation precision | 0.58 | Precision over top-3 cited evidence blocks for answerable queries. |
+| No-answer accuracy | 1.00 | Q09/Q10 returned `insufficient_evidence` with no generated guidance. |
+| Median retrieval latency | 61.83 ms | Local PostgreSQL/pgvector eval run. |
+| p95 retrieval latency | 92.19 ms | Local PostgreSQL/pgvector eval run. |
 
 ## Current Metrics
 
-Recorded at: not yet measured
+Recorded at: 2026-05-19 automated T22 run
 
 | Metric | Previous | Current | Delta | Regression? |
 |--------|----------|---------|-------|-------------|
-| hit@3 | n/a | n/a | n/a | n/a |
-| hit@5 | n/a | n/a | n/a | n/a |
-| MRR | n/a | n/a | n/a | n/a |
-| Citation precision | n/a | n/a | n/a | n/a |
-| No-answer accuracy | n/a | n/a | n/a | n/a |
-| Median retrieval latency | n/a | n/a | n/a | n/a |
-| p95 retrieval latency | n/a | n/a | n/a | n/a |
+| hit@3 | n/a | 1.00 | n/a | No |
+| hit@5 | n/a | 1.00 | n/a | No |
+| MRR | n/a | 0.94 | n/a | No |
+| Citation precision | integration proxy passed | 0.58 | n/a | No |
+| No-answer accuracy | integration proxy passed | 1.00 | n/a | No |
+| Median retrieval latency | n/a | 61.83 ms | n/a | No |
+| p95 retrieval latency | n/a | 92.19 ms | n/a | No |
 
 ## Baseline Comparison
 
 | Comparison | Previous / baseline | Current | Decision note |
 |------------|---------------------|---------|---------------|
-| Text-only baseline quality | not yet measured | not yet measured | Text-only is the declared v1 mode. |
-| Text-only baseline latency/cost | not yet measured | not yet measured | Measure after T14. |
+| Text-only baseline quality | not yet measured | hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00 | T22 established the first automated baseline. |
+| Text-only baseline latency/cost | not yet measured | median=61.83 ms; p95=92.19 ms | Local PostgreSQL/pgvector timing; cost is zero in stub-embedding eval mode. |
 | Fallback behavior | Human review on retrieval outage or insufficient evidence | planned | Required before feedback release. |
 
 ## Answer Quality Metrics
 
-Recorded at: not yet measured
-Corpus version: not yet implemented
+Recorded at: 2026-05-19 feedback schema bootstrap
+Corpus version: `index_schema_version=v1`; answer-quality eval corpus not yet measured
 
 | Metric | Description | Baseline | Previous | Current | Delta | Regression? |
 |--------|-------------|----------|----------|---------|-------|-------------|
-| Faithfulness | Answer contains only claims supported by retrieved context | n/a | n/a | n/a | n/a | n/a |
-| Answer Completeness | Answer addresses the full question given retrieved context | n/a | n/a | n/a | n/a | n/a |
-| Answer Relevance | Answer is on-topic and scoped to the query | n/a | n/a | n/a | n/a | n/a |
+| Faithfulness | Answer contains only claims supported by retrieved context | n/a | n/a | not yet measured | n/a | No |
+| Answer Completeness | Answer addresses the full question given retrieved context | n/a | n/a | not yet measured | n/a | No |
+| Answer Relevance | Answer is on-topic and scoped to the query | n/a | n/a | not yet measured | n/a | No |
 
-Judge: not selected; choose after T15.
+Judge: not selected; T15 added structured feedback validation, but no LLM answer-quality judge or eval runner exists yet. Choose after T22.
 
 ## Regression Notes
 
@@ -114,10 +114,10 @@ none
 
 | Query ID | Result | Expected | Pass? |
 |----------|--------|----------|-------|
-| Q09 | not yet measured | insufficient_evidence | n/a |
-| Q10 | not yet measured | insufficient_evidence | n/a |
+| Q09 | insufficient_evidence | insufficient_evidence | pass |
+| Q10 | insufficient_evidence | insufficient_evidence | pass |
 
-Notes: no retrieval code exists yet.
+Notes: T22 automated eval enforces no-answer queries as `insufficient_evidence` with no generated guidance.
 
 ## Modality-Specific Notes
 
@@ -127,8 +127,8 @@ Text-only is the only v1 modality.
 
 | Query ID | Citation present? | Source matches? | Notes |
 |----------|-------------------|-----------------|-------|
-| Q01 | not yet measured | not yet measured | Evaluate after T14. |
-| Q02 | not yet measured | not yet measured | Evaluate after T14. |
+| Q01 | yes | yes | T22 automated eval includes source ID, section path, chunk ID, score, and snippet fields. |
+| Q02 | yes | yes | Multi-document evidence appears in the top retrieved citation set. |
 
 ## Experiments
 
@@ -139,3 +139,6 @@ Text-only is the only v1 modality.
 
 | Date | Task | Eval Source | Corpus Version | Metrics | Result | Notes |
 |------|------|-------------|----------------|---------|--------|-------|
+| 2026-05-19 | T22: Retrieval Evaluation Automation | scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset, run 2026-05-19 | `eval-corpus-v1` | hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=61.83; p95_latency_ms=92.19 | pass | Automated retrieval eval. |
+| 2026-05-19 | T13: Text Retrieval Ingestion Pipeline | `.venv/bin/pytest -q tests/integration/test_retrieval_ingestion.py tests/unit/test_retrieval_ingestion.py tests/test_retrieval_eval_doc.py`, run 2026-05-19 | `index_schema_version=v1`; corpus versions are created per ingested snapshot | not yet measured | bootstrap valid | Ingestion now records source ID, snapshot ID, section path, vectors, and corpus version metadata. Retrieval metrics wait for T14 query service and T22 eval runner. |
+| 2026-05-19 | T14: Retrieval Query And Evidence Assembly | `.venv/bin/pytest -q tests/integration/test_retrieval_query.py tests/unit/test_retrieval_query.py`, run 2026-05-19 | `index_schema_version=v1`; query scoped by workspace, snapshot, and document type | citation and no-answer integration proxies passed | bootstrap valid | Hybrid vector/FTS retrieval, RRF fusion, citation evidence blocks, and below-threshold `insufficient_evidence` are implemented. Full dataset metrics wait for T22 eval runner. |

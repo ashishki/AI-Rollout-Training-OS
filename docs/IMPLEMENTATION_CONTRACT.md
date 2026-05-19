@@ -110,6 +110,12 @@ This project is operated by the current Codex session. Do not launch external AI
 
 Violation: P1 if the workflow requires an external AI worker process to complete a normal task.
 
+### Nonstop Development Loop
+
+Development follows the loop in `docs/prompts/ORCHESTRATOR.md` continuously. Codex must not stop merely because a task or phase ended. Phase boundaries are mandatory verification/review/state-update checkpoints inside the loop; they are not idle waiting states. After checks pass and there are no open P0/P1 findings, Codex advances to the next task or phase automatically unless the human explicitly says to pause.
+
+Violation: P1 if normal progress depends on a manual "continue" prompt between phases when no blocker exists.
+
 ## Control Surface And Runtime Boundaries
 
 | Boundary | Rule |

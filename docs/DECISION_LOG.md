@@ -26,6 +26,7 @@ This file is a retrieval index. Canonical documents win on conflict.
 | D-006 | 2026-05-19 | Active | Manager approval, certification, policy changes, and productivity claims remain human-owned. | Prevents adoption evidence from becoming unauditable AI authority. | `docs/ARCHITECTURE.md#human-approval-boundaries` | none |
 | D-007 | 2026-05-19 | Active | Adapt RAG and retrieval evaluation from Dream Motif Interpreter. | Reuses a proven pgvector, hybrid FTS/vector retrieval, insufficient-evidence, and markdown eval pattern while requiring domain adaptation to policy/SOP evidence. | `docs/reference/dream_motif_rag_reuse.md` | none |
 | D-008 | 2026-05-19 | Active | Use Codex-only orchestration with no external AI worker process. | The project will not use nested Codex worker commands; the current Codex session runs implementation, verification, review passes, and state updates directly. | `docs/prompts/ORCHESTRATOR.md` | none |
+| D-009 | 2026-05-19 | Active | Run development as a nonstop Codex loop across phase boundaries. | Prevents idle handoff gaps; phase boundaries remain mandatory checks, but Codex continues to the next task/phase automatically when no blocker exists. | `docs/prompts/ORCHESTRATOR.md#phase-boundary` | none |
 
 ## Retrieval Notes
 

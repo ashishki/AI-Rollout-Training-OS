@@ -18,6 +18,8 @@ The current Codex session owns the loop end to end:
 5. Review the diff in a separate review pass.
 6. Update state files and commit when requested by the human.
 
+The loop is nonstop. Do not pause between tasks or phases for routine permission to continue. A phase boundary is a verification, review, archive, and state-update checkpoint inside the same loop. After the checkpoint passes with no P0/P1 blockers, immediately select the next task and continue. Stop only for a true blocker, an unresolved P0/P1 finding, missing required human decision, failing baseline that prevents safe work, or an explicit human instruction to pause.
+
 Use built-in Codex tools only. If the human explicitly asks for parallel subagents, split work into bounded, non-overlapping tasks; otherwise keep execution local and sequential.
 
 ## Required Inputs
@@ -140,6 +142,7 @@ At the end of a phase:
 4. Update `docs/audit/AUDIT_INDEX.md`.
 5. Update `docs/CODEX_PROMPT.md` Phase History.
 6. Do not start the next phase with open P0/P1 findings.
+7. If there are no open P0/P1 findings and required checks passed, continue directly to the first task of the next phase without waiting for a separate prompt.
 
 ## RAG-Specific Gate
 

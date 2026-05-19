@@ -13,6 +13,11 @@ updates directly in the shared workspace. Legacy slash-command wrappers,
 host-specific hook integrations, and nested external AI worker commands are not
 part of this project's active workflow.
 
+Development must run in a nonstop loop. Phase boundaries are verification and
+state-update checkpoints inside the loop, not manual pause points. When a phase
+has no P0/P1 blockers and required checks pass, Codex immediately advances to
+the next task/phase unless the human explicitly says to pause.
+
 The canonical operational prompt is `docs/prompts/ORCHESTRATOR.md`.
 
 ---
@@ -21,7 +26,7 @@ The canonical operational prompt is `docs/prompts/ORCHESTRATOR.md`.
 
 ### AI-Assisted Development
 
-The developer is the architect and reviewer. AI agents (Codex) write code. Review agents validate it. The human approves phase gates. Nothing progresses without human sign-off.
+The developer is the architect and reviewer. AI agents (Codex) write code. Review passes validate it. For AI Rollout Training OS, clean phase gates continue automatically inside the nonstop loop; the human intervenes for blockers, required approval boundaries, scope changes, or explicit pause/redirect decisions.
 
 This is not "AI writes everything." This is "AI does the mechanical work under a structure you control." The value of this workflow is the structure — the prompts, the contracts, the review cycle — not the raw capability of any individual agent call.
 
@@ -32,7 +37,7 @@ Strategist (architecture)
     → Orchestrator (phase execution)
         → Codex agents (implementation, one task at a time)
             → Review cycle (META → ARCH → CODE → CONSOLIDATED)
-                → Human approval
+                → Gate checkpoint
                     → next phase
 ```
 
