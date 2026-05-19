@@ -1,0 +1,84 @@
+{
+  "workspace_id": "ws-eval",
+  "created_by": "eval-runner",
+  "corpus_version": "eval-corpus-v1",
+  "documents": [
+    {
+      "logical_document_id": "company_ai_policy",
+      "title": "Company AI policy",
+      "document_type": "company_policy",
+      "aliases": [
+        "Company AI policy",
+        "AI policy",
+        "Customer Data section",
+        "AI policy privacy section",
+        "AI policy ownership",
+        "Policy snapshot rules"
+      ],
+      "body_text": "# Company AI policy\n## Customer Data section\nSupport reps may paste only approved customer data into an AI tool: issue category, product area, sanitized conversation excerpts, and internal ticket id. They must not paste payment details, personal contact details, credentials, secrets, or regulated health data.\n## Approval and ownership\nAI-assisted support workflow changes require manager approval before reuse with customers. Legal approval, new policy ownership, certification, and sensitive-data exceptions remain human-owned decisions.\n## Snapshot rules\nFeedback and reports cite the policy snapshot captured on the learner submission, even when the policy is updated mid-cohort."
+    },
+    {
+      "logical_document_id": "support_sop",
+      "title": "Support SOP",
+      "document_type": "sop",
+      "aliases": ["support SOP", "support workflow evidence"],
+      "body_text": "# Support SOP\nSupport agents may use AI to draft replies, summarize ticket history, and compare a response against policy. Before a workflow change is reused, the manager reviews the evidence, approval note, and any risk flags."
+    },
+    {
+      "logical_document_id": "role_pack_rubric",
+      "title": "Role pack rubric",
+      "document_type": "company_policy",
+      "aliases": ["role pack rubric", "human approval boundary"],
+      "body_text": "# Role pack rubric\nLearner feedback must cite retrieved evidence, identify unsupported claims, and route legal approval or new policy requests to a manager. The rubric forbids presenting policy changes as approved without explicit human approval."
+    },
+    {
+      "logical_document_id": "recruiting_sop",
+      "title": "Recruiting SOP",
+      "document_type": "sop",
+      "aliases": ["Recruiting SOP"],
+      "body_text": "# Recruiting SOP\nRecruiters must remove candidate resume personal contact details before using AI. Names, personal emails, phone numbers, addresses, and links from resumes are sensitive and must be redacted or summarized safely."
+    },
+    {
+      "logical_document_id": "sales_sop",
+      "title": "Sales SOP",
+      "document_type": "sop",
+      "aliases": ["Sales SOP"],
+      "body_text": "# Sales SOP\nAllowed sales outreach tasks include drafting account research summaries, preparing first-draft email copy, and generating objection-handling notes. A human must verify facts, claims, pricing, and customer-specific commitments before sending."
+    },
+    {
+      "logical_document_id": "allowed_use_cases",
+      "title": "Allowed use cases",
+      "document_type": "allowed_use",
+      "aliases": ["allowed use cases"],
+      "body_text": "# Allowed use cases\nAI may help with support drafts, sales outreach drafts, meeting summaries, onboarding checklists, and internal learning artifacts when a human verifies output before external use."
+    },
+    {
+      "logical_document_id": "guardrail_quiz",
+      "title": "Guardrail quiz",
+      "document_type": "company_policy",
+      "aliases": ["guardrail quiz"],
+      "body_text": "# Guardrail quiz\nBefore sending AI-assisted sales outreach, the learner must answer that human verification of facts and claims is mandatory. The quiz also checks that sensitive customer data is not pasted into AI tools."
+    },
+    {
+      "logical_document_id": "submission_guardrail_rubric",
+      "title": "Submission guardrail rubric",
+      "document_type": "company_policy",
+      "aliases": ["submission guardrail rubric"],
+      "body_text": "# Submission guardrail rubric\nA learner's submitted artifact is blocked from AI feedback when sensitive data is detected, including customer personal data, payment details, credentials, candidate contact details, or regulated data. Blocked submissions require manager review."
+    },
+    {
+      "logical_document_id": "manager_reporting_rubric",
+      "title": "Manager reporting rubric",
+      "document_type": "company_policy",
+      "aliases": ["Manager reporting rubric"],
+      "body_text": "# Manager reporting rubric\nA manager progress report for an approved workflow change must include cohort metadata, role pack version, policy snapshot id, dashboard metric snapshot, manager approval note, approved workflow change, and open risk flags."
+    },
+    {
+      "logical_document_id": "submission_record_rules",
+      "title": "Submission record rules",
+      "document_type": "company_policy",
+      "aliases": ["submission record rules"],
+      "body_text": "# Submission record rules\nEach learner submission stores assignment id, mission template id, learner id, rubric id, policy snapshot id, submission version, redaction status, and review state. Feedback uses the stored submission snapshot rather than a newer policy snapshot."
+    }
+  ]
+}
