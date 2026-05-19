@@ -1,8 +1,5 @@
 name: CI
 
-# Reference copy of the active workflow in `.github/workflows/ci.yml`.
-# Keep this file parseable YAML; do not leave unresolved template placeholders.
-
 on:
   push:
     branches: ["main"]

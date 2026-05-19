@@ -14,8 +14,7 @@ but unnecessarily complex". They are complementary, not overlapping.
 
 ## Trigger
 
-- Explicit user invocation, e.g. via
-  `templates/.claude/commands/simplify.md`.
+- Explicit user invocation using `prompts/audit/PROMPT_SIMPLIFY.md`.
 - NEVER automatic. NEVER part of the mandatory phase-boundary cycle.
 
 ## Allowed Role
@@ -104,6 +103,7 @@ always wins.
 
 `prompts/audit/PROMPT_SIMPLIFY.md`
 
-## Companion Command
+## Invocation
 
-`templates/.claude/commands/simplify.md`
+Run this pass from the current Codex session with a user-stated scope and the
+companion prompt above.
