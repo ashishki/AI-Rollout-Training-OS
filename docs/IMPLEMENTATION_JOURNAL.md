@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-05-19 - ROADMAP - Product Maturity AI Loop
+
+- Scope: `docs/product_maturity_roadmap.md`, `docs/product_maturity_task_graph.md`, `docs/prompts/ORCHESTRATOR.md`, `docs/CODEX_PROMPT.md`, `tests/test_product_maturity_docs.py`
+- Why this work happened: Human asked to turn the production-readiness strategy into a detailed plan, tasks, and AI-loop documentation after the MVP task graph completed.
+- Decisions applied: `docs/ARCHITECTURE.md#problem-fit-and-adoption-reality`, `docs/spec.md#overview`, `docs/prompts/ORCHESTRATOR.md#step-1---select-work`
+- Evidence collected: `.venv/bin/pytest -q tests/test_product_maturity_docs.py` passed with 3 tests; `.venv/bin/pytest -q` passed with 82 tests; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` passed.
+- Follow-ups: T25 Pilot Outcome Metrics Model starts Phase 6 PMF pilot system work.
+- Notes for next agent: `docs/product_maturity_roadmap.md` defines phases 6-14 from PMF pilots through GA readiness. `docs/product_maturity_task_graph.md` defines T25-T61 with owner, phase, dependencies, acceptance criteria, files, and context refs so the Codex-only orchestrator can continue without a separate planning prompt.
+
 ### 2026-05-19 - T24 - Pilot Readiness Gate
 
 - Scope: `docs/pilot_readiness.md`, `tests/fixtures/pilot_data.py`, `tests/integration/test_pilot_readiness.py`, `tests/test_pilot_readiness_doc.py`

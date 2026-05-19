@@ -28,6 +28,7 @@ Read these before starting a task:
 
 - `docs/CODEX_PROMPT.md`
 - `docs/tasks.md`
+- `docs/product_maturity_task_graph.md` when Next Task is T25 or later
 - `docs/IMPLEMENTATION_CONTRACT.md`
 - task `Context-Refs`
 - `docs/DECISION_LOG.md` when changing architecture, runtime, RAG, auth, approval boundaries, or prior decisions
@@ -67,6 +68,8 @@ Default selection order:
 2. Fix Queue items blocking the current phase.
 3. `docs/CODEX_PROMPT.md` Next Task.
 4. The first uncompleted task in `docs/tasks.md`.
+5. If the MVP task graph is complete, the first uncompleted task in
+   `docs/product_maturity_task_graph.md`.
 
 Only work on one implementation task at a time unless the human explicitly asks for parallel work.
 

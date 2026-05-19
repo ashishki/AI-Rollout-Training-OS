@@ -2,7 +2,7 @@
 
 Version: 1.0
 Date: 2026-05-19
-Phase: 5
+Phase: 6
 
 This file is the single source of truth for session state. Update it at task and phase boundaries.
 
@@ -10,8 +10,8 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Current State
 
-- Phase: 5
-- Baseline: 79 passing tests
+- Phase: 6
+- Baseline: 82 passing tests
 - Ruff: `ruff check scripts ai_rollout_os tests migrations` and `ruff format --check scripts ai_rollout_os tests migrations` passing
 - Last CI run: not yet configured
 - Last updated: 2026-05-19
@@ -22,10 +22,12 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Summary State
 
-- Current phase: 5 pilot readiness
-- Current baseline: 79 passing tests
-- Most recent task: T24 Pilot Readiness Gate
-- Active next task: none; planned task graph complete
+- Current phase: 6 PMF pilot system
+- Current baseline: 82 passing tests
+- Most recent task: Product Maturity AI Loop Planning
+- Active next task: T25 Pilot Outcome Metrics Model
+- Planned MVP task graph: complete through T24
+- Post-MVP production maturity graph: open from T25 through T61
 - Recent phase boundary: Phase 5 audit passed with no open P0/P1/P2 findings
 - Older completed-task and phase rows are preserved in archive sections below.
 
@@ -36,11 +38,14 @@ This file is the single source of truth for session state. Update it at task and
 - Evidence index: `docs/EVIDENCE_INDEX.md`
 - Retrieval evaluation: `docs/retrieval_eval.md`
 - Codex-only workflow: `reference/CODEX_ONLY_WORKFLOW.md`
-- Task-scoped context: read `Context-Refs` in `docs/tasks.md` before broad searching
+- MVP task graph: `docs/tasks.md`
+- Post-MVP task graph: `docs/product_maturity_task_graph.md`
+- Product maturity roadmap: `docs/product_maturity_roadmap.md`
+- Task-scoped context: read `Context-Refs` in the active task graph before broad searching
 
 ## Next Task
 
-none; planned task graph complete
+T25: Pilot Outcome Metrics Model
 
 ## Fix Queue
 
