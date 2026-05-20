@@ -35,4 +35,24 @@ def test_orchestrator_knows_post_mvp_task_graph() -> None:
 
     assert "docs/product_maturity_task_graph.md" in prompt
     assert "docs/product_maturity_task_graph.md" in state
-    assert "T25: Pilot Outcome Metrics Model" in state
+    assert "Post-MVP production maturity graph" in state
+    assert "Active next task:" in state
+
+
+def test_roadmap_lists_phase_6_metrics() -> None:
+    doc = Path("docs/product_maturity_roadmap.md").read_text()
+    phase_6 = doc.split("## Phase 6 - PMF Pilot System", maxsplit=1)[1].split(
+        "## Phase 7 - Core Product UX", maxsplit=1
+    )[0]
+
+    for metric in [
+        "Activation rate",
+        "Completion rate",
+        "Approved workflow changes",
+        "Manager review time",
+        "Risk rate",
+        "Time-to-first-safe-use",
+    ]:
+        assert metric in phase_6
+
+    assert "Phase 6 exit gate" in phase_6

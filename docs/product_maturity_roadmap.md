@@ -70,7 +70,18 @@ Build:
 - Lightweight ROI model.
 - Design partner reporting pack.
 
-Exit gate:
+Phase 6 metrics:
+
+| Metric | Source | Denominator |
+|--------|--------|-------------|
+| Activation rate | Stored guardrail quiz pass records for learners enrolled in the cohort | Enrolled learners |
+| Completion rate | Stored mission assignment status records | Assigned missions |
+| Approved workflow changes | Manager-approved submission records with approved workflow change text | Cohort |
+| Manager review time | Stored submission created and manager approval timestamps | Manager-reviewed approved submissions |
+| Risk rate | Stored sensitive-data flags and feedback risk flags | Cohort submissions |
+| Time-to-first-safe-use | First stored clear submission from a learner with a passing guardrail result | Cohort start timestamp |
+
+Phase 6 exit gate:
 
 - At least 2 pilots show manager-approved workflow changes.
 - At least 1 pilot has a credible path to paid expansion.
