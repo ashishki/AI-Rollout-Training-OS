@@ -1,8 +1,8 @@
 # CODEX_PROMPT.md
 
 Version: 1.0
-Date: 2026-05-19
-Phase: 6
+Date: 2026-05-20
+Phase: 8
 
 This file is the single source of truth for session state. Update it at task and phase boundaries.
 
@@ -10,11 +10,11 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Current State
 
-- Phase: 6
-- Baseline: 82 passing tests
-- Ruff: `ruff check scripts ai_rollout_os tests migrations` and `ruff format --check scripts ai_rollout_os tests migrations` passing
+- Phase: 8
+- Baseline: 100 passing tests
+- Ruff: `ruff check scripts ai_rollout_os frontend tests migrations` and `ruff format --check scripts ai_rollout_os frontend tests migrations` passing
 - Last CI run: not yet configured
-- Last updated: 2026-05-19
+- Last updated: 2026-05-20
 - Session tokens: not yet tracked
 - Cumulative phase tokens: not yet tracked
 - Execution model: Codex-only current session; no external AI worker process
@@ -22,13 +22,13 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Summary State
 
-- Current phase: 6 PMF pilot system
-- Current baseline: 82 passing tests
-- Most recent task: Product Maturity AI Loop Planning
-- Active next task: T25 Pilot Outcome Metrics Model
+- Current phase: 8 Enterprise Security
+- Current baseline: 100 passing tests
+- Most recent task: T34 UX Readiness Gate
+- Active next task: T35 SSO And Identity Boundary
 - Planned MVP task graph: complete through T24
-- Post-MVP production maturity graph: open from T25 through T61
-- Recent phase boundary: Phase 5 audit passed with no open P0/P1/P2 findings
+- Post-MVP production maturity graph: complete through T34; open from T35 through T61
+- Recent phase boundary: Phase 7 UX audit conditionally passed with no open P0/P1 findings and one open P2 finding
 - Older completed-task and phase rows are preserved in archive sections below.
 
 ## Continuity Pointers
@@ -45,7 +45,7 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Next Task
 
-T25: Pilot Outcome Metrics Model
+T35: SSO And Identity Boundary
 
 ## Fix Queue
 
@@ -53,7 +53,7 @@ empty
 
 ## Open Findings
 
-none
+- P2-UX-001 (T34): Browser automation is not yet installed; current e2e coverage uses HTTP UI surfaces rather than a real browser rendering engine. Not blocking Phase 8, but required before claiming full UX readiness for GA-grade non-engineer operation.
 
 ## Profile State: RAG
 
@@ -142,6 +142,16 @@ none
 
 | Date | Task | Summary | Evidence |
 |------|------|---------|----------|
+| 2026-05-20 | T34: UX Readiness Gate | Added the Phase 7 UX audit covering critical operator, learner, manager, and app-shell workflows. Conditional go to Phase 8 with one open P2 for missing browser automation. | `.venv/bin/pytest -q` -> 100 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T33: Manager Review UI | Added manager UI endpoints for filtered review queue, dashboard snapshot, workflow approval, and report creation; added e2e coverage for approval/report flow and manager-note non-leak behavior. | `.venv/bin/pytest -q` -> 99 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T32: Learner Mission UI | Added learner UI endpoints for assignments, guardrail quiz submission, artifact submission, feedback status surface, and redacted display for sensitive submissions. | `.venv/bin/pytest -q` -> 97 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T31: Operator Admin UI | Added operator admin UI form endpoints for policy/SOP documents, guardrail quizzes, role packs, missions, role-pack launch, cohort creation, and cohort launch; added e2e coverage proving an operator can launch a cohort and policy body text does not leak in UI errors/logs. | `.venv/bin/pytest -q` -> 95 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T30: Frontend Application Shell | Added authenticated `/app` frontend shell with role-specific operator, manager, and learner navigation; protected unknown/missing/invalid roles; added e2e coverage and included `frontend` in ruff/CI scope. | `.venv/bin/pytest -q` -> 93 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T29: Phase 6 PMF Gate | Added the Phase 6 PMF audit with evidence, gaps, and go/no-go status: conditional go for Phase 7 UX work, no-go for claiming PMF or paid expansion readiness until observed customer evidence meets the exit gate. | `.venv/bin/pytest -q` -> 91 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed |
+| 2026-05-20 | T28: Pilot ROI Report | Added a conservative ROI report service that summarizes adoption, approved workflow changes, risk signals, denominator fields, and assumption-labeled manual review savings without productivity guarantees. | `.venv/bin/pytest -q` -> 90 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed |
+| 2026-05-20 | T27: Pilot Success Rubric | Added a pilot go/no-go rubric defining expand, repeat, pause, and reposition outcomes with product, quality, and business metrics. | `.venv/bin/pytest -q` -> 88 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed |
+| 2026-05-20 | T26: Customer Discovery Evidence Registry | Added a structured customer discovery registry for ICP, buyer, blockers, workarounds, willingness-to-pay signals, pilot outcome notes, confidence levels, interview templates, and decision rules that separate observed evidence from internal assumptions. | `.venv/bin/pytest -q` -> 86 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed |
+| 2026-05-20 | T25: Pilot Outcome Metrics Model | Added deterministic pilot outcome metrics for activation, completion, approved workflow changes, manager review time, risk rate, and time-to-first-safe-use, plus explicit Phase 6 metrics and exit gate documentation. | `.venv/bin/pytest -q` -> 84 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed |
 | 2026-05-19 | T24: Pilot Readiness Gate | Added pilot readiness checklist, minimum pilot seed fixture, and end-to-end pilot test covering cohort launch, artifact submission, feedback generation, manager approval, and report export. | `.venv/bin/pytest -q` -> 79 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed |
 | 2026-05-19 | T23: Docker Compose Deployment | Added Dockerfile, Docker Compose web/migrate/worker/postgres services, `.env.example` placeholders, bounded worker runner command, default deployed DB session factory, and deployment file tests. | `.venv/bin/pytest -q` -> 76 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed; `docker-compose config` -> passed |
 | 2026-05-19 | T22: Retrieval Evaluation Automation | Added CI-safe retrieval eval runner, seeded policy/SOP corpus fixture, automated hit@3/hit@5/MRR/citation/no-answer/latency metrics, no-write mode, and eval-history validation. | `.venv/bin/pytest -q` -> 73 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/python scripts/eval.py --no-write` -> pass |
@@ -176,6 +186,8 @@ none
 
 | Date | Phase | Summary | Evidence | Open P0/P1 |
 |------|-------|---------|----------|------------|
+| 2026-05-20 | Phase 7 | Completed T30-T34 core product UX: authenticated role shell, operator admin UI, learner mission UI, manager review UI, and UX readiness gate. Conditional go to Phase 8; one P2 remains for missing browser automation. | `docs/audit/PHASE7_UX_AUDIT.md`; `.venv/bin/pytest -q` -> 100 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
+| 2026-05-20 | Phase 6 | Completed T25-T29 PMF pilot system: deterministic pilot metrics, discovery registry, success rubric, conservative ROI report, and PMF gate. Conditional go for Phase 7 UX work; PMF claim remains not met until observed customer evidence satisfies the exit gate. | `docs/audit/PHASE6_PMF_AUDIT.md`; `.venv/bin/pytest -q` -> 91 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 5 | Completed T21-T24 pilot readiness: reminders, automated retrieval eval, Docker Compose deployment assets, and pilot readiness end-to-end gate. | `docs/audit/PHASE5_AUDIT.md`; `.venv/bin/pytest -q` -> 79 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 4 | Completed T16-T20 review, dashboard, reports, and iteration workflows: feedback jobs, manager approvals, dashboard metrics, exportable reports, and role-pack versioning. | `docs/audit/PHASE4_AUDIT.md`; `.venv/bin/pytest -q` -> 65 passed; `.venv/bin/ruff check ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check ai_rollout_os tests migrations` -> passed | 0 |
 

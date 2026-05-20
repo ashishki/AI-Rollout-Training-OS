@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-19
+Last updated: 2026-05-20
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,96 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-05-20 - T34 - UX Readiness Gate
+
+- Scope: `docs/audit/PHASE7_UX_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase7_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T34 after T33 manager review UI completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-7---core-product-ux`
+- Evidence collected: `.venv/bin/pytest -q` passed with 100 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T35 SSO And Identity Boundary starts Phase 8 Enterprise Security. Open P2: browser automation is not yet installed; current e2e tests exercise HTTP UI surfaces with `TestClient`.
+- Notes for next agent: Phase 7 is conditionally clear for Phase 8 with no P0/P1 blockers. The core pilot path can run through authenticated UI routes from policy upload to report creation, but GA-grade UX readiness still needs browser-level e2e coverage.
+
+### 2026-05-20 - T33 - Manager Review UI
+
+- Scope: `frontend/app_shell.py`, `tests/e2e/test_manager_review.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T33 after T32 learner mission UI completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`, `docs/product_maturity_roadmap.md#phase-7---core-product-ux`
+- Evidence collected: `.venv/bin/pytest -q` passed with 99 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T34 UX Readiness Gate.
+- Notes for next agent: Manager UI remains server-rendered. It filters queue items through `ManagerReviewService`, approves workflow changes only through the manager route/service boundary, renders dashboard metrics from stored records, and creates reports through `ReportService`. Manager notes are not rendered into UI result bodies, dashboard metric output, logs, or metric labels.
+
+### 2026-05-20 - T32 - Learner Mission UI
+
+- Scope: `frontend/app_shell.py`, `tests/e2e/test_learner_missions.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T32 after T31 operator admin UI completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#artifact-retention-and-redaction`, `docs/product_maturity_roadmap.md#phase-7---core-product-ux`
+- Evidence collected: `.venv/bin/pytest -q` passed with 97 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T33 Manager Review UI.
+- Notes for next agent: Learner UI remains server-rendered. It lists learner assignments, submits guardrail quiz answers through `GuardrailService`, submits artifacts through `SubmissionService`, and renders flagged artifacts as `[REDACTED]` only.
+
+### 2026-05-20 - T31 - Operator Admin UI
+
+- Scope: `frontend/app_shell.py`, `tests/e2e/test_operator_admin.py`, `tests/e2e/conftest.py`, `ai_rollout_os/retrieval/document_service.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T31 after T30 frontend application shell completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`, `docs/product_maturity_roadmap.md#phase-7---core-product-ux`
+- Evidence collected: `.venv/bin/pytest -q` passed with 95 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T32 Learner Mission UI.
+- Notes for next agent: Operator UI remains server-rendered and calls existing backend services directly. It supports document creation, guardrail quiz creation, role-pack creation, mission creation, role-pack launch, cohort creation, and cohort launch. UI success/error responses intentionally omit policy/SOP body text.
+
+### 2026-05-20 - T30 - Frontend Application Shell
+
+- Scope: `frontend/`, `ai_rollout_os/main.py`, `.github/workflows/ci.yml`, `pyproject.toml`, `tests/e2e/test_app_shell.py`, `tests/test_ci_workflow.py`, `tests/test_project_metadata.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Human asked to continue, and the orchestrator advanced to T30 after Phase 6 PMF gate completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-7---core-product-ux`, `docs/IMPLEMENTATION_CONTRACT.md#authorization`
+- Evidence collected: `.venv/bin/pytest -q` passed with 93 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T31 Operator Admin UI.
+- Notes for next agent: The app shell is server-rendered at `/app` to avoid introducing Node/Playwright before the repo has frontend tooling. It requires bearer auth, rejects unsupported roles, and renders direct role-specific navigation for operator, manager, and learner. `frontend` is now included in pyproject and CI ruff scopes.
+
+### 2026-05-20 - T29 - Phase 6 PMF Gate
+
+- Scope: `docs/audit/PHASE6_PMF_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase6_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T29 after T28 pilot ROI report completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-6---pmf-pilot-system`
+- Evidence collected: `.venv/bin/pytest -q` passed with 91 tests; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` passed.
+- Follow-ups: T30 Frontend Application Shell starts Phase 7 Core Product UX.
+- Notes for next agent: Phase 6 is conditionally clear for Phase 7 UX work with no P0/P1/P2 implementation findings. The audit is a no-go for claiming PMF, paid expansion readiness, or repeatable sales motion until observed customer evidence meets the Phase 6 exit gate.
+
+### 2026-05-20 - T28 - Pilot ROI Report
+
+- Scope: `ai_rollout_os/reporting/pilot_roi.py`, `tests/integration/test_pilot_roi_report.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T28 after T27 pilot success rubric completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`, `docs/product_maturity_roadmap.md#metrics-that-matter`
+- Evidence collected: `.venv/bin/pytest -q` passed with 90 tests; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` passed.
+- Follow-ups: T29 Phase 6 PMF Gate.
+- Notes for next agent: `PilotROIService` wraps `PilotMetricsService` and keeps metric sources and denominators visible. Manual review savings are labeled as assumptions, require an explicit per-review assumption, and no productivity guarantee text is emitted.
+
+### 2026-05-20 - T27 - Pilot Success Rubric
+
+- Scope: `docs/pilot_success_rubric.md`, `tests/test_pilot_success_rubric.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T27 after T26 customer discovery registry completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#metrics-that-matter`
+- Evidence collected: `.venv/bin/pytest -q` passed with 88 tests; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` passed.
+- Follow-ups: T28 Pilot ROI Report.
+- Notes for next agent: The rubric defines expand, repeat, pause, and reposition decisions and requires product, quality, and business evidence before expansion. It explicitly references current pilot metrics, retrieval/feedback eval evidence, and customer discovery records.
+
+### 2026-05-20 - T26 - Customer Discovery Evidence Registry
+
+- Scope: `docs/customer_discovery.md`, `tests/test_customer_discovery_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T26 after T25 pilot metrics completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#target-market-wedge`
+- Evidence collected: `.venv/bin/pytest -q` passed with 86 tests; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` passed.
+- Follow-ups: T27 Pilot Success Rubric.
+- Notes for next agent: `docs/customer_discovery.md` is the Phase 6 discovery registry. It explicitly separates observed customer evidence from internal assumptions and states that assumptions cannot satisfy Phase 6 exit gates by themselves.
+
+### 2026-05-20 - T25 - Pilot Outcome Metrics Model
+
+- Scope: `ai_rollout_os/reporting/pilot_metrics.py`, `tests/integration/test_pilot_metrics.py`, `docs/product_maturity_roadmap.md`, `tests/test_product_maturity_docs.py`, `docs/CODEX_PROMPT.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T25 after the post-MVP product maturity graph opened Phase 6 PMF pilot system work.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-6---pmf-pilot-system`, `docs/IMPLEMENTATION_CONTRACT.md#deterministic-metrics`
+- Evidence collected: `.venv/bin/pytest -q` passed with 84 tests; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` passed.
+- Follow-ups: T26 Customer Discovery Evidence Registry.
+- Notes for next agent: `PilotMetricsService` computes metrics only from stored cohort, enrollment, assignment, quiz, submission, and feedback-result records. It reports source and denominator counts for pilot analytics and does not import or call provider/model code.
 
 ### 2026-05-19 - ROADMAP - Product Maturity AI Loop
 
