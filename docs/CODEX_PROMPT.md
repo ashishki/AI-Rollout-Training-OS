@@ -2,7 +2,7 @@
 
 Version: 1.0
 Date: 2026-05-20
-Phase: 8
+Phase: 9
 
 This file is the single source of truth for session state. Update it at task and phase boundaries.
 
@@ -10,8 +10,8 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Current State
 
-- Phase: 8
-- Baseline: 100 passing tests
+- Phase: 9
+- Baseline: 110 passing tests
 - Ruff: `ruff check scripts ai_rollout_os frontend tests migrations` and `ruff format --check scripts ai_rollout_os frontend tests migrations` passing
 - Last CI run: not yet configured
 - Last updated: 2026-05-20
@@ -22,13 +22,13 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Summary State
 
-- Current phase: 8 Enterprise Security
-- Current baseline: 100 passing tests
-- Most recent task: T34 UX Readiness Gate
-- Active next task: T35 SSO And Identity Boundary
+- Current phase: 9 Governance Layer
+- Current baseline: 110 passing tests
+- Most recent task: T38 Security Review Packet
+- Active next task: T39 Policy Approval Workflow
 - Planned MVP task graph: complete through T24
-- Post-MVP production maturity graph: complete through T34; open from T35 through T61
-- Recent phase boundary: Phase 7 UX audit conditionally passed with no open P0/P1 findings and one open P2 finding
+- Post-MVP production maturity graph: complete through T38; open from T39 through T61
+- Recent phase boundary: Phase 8 security audit passed with no open P0/P1 findings and one inherited open P2 finding
 - Older completed-task and phase rows are preserved in archive sections below.
 
 ## Continuity Pointers
@@ -45,7 +45,7 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Next Task
 
-T35: SSO And Identity Boundary
+T39: Policy Approval Workflow
 
 ## Fix Queue
 
@@ -142,6 +142,10 @@ none
 
 | Date | Task | Summary | Evidence |
 |------|------|---------|----------|
+| 2026-05-20 | T38: Security Review Packet | Completed the first enterprise security review packet covering architecture, data flow, subprocessors, secrets, SSO, RBAC, audit logs, controls, retention, backup/restore, and incident response. | `.venv/bin/pytest -q` -> 110 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T37: Backup Restore And Retention | Added backup/restore/retention/rollback procedures and a deterministic retention job that redacts expired mutable artifact text while preserving audit events and appending retention audit records. | `.venv/bin/pytest -q` -> 108 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T36: RBAC Permissions Matrix | Added a named permission matrix, shared `require_permission` enforcement helper, route-to-permission coverage tests, denied-permission audit coverage, and documented RBAC roles in the security review packet. | `.venv/bin/pytest -q` -> 106 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-20 | T35: SSO And Identity Boundary | Added an OIDC SSO service boundary that verifies external identity through a provider adapter while mapping actor, workspace, and role from server-owned user records; added env-only OIDC configuration validation and SAML decision-path documentation. | `.venv/bin/pytest -q` -> 103 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-20 | T34: UX Readiness Gate | Added the Phase 7 UX audit covering critical operator, learner, manager, and app-shell workflows. Conditional go to Phase 8 with one open P2 for missing browser automation. | `.venv/bin/pytest -q` -> 100 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-20 | T33: Manager Review UI | Added manager UI endpoints for filtered review queue, dashboard snapshot, workflow approval, and report creation; added e2e coverage for approval/report flow and manager-note non-leak behavior. | `.venv/bin/pytest -q` -> 99 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-20 | T32: Learner Mission UI | Added learner UI endpoints for assignments, guardrail quiz submission, artifact submission, feedback status surface, and redacted display for sensitive submissions. | `.venv/bin/pytest -q` -> 97 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
@@ -186,6 +190,7 @@ none
 
 | Date | Phase | Summary | Evidence | Open P0/P1 |
 |------|-------|---------|----------|------------|
+| 2026-05-20 | Phase 8 | Completed T35-T38 enterprise security: OIDC SSO boundary, named RBAC permission matrix, backup/restore and retention controls, and security review packet. PASS for Phase 9 with inherited P2 browser automation finding still open. | `docs/audit/PHASE8_SECURITY_AUDIT.md`; `.venv/bin/pytest -q` -> 110 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-20 | Phase 7 | Completed T30-T34 core product UX: authenticated role shell, operator admin UI, learner mission UI, manager review UI, and UX readiness gate. Conditional go to Phase 8; one P2 remains for missing browser automation. | `docs/audit/PHASE7_UX_AUDIT.md`; `.venv/bin/pytest -q` -> 100 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-20 | Phase 6 | Completed T25-T29 PMF pilot system: deterministic pilot metrics, discovery registry, success rubric, conservative ROI report, and PMF gate. Conditional go for Phase 7 UX work; PMF claim remains not met until observed customer evidence satisfies the exit gate. | `docs/audit/PHASE6_PMF_AUDIT.md`; `.venv/bin/pytest -q` -> 91 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 5 | Completed T21-T24 pilot readiness: reminders, automated retrieval eval, Docker Compose deployment assets, and pilot readiness end-to-end gate. | `docs/audit/PHASE5_AUDIT.md`; `.venv/bin/pytest -q` -> 79 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed | 0 |

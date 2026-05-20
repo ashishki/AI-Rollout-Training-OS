@@ -23,6 +23,42 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-05-20 - T38 - Security Review Packet And Phase 8 Gate
+
+- Scope: `docs/security_review.md`, `tests/test_security_review_doc.py`, `docs/audit/PHASE8_SECURITY_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase8_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T38 after T37 backup/restore and retention completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-8---enterprise-security`, `docs/IMPLEMENTATION_CONTRACT.md#authorization`, `docs/IMPLEMENTATION_CONTRACT.md#credentials-and-secrets`, `docs/IMPLEMENTATION_CONTRACT.md#artifact-retention-and-redaction`
+- Evidence collected: `.venv/bin/pytest -q` passed with 110 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T39 Policy Approval Workflow starts Phase 9 Governance Layer. Existing P2-UX-001 remains open.
+- Notes for next agent: Phase 8 audit is PASS with no P0/P1 blockers. The security packet is early-pilot review ready, not GA-grade; remaining gaps are formal access review export, tenant isolation, stronger audit tamper evidence, and customer-specific subprocessors/incident contacts.
+
+### 2026-05-20 - T37 - Backup Restore And Retention
+
+- Scope: `ai_rollout_os/jobs/retention.py`, `docs/backup_restore.md`, `docs/security_review.md`, `tests/integration/test_retention.py`, `tests/test_backup_restore_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T37 after T36 RBAC permissions matrix completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#artifact-retention-and-redaction`, `docs/IMPLEMENTATION_CONTRACT.md#deterministic-metrics`
+- Evidence collected: `.venv/bin/pytest -q` passed with 108 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T38 Security Review Packet and Phase 8 audit boundary.
+- Notes for next agent: Retention currently redacts mutable text fields in submissions, feedback results, source documents, and retrieval chunks. It does not delete `audit_events`; each retention mutation appends a `retention.redacted` audit event.
+
+### 2026-05-20 - T36 - RBAC Permissions Matrix
+
+- Scope: `ai_rollout_os/auth/permissions.py`, backend route modules, `frontend/app_shell.py`, `docs/security_review.md`, `tests/test_permissions_matrix.py`, `tests/integration/test_permissions_matrix.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T36 after T35 SSO and identity boundary completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#authorization`, `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`
+- Evidence collected: `.venv/bin/pytest -q` passed with 106 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T37 Backup Restore And Retention.
+- Notes for next agent: Product routes now use named `require_permission(...)` dependencies. `ROUTE_PERMISSIONS` is tested against the FastAPI route table; denied permission checks audit `resource_type=permission` with the permission name as `resource_id`.
+
+### 2026-05-20 - T35 - SSO And Identity Boundary
+
+- Scope: `ai_rollout_os/auth/sso.py`, `ai_rollout_os/core/config.py`, `.env.example`, `docs/security_review.md`, `tests/integration/test_sso.py`, `tests/test_sso_config.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T35 after Phase 7 UX readiness completed and Phase 8 enterprise security opened.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#credentials-and-secrets`, `docs/IMPLEMENTATION_CONTRACT.md#authorization`, `docs/DECISION_LOG.md#decision-index`
+- Evidence collected: `.venv/bin/pytest -q` passed with 103 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T36 RBAC Permissions Matrix.
+- Notes for next agent: OIDC maps only verified identity to existing server-owned `users` records. Provider role/workspace claims are intentionally ignored, and SAML remains deferred behind an ADR-backed decision path.
+
 ### 2026-05-20 - T34 - UX Readiness Gate
 
 - Scope: `docs/audit/PHASE7_UX_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase7_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
