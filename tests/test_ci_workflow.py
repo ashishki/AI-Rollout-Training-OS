@@ -14,8 +14,11 @@ def test_ci_workflow_has_required_steps() -> None:
     assert "uses: actions/setup-python@v5" in workflow
     assert 'python-version: "3.12"' in workflow
     assert "pip install -r requirements-dev.txt -e ." in workflow
-    assert "ruff check scripts ai_rollout_os tests migrations" in workflow
-    assert "ruff format --check scripts ai_rollout_os tests migrations" in workflow
+    assert "ruff check scripts ai_rollout_os frontend tests migrations" in workflow
+    assert (
+        "ruff format --check scripts ai_rollout_os frontend tests migrations"
+        in workflow
+    )
     assert "python -m pytest tests/ -q --tb=short" in workflow
     assert "python scripts/eval.py --no-write" in workflow
 

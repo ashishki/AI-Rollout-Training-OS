@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from frontend.app_shell import router as frontend_router
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -38,6 +39,7 @@ def create_app(
     app.include_router(review_router)
     app.include_router(submissions_router)
     app.include_router(training_router)
+    app.include_router(frontend_router)
     return app
 
 

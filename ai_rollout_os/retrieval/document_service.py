@@ -124,7 +124,7 @@ class DocumentService:
     def _validate_document_type(self, document_type: str) -> None:
         if document_type not in DOCUMENT_TYPES:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                 detail="Unsupported document type",
             )
 

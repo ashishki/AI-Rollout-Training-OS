@@ -29,7 +29,7 @@ addopts = ["--import-mode=importlib"]
 [tool.ruff]
 target-version = "py312"
 line-length = 88
-src = ["ai_rollout_os", "scripts", "tests"]
+src = ["ai_rollout_os", "frontend", "scripts", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]

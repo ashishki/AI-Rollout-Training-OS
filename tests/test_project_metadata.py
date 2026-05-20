@@ -12,4 +12,5 @@ def test_pyproject_declares_required_metadata() -> None:
     ruff_config = pyproject["tool"]["ruff"]
     assert ruff_config["target-version"] == "py312"
     assert "ai_rollout_os" in ruff_config["src"]
+    assert "frontend" in ruff_config["src"]
     assert "tests" in ruff_config["src"]
