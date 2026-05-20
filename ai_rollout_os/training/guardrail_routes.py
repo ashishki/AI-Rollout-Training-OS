@@ -1,6 +1,6 @@
 from collections.abc import Generator
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.training.guardrail_models import (
     FeedbackReleaseRead,
@@ -15,8 +15,9 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-OPERATOR_ACTOR = Depends(require_role("operator"))
-LEARNER_ACTOR = Depends(require_role("learner"))
+CREATE_GUARDRAIL = Depends(require_permission("guardrails.create"))
+SUBMIT_GUARDRAIL = Depends(require_permission("guardrails.submissions.create"))
+READ_FEEDBACK_RELEASE = Depends(require_permission("guardrails.feedback_release.read"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -31,7 +32,7 @@ DB_SESSION = Depends(get_session)
 @router.post("/guardrail-quizzes", response_model=GuardrailQuizRead, status_code=201)
 def create_guardrail_quiz(
     payload: GuardrailQuizCreate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_GUARDRAIL,
     session: Session = DB_SESSION,
 ) -> GuardrailQuizRead:
     quiz, questions = GuardrailService(session).create_quiz(payload, actor)
@@ -62,7 +63,7 @@ def create_guardrail_quiz(
 def submit_guardrail_quiz(
     quiz_id: str,
     payload: QuizSubmission,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = SUBMIT_GUARDRAIL,
     session: Session = DB_SESSION,
 ) -> QuizResultRead:
     result = GuardrailService(session).score_submission(quiz_id, payload, actor)
@@ -83,7 +84,7 @@ def submit_guardrail_quiz(
 )
 def feedback_release_status(
     mission_id: str,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = READ_FEEDBACK_RELEASE,
     session: Session = DB_SESSION,
 ) -> FeedbackReleaseRead:
     GuardrailService(session).assert_feedback_release_allowed(mission_id, actor)

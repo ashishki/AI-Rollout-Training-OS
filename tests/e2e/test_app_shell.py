@@ -4,6 +4,8 @@ from ai_rollout_os.auth.tokens import create_token
 from ai_rollout_os.core.config import get_settings
 from ai_rollout_os.main import create_app
 from fastapi.testclient import TestClient
+from sqlalchemy.engine import Engine
+from sqlalchemy.orm import sessionmaker
 
 
 def test_role_navigation_shell() -> None:
@@ -30,8 +32,14 @@ def test_role_navigation_shell() -> None:
         assert "landing" not in response.text.lower()
 
 
-def test_protected_views_require_authentication() -> None:
-    client = TestClient(create_app(settings=get_settings({"APP_ENV": "test"})))
+def test_protected_views_require_authentication(migrated_engine: Engine) -> None:
+    session_factory = sessionmaker(bind=migrated_engine, expire_on_commit=False)
+    client = TestClient(
+        create_app(
+            settings=get_settings({"APP_ENV": "test"}),
+            session_factory=session_factory,
+        )
+    )
 
     missing = client.get("/app")
     invalid = client.get("/app", headers={"authorization": "Bearer invalid"})

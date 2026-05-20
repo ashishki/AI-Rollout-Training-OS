@@ -3,7 +3,7 @@ from collections.abc import Generator
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.submissions.models import (
     RedactionApprovalCreate,
@@ -13,8 +13,8 @@ from ai_rollout_os.submissions.models import (
 from ai_rollout_os.submissions.service import SubmissionService
 
 router = APIRouter()
-LEARNER_ACTOR = Depends(require_role("learner"))
-MANAGER_ACTOR = Depends(require_role("manager"))
+CREATE_SUBMISSION = Depends(require_permission("submissions.create"))
+APPROVE_REDACTION = Depends(require_permission("submissions.redaction_approval.create"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -34,7 +34,7 @@ DB_SESSION = Depends(get_session)
 def create_submission(
     mission_id: str,
     payload: SubmissionCreate,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = CREATE_SUBMISSION,
     session: Session = DB_SESSION,
 ) -> SubmissionRead:
     submission = SubmissionService(session).create_submission(
@@ -51,7 +51,7 @@ def create_submission(
 def approve_redaction_for_feedback(
     submission_id: str,
     payload: RedactionApprovalCreate,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = APPROVE_REDACTION,
     session: Session = DB_SESSION,
 ) -> SubmissionRead:
     submission = SubmissionService(session).approve_for_feedback(

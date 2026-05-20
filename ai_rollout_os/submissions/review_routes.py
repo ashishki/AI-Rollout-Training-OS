@@ -3,7 +3,7 @@ from collections.abc import Generator
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.orm import Session
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.submissions.models import (
     ManagerApprovalCreate,
@@ -12,7 +12,8 @@ from ai_rollout_os.submissions.models import (
 from ai_rollout_os.submissions.review_service import ManagerReviewService
 
 router = APIRouter(prefix="/manager")
-MANAGER_ACTOR = Depends(require_role("manager"))
+READ_MANAGER_SUBMISSIONS = Depends(require_permission("manager.submissions.read"))
+APPROVE_MANAGER_SUBMISSION = Depends(require_permission("manager.submissions.approve"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -31,7 +32,7 @@ def list_manager_submissions(
     feedback_status: str | None = Query(default=None),
     guardrail_status: str | None = Query(default=None),
     risk_flag: str | None = Query(default=None),
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = READ_MANAGER_SUBMISSIONS,
     session: Session = DB_SESSION,
 ) -> list[ManagerSubmissionRead]:
     return ManagerReviewService(session).list_submissions(
@@ -51,7 +52,7 @@ def list_manager_submissions(
 def approve_workflow_change(
     submission_id: str,
     payload: ManagerApprovalCreate,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = APPROVE_MANAGER_SUBMISSION,
     session: Session = DB_SESSION,
 ) -> ManagerSubmissionRead:
     item = ManagerReviewService(session).approve_submission(

@@ -3,8 +3,8 @@ from datetime import date
 from html import escape
 from urllib.parse import parse_qs
 
-from ai_rollout_os.auth.dependencies import authenticate_request, get_settings_from_app
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.dependencies import get_settings_from_app
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.db.models import MissionAssignment
 from ai_rollout_os.reporting.dashboard import DashboardService
@@ -33,10 +33,23 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-AUTHENTICATED_ACTOR = Depends(authenticate_request)
-OPERATOR_ACTOR = Depends(require_role("operator"))
-LEARNER_ACTOR = Depends(require_role("learner"))
-MANAGER_ACTOR = Depends(require_role("manager"))
+APP_SHELL = Depends(require_permission("app.shell.view"))
+OPERATOR_VIEW = Depends(require_permission("app.operator.view"))
+LEARNER_VIEW = Depends(require_permission("app.learner.view"))
+MANAGER_VIEW = Depends(require_permission("app.manager.view"))
+CREATE_DOCUMENT = Depends(require_permission("app.operator.documents.create"))
+CREATE_GUARDRAIL = Depends(require_permission("app.operator.guardrail_quizzes.create"))
+CREATE_ROLE_PACK = Depends(require_permission("app.operator.role_packs.create"))
+CREATE_MISSION = Depends(require_permission("app.operator.missions.create"))
+LAUNCH_ROLE_PACK = Depends(require_permission("app.operator.role_packs.launch"))
+CREATE_COHORT = Depends(require_permission("app.operator.cohorts.create"))
+LAUNCH_COHORT = Depends(require_permission("app.operator.cohorts.launch"))
+SUBMIT_GUARDRAIL = Depends(
+    require_permission("app.learner.guardrail_submissions.create")
+)
+CREATE_SUBMISSION = Depends(require_permission("app.learner.submissions.create"))
+APPROVE_SUBMISSION = Depends(require_permission("app.manager.submissions.approve"))
+CREATE_REPORT = Depends(require_permission("app.manager.reports.create"))
 APP_SETTINGS = Depends(get_settings_from_app)
 
 
@@ -73,7 +86,7 @@ DB_SESSION = Depends(get_session)
 
 
 @router.get("/app", response_class=HTMLResponse)
-def app_shell(actor: ActorContext = AUTHENTICATED_ACTOR) -> HTMLResponse:
+def app_shell(actor: ActorContext = APP_SHELL) -> HTMLResponse:
     navigation = ROLE_NAVIGATION.get(actor.role)
     if navigation is None:
         raise HTTPException(
@@ -86,7 +99,7 @@ def app_shell(actor: ActorContext = AUTHENTICATED_ACTOR) -> HTMLResponse:
 @router.get("/app/operator/{section}", response_class=HTMLResponse)
 def operator_admin_section(
     section: str,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = OPERATOR_VIEW,
 ) -> HTMLResponse:
     allowed_sections = {"policies", "role-packs", "missions", "guardrails", "cohorts"}
     if section not in allowed_sections:
@@ -97,7 +110,7 @@ def operator_admin_section(
 @router.get("/app/learner/{section}", response_class=HTMLResponse)
 def learner_section(
     section: str,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = LEARNER_VIEW,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     allowed_sections = {"assignments", "guardrails", "submissions", "feedback"}
@@ -118,7 +131,7 @@ def learner_section(
 def manager_section(
     section: str,
     request: Request,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = MANAGER_VIEW,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     allowed_sections = {"review-queue", "dashboard", "reports", "approvals"}
@@ -153,7 +166,7 @@ def manager_section(
 @router.post("/app/operator/documents", response_class=HTMLResponse)
 async def create_document_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_DOCUMENT,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -184,7 +197,7 @@ async def create_document_from_ui(
 @router.post("/app/operator/guardrail-quizzes", response_class=HTMLResponse)
 async def create_guardrail_quiz_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_GUARDRAIL,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -228,7 +241,7 @@ async def create_guardrail_quiz_from_ui(
 @router.post("/app/operator/role-packs", response_class=HTMLResponse)
 async def create_role_pack_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_ROLE_PACK,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -257,7 +270,7 @@ async def create_role_pack_from_ui(
 @router.post("/app/operator/missions", response_class=HTMLResponse)
 async def create_mission_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_MISSION,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -291,7 +304,7 @@ async def create_mission_from_ui(
 @router.post("/app/operator/role-packs/launch", response_class=HTMLResponse)
 async def launch_role_pack_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = LAUNCH_ROLE_PACK,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -317,7 +330,7 @@ async def launch_role_pack_from_ui(
 @router.post("/app/operator/cohorts", response_class=HTMLResponse)
 async def create_cohort_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_COHORT,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -347,7 +360,7 @@ async def create_cohort_from_ui(
 @router.post("/app/operator/cohorts/launch", response_class=HTMLResponse)
 async def launch_cohort_from_ui(
     request: Request,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = LAUNCH_COHORT,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -370,7 +383,7 @@ async def launch_cohort_from_ui(
 @router.post("/app/learner/guardrail-submissions", response_class=HTMLResponse)
 async def submit_guardrail_from_ui(
     request: Request,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = SUBMIT_GUARDRAIL,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -406,7 +419,7 @@ async def submit_guardrail_from_ui(
 @router.post("/app/learner/submissions", response_class=HTMLResponse)
 async def submit_artifact_from_ui(
     request: Request,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = CREATE_SUBMISSION,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -446,7 +459,7 @@ async def submit_artifact_from_ui(
 @router.post("/app/manager/submissions/approve", response_class=HTMLResponse)
 async def approve_submission_from_ui(
     request: Request,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = APPROVE_SUBMISSION,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)
@@ -479,7 +492,7 @@ async def approve_submission_from_ui(
 @router.post("/app/manager/reports", response_class=HTMLResponse)
 async def create_report_from_ui(
     request: Request,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = CREATE_REPORT,
     session: Session = DB_SESSION,
 ) -> HTMLResponse:
     form = await _form_values(request)

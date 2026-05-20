@@ -1,6 +1,6 @@
 from collections.abc import Generator
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.training.schemas import (
     MissionCreate,
@@ -19,7 +19,11 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-OPERATOR_ACTOR = Depends(require_role("operator"))
+CREATE_ROLE_PACK = Depends(require_permission("role_packs.create"))
+CREATE_MISSION = Depends(require_permission("role_packs.missions.create"))
+LAUNCH_ROLE_PACK = Depends(require_permission("role_packs.launch"))
+CREATE_ROLE_PACK_VERSION = Depends(require_permission("role_packs.versions.create"))
+COMPARE_ROLE_PACK_VERSIONS = Depends(require_permission("role_packs.versions.compare"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -34,7 +38,7 @@ DB_SESSION = Depends(get_session)
 @router.post("/role-packs", response_model=RolePackRead, status_code=201)
 def create_role_pack(
     payload: RolePackCreate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_ROLE_PACK,
     session: Session = DB_SESSION,
 ) -> RolePackRead:
     role_pack = RolePackService(session).create_draft_role_pack(payload, actor)
@@ -53,7 +57,7 @@ def create_role_pack(
 def add_mission(
     role_pack_id: str,
     payload: MissionCreate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_MISSION,
     session: Session = DB_SESSION,
 ) -> MissionRead:
     mission = RolePackService(session).add_mission(role_pack_id, payload, actor)
@@ -74,7 +78,7 @@ def add_mission(
 @router.post("/role-packs/{role_pack_id}/launch", response_model=RolePackRead)
 def launch_role_pack(
     role_pack_id: str,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = LAUNCH_ROLE_PACK,
     session: Session = DB_SESSION,
 ) -> RolePackRead:
     role_pack = RolePackService(session).launch(role_pack_id, actor)
@@ -96,7 +100,7 @@ def launch_role_pack(
 def create_role_pack_version(
     role_pack_id: str,
     payload: RolePackVersionUpdate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_ROLE_PACK_VERSION,
     session: Session = DB_SESSION,
 ) -> RolePackVersionRead:
     result = RolePackVersioningService(session).create_version(
@@ -112,7 +116,7 @@ def create_role_pack_version(
 )
 def compare_role_pack_versions(
     role_pack_id: str,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = COMPARE_ROLE_PACK_VERSIONS,
     session: Session = DB_SESSION,
 ) -> RolePackVersionDiff:
     return RolePackVersioningService(session).compare_versions(role_pack_id, actor)

@@ -30,6 +30,7 @@ TEST_DEFAULTS = {
     "REMINDER_WINDOW_DAYS": "3",
     "REMINDER_DELIVERY_ENABLED": "false",
     "RETENTION_DAYS": "365",
+    "SSO_ENABLED": "false",
 }
 
 
@@ -48,6 +49,11 @@ class Settings:
     reminder_window_days: int = 3
     reminder_delivery_enabled: bool = False
     retention_days: int = 365
+    sso_enabled: bool = False
+    oidc_issuer_url: str | None = None
+    oidc_client_id: str | None = None
+    oidc_client_secret: str | None = None
+    oidc_redirect_uri: str | None = None
 
 
 def get_settings(environ: Mapping[str, str] | None = None) -> Settings:
@@ -65,6 +71,19 @@ def get_settings(environ: Mapping[str, str] | None = None) -> Settings:
             joined = ", ".join(sorted(missing))
             raise ConfigError(f"Missing required environment variables: {joined}")
 
+    sso_enabled = _bool_env(source.get("SSO_ENABLED", TEST_DEFAULTS["SSO_ENABLED"]))
+    oidc_values = {
+        "OIDC_ISSUER_URL": source.get("OIDC_ISSUER_URL"),
+        "OIDC_CLIENT_ID": source.get("OIDC_CLIENT_ID"),
+        "OIDC_CLIENT_SECRET": source.get("OIDC_CLIENT_SECRET"),
+        "OIDC_REDIRECT_URI": source.get("OIDC_REDIRECT_URI"),
+    }
+    if sso_enabled:
+        missing_oidc = [key for key, value in oidc_values.items() if not value]
+        if missing_oidc:
+            joined = ", ".join(sorted(missing_oidc))
+            raise ConfigError(f"Missing required SSO environment variables: {joined}")
+
     return Settings(
         app_env=app_env,
         database_url=values["DATABASE_URL"] or TEST_DEFAULTS["DATABASE_URL"],
@@ -81,6 +100,11 @@ def get_settings(environ: Mapping[str, str] | None = None) -> Settings:
             source.get("REMINDER_DELIVERY_ENABLED", "false")
         ),
         retention_days=int(source.get("RETENTION_DAYS", "365")),
+        sso_enabled=sso_enabled,
+        oidc_issuer_url=oidc_values["OIDC_ISSUER_URL"],
+        oidc_client_id=oidc_values["OIDC_CLIENT_ID"],
+        oidc_client_secret=oidc_values["OIDC_CLIENT_SECRET"],
+        oidc_redirect_uri=oidc_values["OIDC_REDIRECT_URI"],
     )
 
 

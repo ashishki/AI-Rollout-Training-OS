@@ -1,6 +1,6 @@
 from collections.abc import Generator
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.retrieval.document_models import (
     DocumentCreate,
@@ -12,7 +12,9 @@ from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-OPERATOR_ACTOR = Depends(require_role("operator"))
+CREATE_DOCUMENT = Depends(require_permission("documents.create"))
+UPDATE_DOCUMENT = Depends(require_permission("documents.update"))
+READ_DOCUMENT_SNAPSHOT = Depends(require_permission("documents.read_snapshot"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -27,7 +29,7 @@ DB_SESSION = Depends(get_session)
 @router.post("/documents", response_model=DocumentRead, status_code=201)
 def create_document(
     payload: DocumentCreate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_DOCUMENT,
     session: Session = DB_SESSION,
 ) -> DocumentRead:
     document = DocumentService(session).create_document(payload, actor)
@@ -39,7 +41,7 @@ def create_document(
 def update_document(
     logical_document_id: str,
     payload: DocumentUpdate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = UPDATE_DOCUMENT,
     session: Session = DB_SESSION,
 ) -> DocumentRead:
     document = DocumentService(session).update_document(
@@ -56,7 +58,7 @@ def update_document(
 def get_document_snapshot(
     logical_document_id: str,
     snapshot_id: str,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = READ_DOCUMENT_SNAPSHOT,
     session: Session = DB_SESSION,
 ) -> DocumentRead:
     document = DocumentService(session).get_snapshot(

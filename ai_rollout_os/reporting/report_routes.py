@@ -3,12 +3,12 @@ from collections.abc import Generator
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.reporting.reports import ReportRead, ReportService, report_read
 
 router = APIRouter(prefix="/manager")
-MANAGER_ACTOR = Depends(require_role("manager"))
+CREATE_REPORT = Depends(require_permission("manager.reports.create"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -23,7 +23,7 @@ DB_SESSION = Depends(get_session)
 @router.post("/cohorts/{cohort_id}/reports", response_model=ReportRead, status_code=201)
 def create_report(
     cohort_id: str,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = CREATE_REPORT,
     session: Session = DB_SESSION,
 ) -> ReportRead:
     report = ReportService(session).create_report(cohort_id=cohort_id, actor=actor)

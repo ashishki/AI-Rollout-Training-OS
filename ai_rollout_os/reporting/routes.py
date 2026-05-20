@@ -3,12 +3,12 @@ from collections.abc import Generator
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 
-from ai_rollout_os.auth.permissions import require_role
+from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.reporting.dashboard import DashboardMetrics, DashboardService
 
 router = APIRouter(prefix="/manager")
-MANAGER_ACTOR = Depends(require_role("manager"))
+READ_DASHBOARD = Depends(require_permission("manager.dashboard.read"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -23,7 +23,7 @@ DB_SESSION = Depends(get_session)
 @router.get("/cohorts/{cohort_id}/dashboard", response_model=DashboardMetrics)
 def cohort_dashboard(
     cohort_id: str,
-    actor: ActorContext = MANAGER_ACTOR,
+    actor: ActorContext = READ_DASHBOARD,
     session: Session = DB_SESSION,
 ) -> DashboardMetrics:
     return DashboardService(session).cohort_dashboard(

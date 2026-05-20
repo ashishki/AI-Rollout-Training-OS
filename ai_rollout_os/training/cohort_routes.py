@@ -1,6 +1,6 @@
 from collections.abc import Generator
 
-from ai_rollout_os.auth.permissions import audit_denied_access, require_role
+from ai_rollout_os.auth.permissions import audit_denied_access, require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.training.cohort_models import (
     AssignmentRead,
@@ -12,8 +12,9 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
 router = APIRouter()
-OPERATOR_ACTOR = Depends(require_role("operator"))
-LEARNER_ACTOR = Depends(require_role("learner"))
+CREATE_COHORT = Depends(require_permission("cohorts.create"))
+LAUNCH_COHORT = Depends(require_permission("cohorts.launch"))
+READ_ASSIGNMENTS = Depends(require_permission("cohorts.assignments.read"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -28,7 +29,7 @@ DB_SESSION = Depends(get_session)
 @router.post("/cohorts", response_model=CohortRead, status_code=201)
 def create_cohort(
     payload: CohortCreate,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = CREATE_COHORT,
     session: Session = DB_SESSION,
 ) -> CohortRead:
     cohort = CohortService(session).create_cohort(payload, actor)
@@ -39,7 +40,7 @@ def create_cohort(
 @router.post("/cohorts/{cohort_id}/launch", response_model=list[AssignmentRead])
 def launch_cohort(
     cohort_id: str,
-    actor: ActorContext = OPERATOR_ACTOR,
+    actor: ActorContext = LAUNCH_COHORT,
     session: Session = DB_SESSION,
 ) -> list[AssignmentRead]:
     assignments = CohortService(session).launch_cohort(cohort_id, actor)
@@ -51,7 +52,7 @@ def launch_cohort(
 def learner_assignments(
     cohort_id: str,
     request: Request,
-    actor: ActorContext = LEARNER_ACTOR,
+    actor: ActorContext = READ_ASSIGNMENTS,
     session: Session = DB_SESSION,
 ) -> list[AssignmentRead]:
     try:
