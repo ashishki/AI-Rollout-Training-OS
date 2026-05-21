@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-20
+Last updated: 2026-05-21
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,69 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-05-21 - T44 - HRIS User Import
+
+- Scope: `ai_rollout_os/integrations/user_import.py`, `ai_rollout_os/integrations/__init__.py`, `tests/integration/test_user_import.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T44 after T43 Slack and Teams reminder adapters completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`
+- Evidence collected: `.venv/bin/pytest -q` passed with 124 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T45 LMS Completion Export.
+- Notes for next agent: `UserImportService.import_csv(...)` validates the full CSV before mutating `users`. The current durable schema stores user IDs, workspace IDs, emails, and roles; manager/team CSV values are validated and returned in the import summary without pretending they are persisted columns. Validation failure logs only aggregate counts.
+
+### 2026-05-21 - T43 - Slack And Teams Reminder Adapters
+
+- Scope: `ai_rollout_os/jobs/delivery.py`, `ai_rollout_os/jobs/reminders.py`, `ai_rollout_os/core/config.py`, `.env.example`, `tests/integration/test_reminder_integrations.py`, `docs/ARCHITECTURE.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T43 after the Phase 9 governance audit passed and Phase 10 integrations opened.
+- Decisions applied: `docs/ARCHITECTURE.md#external-integrations`, `docs/IMPLEMENTATION_CONTRACT.md#control-surface-and-runtime-boundaries`
+- Evidence collected: `.venv/bin/pytest -q` passed with 121 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T44 HRIS User Import.
+- Notes for next agent: Reminder delivery remains disabled by default. Enabling it requires `REMINDER_DELIVERY_CHANNEL` plus the matching Slack or Teams webhook URL. Delivery failures mark the existing reminder job `retryable_failed`; a later scheduler run returns the same idempotency-keyed job and does not send again.
+
+### 2026-05-21 - PHASE9 - Governance Audit
+
+- Scope: `docs/audit/PHASE9_GOVERNANCE_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase9_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator reached the Phase 9 boundary after T42 audit export package completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-9---governance-layer`, `docs/prompts/ORCHESTRATOR.md#step-1---select-work`
+- Evidence collected: `.venv/bin/pytest -q` passed with 119 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T43 Slack And Teams Reminder Adapters starts Phase 10 Integrations.
+- Notes for next agent: Phase 9 is PASS with no P0/P1 blockers. The inherited P2 browser automation finding remains open and does not block Phase 10.
+
+### 2026-05-21 - T42 - Audit Export Package
+
+- Scope: `ai_rollout_os/governance/audit_export.py`, `tests/integration/test_audit_export.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T42 after T41 control mapping and evidence lineage completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-9---governance-layer`, `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`
+- Evidence collected: `.venv/bin/pytest -q` passed with 118 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Phase 9 governance audit boundary.
+- Notes for next agent: `AuditExportService` builds deterministic cohort or date-range packages from T41 control mapping exports. The package hash is computed from canonical JSON and section hashes; no runtime timestamp is included, so unchanged data produces identical exports.
+
+### 2026-05-21 - T41 - Control Mapping And Evidence Lineage
+
+- Scope: `ai_rollout_os/governance/controls.py`, `tests/integration/test_control_mapping.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T41 after T40 governance risk taxonomy completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`, `docs/product_maturity_roadmap.md#phase-9---governance-layer`
+- Evidence collected: `.venv/bin/pytest -q` passed with 116 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T42 Audit Export Package.
+- Notes for next agent: `ControlMappingService.export_for_report(...)` is service-level only for now. It emits opaque IDs, statuses, versions, risk flags, timestamps, and actor IDs; it intentionally excludes learner `artifact_text`, source document `body_text`, manager notes, and approved workflow text. T42 can wrap this lineage in an authenticated export package route.
+
+### 2026-05-21 - T40 - Governance Risk Taxonomy
+
+- Scope: `ai_rollout_os/governance/risk_taxonomy.py`, `ai_rollout_os/governance/__init__.py`, `ai_rollout_os/reporting/reports.py`, `ai_rollout_os/reporting/report_routes.py`, `tests/integration/test_risk_taxonomy.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T40 after T39 policy approval workflow completed and Phase 9 governance work continued.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-9---governance-layer`, `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`
+- Evidence collected: `.venv/bin/pytest -q` passed with 114 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T41 Control Mapping And Evidence Lineage.
+- Notes for next agent: Manager report creation now normalizes risk aliases into the versioned taxonomy and rejects unknown risk flags with HTTP 422 before writing a `ProgressReport`. Existing `missing_evidence` flags are represented as `unsupported_claim` in reports.
+
+### 2026-05-21 - T39 - Policy Approval Workflow
+
+- Scope: `ai_rollout_os/retrieval/document_approval.py`, `ai_rollout_os/retrieval/vector_repository.py`, `ai_rollout_os/retrieval/document_routes.py`, `ai_rollout_os/retrieval/document_models.py`, `ai_rollout_os/db/models.py`, `ai_rollout_os/auth/permissions.py`, `migrations/versions/0012_document_approval.py`, `tests/integration/test_policy_approval.py`, `tests/integration/test_retrieval_query.py`, `scripts/eval.py`, `docs/retrieval_eval.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`, `docs/security_review.md`
+- Why this work happened: Orchestrator advanced to T39 after the Phase 8 security gate passed and Phase 9 governance opened.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`, `docs/IMPLEMENTATION_CONTRACT.md#authorization`, `docs/IMPLEMENTATION_CONTRACT.md#profile-rules-rag`
+- Evidence collected: `.venv/bin/pytest -q` passed with 112 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/python scripts/eval.py --no-write` passed with hit@3=1.00, hit@5=1.00, MRR=0.94, citation_precision=0.58, no_answer_accuracy=1.00.
+- Follow-ups: T40 Governance Risk Taxonomy.
+- Notes for next agent: Retrieval query now requires `SourceDocument.approval_status == "approved"`. New and updated document snapshots default to `pending`; policy/SOP snapshots become active evidence only through the human-owned approval service/route. `system` actors are explicitly denied approval.
 
 ### 2026-05-20 - T38 - Security Review Packet And Phase 8 Gate
 

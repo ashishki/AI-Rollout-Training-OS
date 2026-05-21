@@ -1,7 +1,7 @@
 # CODEX_PROMPT.md
 
 Version: 1.0
-Date: 2026-05-20
+Date: 2026-05-21
 Phase: 9
 
 This file is the single source of truth for session state. Update it at task and phase boundaries.
@@ -10,11 +10,11 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Current State
 
-- Phase: 9
-- Baseline: 110 passing tests
+- Phase: 10
+- Baseline: 124 passing tests
 - Ruff: `ruff check scripts ai_rollout_os frontend tests migrations` and `ruff format --check scripts ai_rollout_os frontend tests migrations` passing
 - Last CI run: not yet configured
-- Last updated: 2026-05-20
+- Last updated: 2026-05-21
 - Session tokens: not yet tracked
 - Cumulative phase tokens: not yet tracked
 - Execution model: Codex-only current session; no external AI worker process
@@ -22,13 +22,13 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Summary State
 
-- Current phase: 9 Governance Layer
-- Current baseline: 110 passing tests
-- Most recent task: T38 Security Review Packet
-- Active next task: T39 Policy Approval Workflow
+- Current phase: 10 Integrations
+- Current baseline: 124 passing tests
+- Most recent task: T44 HRIS User Import
+- Active next task: T45 LMS Completion Export
 - Planned MVP task graph: complete through T24
-- Post-MVP production maturity graph: complete through T38; open from T39 through T61
-- Recent phase boundary: Phase 8 security audit passed with no open P0/P1 findings and one inherited open P2 finding
+- Post-MVP production maturity graph: complete through T44; open from T45 through T61
+- Recent phase boundary: Phase 9 governance audit passed with no open P0/P1 findings and one inherited open P2 finding
 - Older completed-task and phase rows are preserved in archive sections below.
 
 ## Continuity Pointers
@@ -45,7 +45,7 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Next Task
 
-T39: Policy Approval Workflow
+T45: LMS Completion Export
 
 ## Fix Queue
 
@@ -53,14 +53,14 @@ empty
 
 ## Open Findings
 
-- P2-UX-001 (T34): Browser automation is not yet installed; current e2e coverage uses HTTP UI surfaces rather than a real browser rendering engine. Not blocking Phase 8, but required before claiming full UX readiness for GA-grade non-engineer operation.
+- P2-UX-001 (T34): Browser automation is not yet installed; current e2e coverage uses HTTP UI surfaces rather than a real browser rendering engine. Not blocking Phase 9, but required before claiming full UX readiness for GA-grade non-engineer operation.
 
 ## Profile State: RAG
 
 - RAG Status: ON
 - Active corpora: company policy, SOPs, role-pack content, rubrics, allowed/forbidden use cases, approved examples
 - Retrieval mode: text-only
-- Retrieval baseline: T22 automated text-only baseline measured
+- Retrieval baseline: T22 automated text-only baseline measured; T39 approval-gated retrieval revalidation passed
 - Open retrieval findings: none
 - Index schema version: v1 implemented
 - Max index age: 7 days after ingestion exists
@@ -108,7 +108,7 @@ empty
 - Retrieval p95 latency: 92.19 ms in T22 local eval baseline
 - Error rate: not yet measured
 - Throughput: not yet measured
-- Last measured: 2026-05-19 for retrieval eval latency
+- Last measured: 2026-05-21 for retrieval eval latency
 - NFR regression open: No
 
 ## Evaluation State
@@ -116,13 +116,13 @@ empty
 ### Last Evaluation
 
 - Profile: RAG
-- Task: T22: Retrieval Evaluation Automation
-- Date: 2026-05-19
-- Eval Source: `scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset`, run 2026-05-19
-- Metric(s): hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=61.83; p95_latency_ms=92.19
+- Task: T39: Policy Approval Workflow
+- Date: 2026-05-21
+- Eval Source: `scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset`, run 2026-05-21
+- Metric(s): hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=60.53; p95_latency_ms=90.07
 - Score: pass
 - Baseline: T22 automated text-only eval baseline
-- Delta: n/a
+- Delta: no quality regression versus T22 baseline; p95 latency improved by 2.12 ms in local run
 - Regression: No
 
 ### Open Evaluation Issues
@@ -133,6 +133,7 @@ none
 
 | Date | Task | Profile | Key metric | Score | Baseline | Delta | Regression? |
 |------|------|---------|------------|-------|----------|-------|-------------|
+| 2026-05-21 | T39 | RAG | Approval-gated retrieval eval | hit@3=1.00; hit@5=1.00; MRR=0.94; no_answer_accuracy=1.00 | T22 automated baseline | no quality regression | No |
 | 2026-05-19 | T22 | RAG | Automated retrieval eval | hit@3=1.00; hit@5=1.00; MRR=0.94; no_answer_accuracy=1.00 | first automated baseline | n/a | No |
 | 2026-05-19 | T15 | RAG | Answer quality bootstrap | schema validation added; metrics not yet measured | n/a | n/a | No |
 | 2026-05-19 | T14 | RAG | Query bootstrap | citation/no-answer proxies passed | n/a | n/a | No |
@@ -142,6 +143,12 @@ none
 
 | Date | Task | Summary | Evidence |
 |------|------|---------|----------|
+| 2026-05-21 | T44: HRIS User Import | Added a CSV-first user import service that validates required columns, roles, emails, teams, duplicate IDs/emails, and learner-manager references before mutation; import errors use aggregate logging and do not expose email addresses or full names. | `.venv/bin/pytest -q` -> 124 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-21 | T43: Slack And Teams Reminder Adapters | Added explicitly enabled Slack/Teams webhook reminder delivery adapters, env validation, safe webhook payloads, and retryable failure handling that preserves reminder jobs and prevents duplicate sends on repeated scheduler runs. | `.venv/bin/pytest -q` -> 121 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-21 | T42: Audit Export Package | Added reproducible governance audit export packages for cohort and date-range report scopes with metadata, controls, lineage, approvals, reports, and deterministic SHA-256 section/package hashes. | `.venv/bin/pytest -q` -> 118 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-21 | T41: Control Mapping And Evidence Lineage | Added governance control mapping exports that link approved source documents, submissions, feedback results, human approval references, and progress reports through opaque IDs/status metadata while excluding raw learner artifact, policy/SOP body, manager-note, and workflow text. | `.venv/bin/pytest -q` -> 116 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-21 | T40: Governance Risk Taxonomy | Added a versioned governance risk taxonomy for privacy/PII, legal, medical, financial, customer data, unsupported claims, and policy ownership; manager-facing reports now normalize known aliases and reject unknown risk flags before persistence. | `.venv/bin/pytest -q` -> 114 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-21 | T39: Policy Approval Workflow | Added human-owned source document approval state, approval route/service, migration, and retrieval filtering so only approved policy/SOP snapshots can become active evidence sources; AI/system actors cannot approve policy versions. | `.venv/bin/pytest -q` -> 112 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/python scripts/eval.py --no-write` -> pass |
 | 2026-05-20 | T38: Security Review Packet | Completed the first enterprise security review packet covering architecture, data flow, subprocessors, secrets, SSO, RBAC, audit logs, controls, retention, backup/restore, and incident response. | `.venv/bin/pytest -q` -> 110 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-20 | T37: Backup Restore And Retention | Added backup/restore/retention/rollback procedures and a deterministic retention job that redacts expired mutable artifact text while preserving audit events and appending retention audit records. | `.venv/bin/pytest -q` -> 108 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-20 | T36: RBAC Permissions Matrix | Added a named permission matrix, shared `require_permission` enforcement helper, route-to-permission coverage tests, denied-permission audit coverage, and documented RBAC roles in the security review packet. | `.venv/bin/pytest -q` -> 106 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
@@ -190,16 +197,17 @@ none
 
 | Date | Phase | Summary | Evidence | Open P0/P1 |
 |------|-------|---------|----------|------------|
+| 2026-05-21 | Phase 9 | Completed T39-T42 governance layer: policy approval workflow, versioned risk taxonomy, control mapping/evidence lineage, and reproducible audit export package. PASS for Phase 10 with inherited P2 browser automation finding still open. | `docs/audit/PHASE9_GOVERNANCE_AUDIT.md`; `.venv/bin/pytest -q` -> 119 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-20 | Phase 8 | Completed T35-T38 enterprise security: OIDC SSO boundary, named RBAC permission matrix, backup/restore and retention controls, and security review packet. PASS for Phase 9 with inherited P2 browser automation finding still open. | `docs/audit/PHASE8_SECURITY_AUDIT.md`; `.venv/bin/pytest -q` -> 110 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-20 | Phase 7 | Completed T30-T34 core product UX: authenticated role shell, operator admin UI, learner mission UI, manager review UI, and UX readiness gate. Conditional go to Phase 8; one P2 remains for missing browser automation. | `docs/audit/PHASE7_UX_AUDIT.md`; `.venv/bin/pytest -q` -> 100 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-20 | Phase 6 | Completed T25-T29 PMF pilot system: deterministic pilot metrics, discovery registry, success rubric, conservative ROI report, and PMF gate. Conditional go for Phase 7 UX work; PMF claim remains not met until observed customer evidence satisfies the exit gate. | `docs/audit/PHASE6_PMF_AUDIT.md`; `.venv/bin/pytest -q` -> 91 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 5 | Completed T21-T24 pilot readiness: reminders, automated retrieval eval, Docker Compose deployment assets, and pilot readiness end-to-end gate. | `docs/audit/PHASE5_AUDIT.md`; `.venv/bin/pytest -q` -> 79 passed; `.venv/bin/ruff check scripts ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os tests migrations` -> passed | 0 |
-| 2026-05-19 | Phase 4 | Completed T16-T20 review, dashboard, reports, and iteration workflows: feedback jobs, manager approvals, dashboard metrics, exportable reports, and role-pack versioning. | `docs/audit/PHASE4_AUDIT.md`; `.venv/bin/pytest -q` -> 65 passed; `.venv/bin/ruff check ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check ai_rollout_os tests migrations` -> passed | 0 |
 
 ## Archived Phase History
 
 | Date | Phase | Summary | Evidence | Open P0/P1 |
 |------|-------|---------|----------|------------|
+| 2026-05-19 | Phase 4 | Completed T16-T20 review, dashboard, reports, and iteration workflows: feedback jobs, manager approvals, dashboard metrics, exportable reports, and role-pack versioning. | `docs/audit/PHASE4_AUDIT.md`; `.venv/bin/pytest -q` -> 65 passed; `.venv/bin/ruff check ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 3 | Completed T11-T15 feedback foundation: submission storage, sensitive-data redaction, retrieval ingestion, retrieval query/evidence assembly, and structured feedback validation with human-review routing. | `docs/audit/PHASE3_AUDIT.md`; `.venv/bin/pytest -q` -> 50 passed; `.venv/bin/ruff check ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 2 | Completed T06-T10 training setup: auth/workspace boundary, role packs/missions, policy document registry, cohorts/enrollment, and deterministic guardrail quizzes. | `docs/audit/PHASE2_AUDIT.md`; `.venv/bin/pytest -q` -> 30 passed; `.venv/bin/ruff check ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check ai_rollout_os tests migrations` -> passed | 0 |
 | 2026-05-19 | Phase 1 | Completed T01-T05 foundation: skeleton, CI, smoke baseline, config/observability, migrations, and append-only audit repository. | `docs/audit/PHASE1_AUDIT.md`; `.venv/bin/pytest -q` -> 15 passed; `.venv/bin/ruff check ai_rollout_os tests migrations` -> passed; `.venv/bin/ruff format --check ai_rollout_os tests migrations` -> passed | 0 |
