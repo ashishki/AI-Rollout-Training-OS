@@ -1,8 +1,8 @@
 # Retrieval Evaluation - AI Rollout Training OS
 
 Version: 1
-Last updated: 2026-05-19
-Changed by: T22 - Retrieval Evaluation Automation
+Last updated: 2026-05-21
+Changed by: T39 - Policy Approval Workflow
 
 Retrieval quality is evaluated separately from code quality. Green unit tests do not prove retrieval quality.
 
@@ -73,17 +73,17 @@ Recorded at: 2026-05-19 automated T22 run
 
 ## Current Metrics
 
-Recorded at: 2026-05-19 automated T22 run
+Recorded at: 2026-05-21 automated T39 approval-gating run
 
 | Metric | Previous | Current | Delta | Regression? |
 |--------|----------|---------|-------|-------------|
-| hit@3 | n/a | 1.00 | n/a | No |
-| hit@5 | n/a | 1.00 | n/a | No |
-| MRR | n/a | 0.94 | n/a | No |
-| Citation precision | integration proxy passed | 0.58 | n/a | No |
-| No-answer accuracy | integration proxy passed | 1.00 | n/a | No |
-| Median retrieval latency | n/a | 61.83 ms | n/a | No |
-| p95 retrieval latency | n/a | 92.19 ms | n/a | No |
+| hit@3 | 1.00 | 1.00 | 0.00 | No |
+| hit@5 | 1.00 | 1.00 | 0.00 | No |
+| MRR | 0.94 | 0.94 | 0.00 | No |
+| Citation precision | 0.58 | 0.58 | 0.00 | No |
+| No-answer accuracy | 1.00 | 1.00 | 0.00 | No |
+| Median retrieval latency | 61.83 ms | 60.53 ms | -1.30 ms | No |
+| p95 retrieval latency | 92.19 ms | 90.07 ms | -2.12 ms | No |
 
 ## Baseline Comparison
 
@@ -139,6 +139,7 @@ Text-only is the only v1 modality.
 
 | Date | Task | Eval Source | Corpus Version | Metrics | Result | Notes |
 |------|------|-------------|----------------|---------|--------|-------|
+| 2026-05-21 | T39: Policy Approval Workflow | scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset, run 2026-05-21 | `eval-corpus-v1`; approved source-document snapshots only | hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=60.53; p95_latency_ms=90.07 | pass | Revalidated after retrieval query filtering changed to require approved source document snapshots. |
 | 2026-05-19 | T22: Retrieval Evaluation Automation | scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset, run 2026-05-19 | `eval-corpus-v1` | hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=61.83; p95_latency_ms=92.19 | pass | Automated retrieval eval. |
 | 2026-05-19 | T13: Text Retrieval Ingestion Pipeline | `.venv/bin/pytest -q tests/integration/test_retrieval_ingestion.py tests/unit/test_retrieval_ingestion.py tests/test_retrieval_eval_doc.py`, run 2026-05-19 | `index_schema_version=v1`; corpus versions are created per ingested snapshot | not yet measured | bootstrap valid | Ingestion now records source ID, snapshot ID, section path, vectors, and corpus version metadata. Retrieval metrics wait for T14 query service and T22 eval runner. |
 | 2026-05-19 | T14: Retrieval Query And Evidence Assembly | `.venv/bin/pytest -q tests/integration/test_retrieval_query.py tests/unit/test_retrieval_query.py`, run 2026-05-19 | `index_schema_version=v1`; query scoped by workspace, snapshot, and document type | citation and no-answer integration proxies passed | bootstrap valid | Hybrid vector/FTS retrieval, RRF fusion, citation evidence blocks, and below-threshold `insufficient_evidence` are implemented. Full dataset metrics wait for T22 eval runner. |

@@ -171,6 +171,8 @@ def seed_chunk(
         snapshot_id=snapshot_id,
         version=1,
         created_by="operator-1",
+        approval_status="approved",
+        approved_by="operator-1",
     )
     corpus = RetrievalCorpusVersion(
         id=f"corpus-{chunk_id}",

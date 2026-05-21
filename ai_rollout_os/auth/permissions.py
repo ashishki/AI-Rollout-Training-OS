@@ -99,6 +99,11 @@ PERMISSIONS = {
         frozenset({"operator"}),
         "Read source document snapshots.",
     ),
+    "documents.approve": Permission(
+        "documents.approve",
+        frozenset({"operator", "manager"}),
+        "Approve policy and SOP document snapshots for retrieval.",
+    ),
     "role_packs.create": Permission(
         "role_packs.create", frozenset({"operator"}), "Create draft role packs."
     ),
@@ -195,6 +200,9 @@ ROUTE_PERMISSIONS = {
     ("PUT", "/documents/{logical_document_id}"): "documents.update",
     ("GET", "/documents/{logical_document_id}/snapshots/{snapshot_id}"): (
         "documents.read_snapshot"
+    ),
+    ("POST", "/documents/{logical_document_id}/snapshots/{snapshot_id}/approval"): (
+        "documents.approve"
     ),
     ("POST", "/role-packs"): "role_packs.create",
     ("POST", "/role-packs/{role_pack_id}/missions"): "role_packs.missions.create",

@@ -225,6 +225,8 @@ def seed_corpus(
             snapshot_id=f"{item['logical_document_id']}_snapshot_v1",
             version=1,
             created_by=fixture["created_by"],
+            approval_status="approved",
+            approved_by=fixture["created_by"],
         )
         session.add(document)
         session.flush()

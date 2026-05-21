@@ -12,6 +12,7 @@ from ai_rollout_os.db.models import (
     SourceDocument,
 )
 from ai_rollout_os.retrieval.constants import INDEX_SCHEMA_VERSION
+from ai_rollout_os.retrieval.document_approval import APPROVED_DOCUMENT_STATUS
 from sqlalchemy import desc, func, select
 from sqlalchemy.orm import Session
 
@@ -133,6 +134,7 @@ class RetrievalQueryRepository:
                 RetrievalChunk.snapshot_id == snapshot_id,
                 RetrievalChunk.index_schema_version == INDEX_SCHEMA_VERSION,
                 SourceDocument.document_type == document_type,
+                SourceDocument.approval_status == APPROVED_DOCUMENT_STATUS,
             )
             .order_by(vector_distance)
             .limit(_QUERY_RANK_LIMIT)
@@ -152,6 +154,7 @@ class RetrievalQueryRepository:
                 RetrievalChunk.snapshot_id == snapshot_id,
                 RetrievalChunk.index_schema_version == INDEX_SCHEMA_VERSION,
                 SourceDocument.document_type == document_type,
+                SourceDocument.approval_status == APPROVED_DOCUMENT_STATUS,
                 text_vector.op("@@")(text_query),
             )
             .order_by(desc(text_rank))

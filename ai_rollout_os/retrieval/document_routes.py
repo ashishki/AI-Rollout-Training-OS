@@ -2,6 +2,7 @@ from collections.abc import Generator
 
 from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
+from ai_rollout_os.retrieval.document_approval import DocumentApprovalService
 from ai_rollout_os.retrieval.document_models import (
     DocumentCreate,
     DocumentRead,
@@ -15,6 +16,7 @@ router = APIRouter()
 CREATE_DOCUMENT = Depends(require_permission("documents.create"))
 UPDATE_DOCUMENT = Depends(require_permission("documents.update"))
 READ_DOCUMENT_SNAPSHOT = Depends(require_permission("documents.read_snapshot"))
+APPROVE_DOCUMENT = Depends(require_permission("documents.approve"))
 
 
 def get_session(request: Request) -> Generator[Session]:
@@ -67,6 +69,25 @@ def get_document_snapshot(
     return document_read(document)
 
 
+@router.post(
+    "/documents/{logical_document_id}/snapshots/{snapshot_id}/approval",
+    response_model=DocumentRead,
+)
+def approve_document_snapshot(
+    logical_document_id: str,
+    snapshot_id: str,
+    actor: ActorContext = APPROVE_DOCUMENT,
+    session: Session = DB_SESSION,
+) -> DocumentRead:
+    document = DocumentApprovalService(session).approve_snapshot(
+        logical_document_id=logical_document_id,
+        snapshot_id=snapshot_id,
+        actor=actor,
+    )
+    session.commit()
+    return document_read(document)
+
+
 def document_read(document) -> DocumentRead:
     return DocumentRead(
         id=document.id,
@@ -78,4 +99,7 @@ def document_read(document) -> DocumentRead:
         effective_date=document.effective_date,
         snapshot_id=document.snapshot_id,
         version=document.version,
+        approval_status=document.approval_status,
+        approved_by=document.approved_by,
+        approved_at=document.approved_at.isoformat() if document.approved_at else None,
     )

@@ -36,6 +36,9 @@ class DocumentRead(BaseModel):
     effective_date: date
     snapshot_id: str
     version: int
+    approval_status: str
+    approved_by: str | None = None
+    approved_at: str | None = None
 
 
 __all__ = [

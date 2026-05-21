@@ -117,6 +117,7 @@ name as `resource_id`.
 | `documents.create` | operator |
 | `documents.update` | operator |
 | `documents.read_snapshot` | operator |
+| `documents.approve` | manager, operator |
 | `role_packs.create` | operator |
 | `role_packs.missions.create` | operator |
 | `role_packs.launch` | operator |
@@ -141,6 +142,10 @@ Audit events are append-only application records. Security-relevant events
 include authentication denials, permission denials, workspace mismatches,
 submission creation, redaction approval, feedback jobs, manager approvals,
 report generation, reminders, SSO login, and `retention.redacted` events.
+
+Policy and SOP document versions default to `pending` and are excluded from
+active feedback retrieval until a human-owned approval route records
+`document.approved`.
 
 Audit records include actor ID when available, action, resource type, resource
 ID, result, trace ID, and optional details. Details must not contain raw

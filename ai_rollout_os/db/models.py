@@ -170,6 +170,13 @@ class SourceDocument(Base):
     snapshot_id: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
     version: Mapped[int] = mapped_column(nullable=False, default=1)
     created_by: Mapped[str] = mapped_column(String(64), nullable=False)
+    approval_status: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="pending", server_default="pending"
+    )
+    approved_by: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    approved_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
