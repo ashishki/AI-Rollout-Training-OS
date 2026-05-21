@@ -23,6 +23,195 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-05-21 - T61 - Final Production Readiness Audit
+
+- Scope: `docs/audit/PRODUCTION_READINESS_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_production_readiness_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T61 after T60 release notes and upgrade guide completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-14---ga-readiness`, `docs/ga_readiness.md`, `docs/release_notes.md`, `docs/upgrade_guide.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 153 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Resolve GA blockers before any GA claim; no remaining T25-T61 task graph items.
+- Notes for next agent: Final decision is NO-GO for GA. The codebase supports controlled pilot/expansion-prep evidence, but GA remains blocked by browser automation, production reliability evidence, customer admin docs/support contacts, paid expansion evidence, and tenant-isolation claims.
+
+### 2026-05-21 - T60 - Release Notes And Upgrade Guide
+
+- Scope: `docs/release_notes.md`, `docs/upgrade_guide.md`, `tests/test_release_docs.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T60 after T59 GA readiness checklist completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-14---ga-readiness`, `docs/migration_rehearsal.md`, `docs/backup_restore.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 152 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T61 Final Production Readiness Audit.
+- Notes for next agent: Release docs cover customer-visible behavior, migrations `0012`-`0014`, rollback, validation, communication, and upgrade impact. They explicitly avoid GA readiness and guaranteed productivity claims.
+
+### 2026-05-21 - T59 - GA Readiness Checklist
+
+- Scope: `docs/ga_readiness.md`, `tests/test_ga_readiness_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T59 after the Phase 13 commercial audit passed and Phase 14 GA readiness opened.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-14---ga-readiness`, `docs/audit/PHASE13_COMMERCIAL_AUDIT.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 151 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T60 Release Notes And Upgrade Guide.
+- Notes for next agent: `docs/ga_readiness.md` explicitly marks the product NOT READY FOR GA. Current blockers/gaps include browser automation, production reliability evidence, customer admin docs, and paid customer or signed expansion evidence.
+
+### 2026-05-21 - PHASE13 - Commercial Packaging Audit
+
+- Scope: `docs/audit/PHASE13_COMMERCIAL_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase13_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator reached the Phase 13 boundary after T58 implementation success plan completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-13---commercial-packaging`, `docs/prompts/ORCHESTRATOR.md#step-1---select-work`
+- Evidence collected: `.venv/bin/pytest -q` passed with 150 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T59 GA Readiness Checklist starts Phase 14 GA Readiness.
+- Notes for next agent: Phase 13 is PASS with no P0/P1 blockers. The inherited P2 browser automation finding remains open and must be considered in GA readiness.
+
+### 2026-05-21 - T58 - Implementation Success Plan
+
+- Scope: `docs/implementation_success_plan.md`, `tests/test_implementation_success_plan_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T58 after T57 procurement packet completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-13---commercial-packaging`, `docs/packaging.md`, `docs/procurement_packet.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 149 tests before the Phase 13 audit test was added; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Phase 13 commercial packaging audit boundary.
+- Notes for next agent: `docs/implementation_success_plan.md` defines owner responsibilities and the kickoff, policy ingestion, role-pack setup, cohort launch, manager review, reporting, and expansion review path.
+
+### 2026-05-21 - T57 - Procurement Packet
+
+- Scope: `docs/procurement_packet.md`, `tests/test_procurement_packet_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T57 after T56 ROI calculator completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-13---commercial-packaging`, `docs/security_review.md`, `docs/packaging.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 148 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T58 Implementation Success Plan.
+- Notes for next agent: `docs/procurement_packet.md` links the existing security review, packaging, SLO, incident response, and migration rehearsal docs. It includes privacy/data processing, deployment options, support model, implementation plan, and procurement checklist.
+
+### 2026-05-21 - T56 - ROI Calculator
+
+- Scope: `ai_rollout_os/reporting/roi_calculator.py`, `tests/unit/test_roi_calculator.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T56 after T55 packaging and pricing completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`, `docs/product_maturity_roadmap.md#phase-13---commercial-packaging`
+- Evidence collected: `.venv/bin/pytest -q` passed with 147 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T57 Procurement Packet.
+- Notes for next agent: `ROICalculator` is assumption-based only. It labels every input as customer-provided, emits estimates and payback signals, and avoids guarantee/productivity language.
+
+### 2026-05-21 - T55 - Packaging And Pricing Model
+
+- Scope: `docs/packaging.md`, `tests/test_packaging_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T55 after the Phase 12 reliability audit passed and Phase 13 commercial packaging opened.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-13---commercial-packaging`, `docs/customer_discovery.md`, `docs/pilot_success_rubric.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 145 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T56 ROI Calculator.
+- Notes for next agent: `docs/packaging.md` defines Team Pilot, Enterprise Enablement, Governance Plus, and Regulated Single-Tenant packages with buyer, value metric, feature boundaries, limits, and pricing drivers. It explicitly avoids guaranteed productivity claims.
+
+### 2026-05-21 - PHASE12 - Reliability And Scale Audit
+
+- Scope: `docs/audit/PHASE12_RELIABILITY_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase12_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator reached the Phase 12 boundary after T54 migration rehearsal gate completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-12---reliability--scale`, `docs/prompts/ORCHESTRATOR.md#step-1---select-work`
+- Evidence collected: `.venv/bin/pytest -q` passed with 144 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T55 Packaging And Pricing Model starts Phase 13 Commercial Packaging.
+- Notes for next agent: Phase 12 is PASS with no P0/P1 blockers. The inherited P2 browser automation finding remains open. Reliability artifacts are process/test-harness level; production dashboards, alert wiring, and live restore drill evidence remain future work.
+
+### 2026-05-21 - T54 - Migration Rehearsal Gate
+
+- Scope: `docs/migration_rehearsal.md`, `tests/test_migration_rehearsal_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T54 after T53 incident response runbook completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-12---reliability--scale`, `docs/backup_restore.md`, `docs/incident_response.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 143 tests before the Phase 12 audit test was added; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Phase 12 reliability and scale audit boundary.
+- Notes for next agent: `docs/migration_rehearsal.md` covers backup, upgrade, validation, rollback plan, restore, go/no-go, and evidence requirements. Rehearsal notes must use IDs and migration revisions, not sensitive text.
+
+### 2026-05-21 - T53 - Incident Response Runbook
+
+- Scope: `docs/incident_response.md`, `tests/test_incident_response_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T53 after T52 load test harness completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-12---reliability--scale`, `docs/slo.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 142 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T54 Migration Rehearsal Gate.
+- Notes for next agent: `docs/incident_response.md` covers retrieval outage, feedback backlog, data leak suspicion, failed migrations, and provider degradation with severity escalation, containment, diagnosis, recovery, and closure checklists. Incident notes must use IDs, not sensitive text.
+
+### 2026-05-21 - T52 - Load Test Harness
+
+- Scope: `scripts/load_test.py`, `tests/test_load_test_harness.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T52 after T51 service SLO documentation completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-12---reliability--scale`
+- Evidence collected: `.venv/bin/pytest -q` passed with 141 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T53 Incident Response Runbook.
+- Notes for next agent: `scripts/load_test.py` is a deterministic synthetic harness. It writes JSON summaries with median, p95, p99, max latency, and sample counts for cohort launch, retrieval query, feedback job, reminder scheduler, and report generation scenarios.
+
+### 2026-05-21 - T51 - Service SLO Dashboard
+
+- Scope: `docs/slo.md`, `tests/test_slo_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T51 after the Phase 11 AI quality and model ops audit passed and Phase 12 reliability work opened.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-12---reliability--scale`, `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`
+- Evidence collected: `.venv/bin/pytest -q` passed with 139 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T52 Load Test Harness.
+- Notes for next agent: `docs/slo.md` defines initial pilot/expansion SLOs, burn-rate thresholds, escalation rules, dashboard requirements, and safe metric-label constraints. Production telemetry wiring is still future work.
+
+### 2026-05-21 - PHASE11 - AI Quality And Model Ops Audit
+
+- Scope: `docs/audit/PHASE11_AI_QUALITY_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase11_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator reached the Phase 11 boundary after T50 cost and latency monitoring completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-11---ai-quality--model-ops`, `docs/prompts/ORCHESTRATOR.md#step-1---select-work`
+- Evidence collected: `.venv/bin/pytest -q` passed with 138 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T51 Service SLO Dashboard starts Phase 12 Reliability and Scale.
+- Notes for next agent: Phase 11 is PASS with no P0/P1 blockers. The inherited P2 browser automation finding remains open. T50 added safe in-memory AI metric accounting; production metric export and budget alerting remain future work.
+
+### 2026-05-21 - T50 - Cost And Latency Monitoring
+
+- Scope: `ai_rollout_os/observability/ai_metrics.py`, `tests/unit/test_ai_metrics.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T50 after T49 human sampling and adjudication completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`, `docs/product_maturity_roadmap.md#phase-11---ai-quality--model-ops`
+- Evidence collected: `.venv/bin/pytest -q` passed with 137 tests before the Phase 11 audit test was added; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Phase 11 AI quality and model ops audit boundary.
+- Notes for next agent: `AIMetricsLedger` records provider/model/feature/workspace/operation labels plus latency, cost, and token totals. Label values must be short safe IDs or names, so prompt text, artifact text, email addresses, and other free-form values are rejected before persistence.
+
+### 2026-05-21 - T49 - Human Sampling And Adjudication
+
+- Scope: `ai_rollout_os/feedback/sampling.py`, `ai_rollout_os/db/models.py`, `migrations/versions/0014_feedback_sampling.py`, test database reset fixtures, `tests/integration/test_feedback_sampling.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T49 after T48 feedback quality evaluation completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-11---ai-quality--model-ops`, `docs/IMPLEMENTATION_CONTRACT.md#authorization`, `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`
+- Evidence collected: `.venv/bin/pytest -q` passed with 135 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T50 Cost And Latency Monitoring.
+- Notes for next agent: `FeedbackSamplingService` allows manager/operator actors to queue sampled `FeedbackResult` rows and adjudicate labels. Sample reads and eval dataset records carry version refs and labels but do not expose learner artifact text or learner feedback. Original feedback rows remain immutable during adjudication.
+
+### 2026-05-21 - T48 - Feedback Quality Eval Runner
+
+- Scope: `scripts/eval_feedback.py`, `tests/eval/test_feedback_quality_eval.py`, `tests/test_retrieval_eval_doc.py`, `docs/retrieval_eval.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T48 after T47 prompt and model registry completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#retrieval-evaluation-gate`, `docs/product_maturity_roadmap.md#phase-11---ai-quality--model-ops`
+- Evidence collected: `.venv/bin/pytest -q` passed with 133 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/python scripts/eval_feedback.py --no-write` passed with faithfulness=1.00, completeness=1.00, relevance=1.00, unsupported_claim_rate=0.00, human_review_routing_accuracy=1.00.
+- Follow-ups: T49 Human Sampling And Adjudication.
+- Notes for next agent: `scripts/eval_feedback.py` is deterministic and CI-safe. It records corpus, prompt, model, and feedback schema versions in `docs/retrieval_eval.md#feedback-evaluation-history`; no LLM judge is used yet.
+
+### 2026-05-21 - T47 - Prompt And Model Registry
+
+- Scope: `ai_rollout_os/feedback/model_registry.py`, `ai_rollout_os/jobs/worker.py`, `ai_rollout_os/db/models.py`, `migrations/versions/0013_model_registry.py`, `tests/integration/test_model_registry.py`, test database reset fixtures, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T47 after the Phase 10 integrations audit passed and Phase 11 AI quality work opened.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-11---ai-quality--model-ops`
+- Evidence collected: `.venv/bin/pytest -q` passed with 130 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T48 Feedback Quality Eval Runner.
+- Notes for next agent: `FeedbackWorker` now writes prompt/model/rubric/corpus/schema version refs to `FeedbackResult` and ensures corresponding `model_registry_records`. Existing manually inserted feedback rows use `untracked` defaults for compatibility.
+
+### 2026-05-21 - PHASE10 - Integrations Audit
+
+- Scope: `docs/audit/PHASE10_INTEGRATIONS_AUDIT.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_phase10_audit_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator reached the Phase 10 boundary after T46 knowledge import v2 completed.
+- Decisions applied: `docs/product_maturity_roadmap.md#phase-10---integrations`, `docs/prompts/ORCHESTRATOR.md#step-1---select-work`
+- Evidence collected: `.venv/bin/pytest -q` passed with 129 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T47 Prompt And Model Registry starts Phase 11 AI Quality and Model Ops.
+- Notes for next agent: Phase 10 is PASS with no P0/P1 blockers. Integration surfaces are explicit and disabled-by-default where they call external systems. The inherited P2 browser automation finding remains open.
+
+### 2026-05-21 - T46 - Knowledge Base Import V2
+
+- Scope: `ai_rollout_os/integrations/knowledge_import.py`, `tests/integration/test_knowledge_import.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T46 after T45 LMS completion export completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#profile-rules-rag`, `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`
+- Evidence collected: `.venv/bin/pytest -q` passed with 128 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Phase 10 integrations audit boundary.
+- Notes for next agent: `KnowledgeImportService.import_from_provider(...)` supports provider names `google_drive`, `confluence`, `notion`, `sharepoint`, and `manual_upload_v2`. Provider fetch and full validation happen before mutation. Imported snapshots are stored as `pending`, so retrieval remains approval-gated.
+
+### 2026-05-21 - T45 - LMS Completion Export
+
+- Scope: `ai_rollout_os/integrations/lms_export.py`, `tests/integration/test_lms_export.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T45 after T44 HRIS user import completed.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#pii-policy`
+- Evidence collected: `.venv/bin/pytest -q` passed with 125 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T46 Knowledge Base Import V2.
+- Notes for next agent: `LMSCompletionExportService.export_for_cohort(...)` emits learner IDs, assignment IDs/status, completion boolean, and submission ID/version/date evidence. It intentionally omits `Submission.artifact_text`; current completion date is derived from latest submission timestamp for completed assignments because no dedicated `completed_at` column exists yet.
+
 ### 2026-05-21 - T44 - HRIS User Import
 
 - Scope: `ai_rollout_os/integrations/user_import.py`, `ai_rollout_os/integrations/__init__.py`, `tests/integration/test_user_import.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
