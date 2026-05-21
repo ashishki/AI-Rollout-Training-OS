@@ -359,6 +359,68 @@ class FeedbackResult(Base):
     learner_feedback: Mapped[str | None] = mapped_column(Text, nullable=True)
     validation_status: Mapped[str] = mapped_column(String(64), nullable=False)
     risk_flags: Mapped[list[str]] = mapped_column(JSON, nullable=False, default=list)
+    prompt_version: Mapped[str] = mapped_column(
+        String(128), nullable=False, default="untracked", server_default="untracked"
+    )
+    model_version: Mapped[str] = mapped_column(
+        String(128), nullable=False, default="untracked", server_default="untracked"
+    )
+    rubric_version: Mapped[str] = mapped_column(
+        String(128), nullable=False, default="untracked", server_default="untracked"
+    )
+    corpus_version: Mapped[str] = mapped_column(
+        String(128), nullable=False, default="untracked", server_default="untracked"
+    )
+    feedback_schema_version: Mapped[str] = mapped_column(
+        String(128), nullable=False, default="untracked", server_default="untracked"
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class ModelRegistryRecord(Base):
+    __tablename__ = "model_registry_records"
+    __table_args__ = (UniqueConstraint("workspace_id", "registry_type", "version"),)
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    registry_type: Mapped[str] = mapped_column(String(64), nullable=False)
+    version: Mapped[str] = mapped_column(String(128), nullable=False)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    registry_metadata: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class FeedbackSampleReview(Base):
+    __tablename__ = "feedback_sample_reviews"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    feedback_result_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    submission_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(64), nullable=False)
+    sampled_by: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class FeedbackAdjudicationLabel(Base):
+    __tablename__ = "feedback_adjudication_labels"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    sample_review_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    feedback_result_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    adjudicator_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    faithfulness_label: Mapped[str] = mapped_column(String(32), nullable=False)
+    completeness_label: Mapped[str] = mapped_column(String(32), nullable=False)
+    relevance_label: Mapped[str] = mapped_column(String(32), nullable=False)
+    unsupported_claim: Mapped[bool] = mapped_column(nullable=False)
+    eval_dataset_record: Mapped[dict] = mapped_column(JSON, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )

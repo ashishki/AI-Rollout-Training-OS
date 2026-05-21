@@ -2,7 +2,7 @@
 
 Version: 1
 Last updated: 2026-05-21
-Changed by: T39 - Policy Approval Workflow
+Changed by: T48 - Feedback Quality Eval Runner
 
 Retrieval quality is evaluated separately from code quality. Green unit tests do not prove retrieval quality.
 
@@ -95,16 +95,26 @@ Recorded at: 2026-05-21 automated T39 approval-gating run
 
 ## Answer Quality Metrics
 
-Recorded at: 2026-05-19 feedback schema bootstrap
-Corpus version: `index_schema_version=v1`; answer-quality eval corpus not yet measured
+Recorded at: 2026-05-21 automated T48 feedback quality run
+Corpus version: `feedback-eval-corpus-v1`
+Prompt version: `feedback-prompt-v1`
+Model version: `test-feedback-eval-model`
 
 | Metric | Description | Baseline | Previous | Current | Delta | Regression? |
 |--------|-------------|----------|----------|---------|-------|-------------|
-| Faithfulness | Answer contains only claims supported by retrieved context | n/a | n/a | not yet measured | n/a | No |
-| Answer Completeness | Answer addresses the full question given retrieved context | n/a | n/a | not yet measured | n/a | No |
-| Answer Relevance | Answer is on-topic and scoped to the query | n/a | n/a | not yet measured | n/a | No |
+| Faithfulness | Answer contains only claims supported by retrieved context | 1.00 | n/a | 1.00 | n/a | No |
+| Answer Completeness | Answer addresses the full question given retrieved context | 1.00 | n/a | 1.00 | n/a | No |
+| Answer Relevance | Answer is on-topic and scoped to the query | 1.00 | n/a | 1.00 | n/a | No |
+| Unsupported Claim Rate | Share of cases with known unsupported claim markers | 0.00 | n/a | 0.00 | n/a | No |
+| Human Review Routing Accuracy | Share of cases matching expected human-review route | 1.00 | n/a | 1.00 | n/a | No |
 
-Judge: not selected; T15 added structured feedback validation, but no LLM answer-quality judge or eval runner exists yet. Choose after T22.
+Judge: deterministic supported-point and unsupported-marker evaluator in `scripts/eval_feedback.py`; no LLM judge is used in CI.
+
+## Feedback Evaluation History
+
+| Date | Task | Eval Source | Corpus Version | Prompt Version | Model Version | Metrics | Result | Notes |
+|------|------|-------------|----------------|----------------|---------------|---------|--------|-------|
+| 2026-05-21 | T48: Feedback Quality Eval Runner | scripts/eval_feedback.py against built-in role/customer feedback dataset, run 2026-05-21 | `feedback-eval-corpus-v1` | `feedback-prompt-v1` | `test-feedback-eval-model` | faithfulness=1.00; completeness=1.00; relevance=1.00; unsupported_claim_rate=0.00; human_review_routing_accuracy=1.00 | pass | Deterministic feedback quality eval. |
 
 ## Regression Notes
 

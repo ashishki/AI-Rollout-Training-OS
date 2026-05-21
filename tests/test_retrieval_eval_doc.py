@@ -35,3 +35,25 @@ def test_evaluation_history_rows_have_required_fields() -> None:
         assert row[0]
         assert row[2]
         assert row[3]
+
+
+def test_feedback_eval_history_has_required_fields() -> None:
+    doc = Path("docs/retrieval_eval.md").read_text()
+    in_history = False
+    rows = []
+    for line in doc.splitlines():
+        if line == "## Feedback Evaluation History":
+            in_history = True
+            continue
+        if in_history and line.startswith("## "):
+            break
+        if in_history and re.match(r"\| 20\d{2}-\d{2}-\d{2} \|", line):
+            rows.append([cell.strip() for cell in line.strip().strip("|").split("|")])
+
+    assert rows
+    for row in rows:
+        assert row[0]
+        assert row[2]
+        assert row[3]
+        assert row[4]
+        assert row[5]

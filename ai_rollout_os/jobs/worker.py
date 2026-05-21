@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from ai_rollout_os.audit.repository import AuditEventRepository
 from ai_rollout_os.core.config import Settings
 from ai_rollout_os.db.models import FeedbackJob, FeedbackResult, Submission
+from ai_rollout_os.feedback.model_registry import ModelRegistryService
 from ai_rollout_os.jobs.models import FeedbackJobStatus, GeneratedFeedback
 
 
@@ -90,6 +91,10 @@ class FeedbackWorker:
             )
         )
         if existing is None:
+            refs = ModelRegistryService(self._session).feedback_versions_for_job(
+                job=job,
+                settings=self._settings,
+            )
             result = FeedbackResult(
                 id=f"feedback_result_{uuid4().hex}",
                 workspace_id=job.workspace_id,
@@ -99,14 +104,28 @@ class FeedbackWorker:
                 learner_feedback=generated.learner_feedback,
                 validation_status=generated.validation_status,
                 risk_flags=generated.risk_flags or [],
+                prompt_version=refs.prompt_version,
+                model_version=refs.model_version,
+                rubric_version=refs.rubric_version,
+                corpus_version=refs.corpus_version,
+                feedback_schema_version=refs.feedback_schema_version,
             )
             self._session.add(result)
             return result
 
+        refs = ModelRegistryService(self._session).feedback_versions_for_job(
+            job=job,
+            settings=self._settings,
+        )
         existing.feedback_status = generated.feedback_status
         existing.learner_feedback = generated.learner_feedback
         existing.validation_status = generated.validation_status
         existing.risk_flags = generated.risk_flags or []
+        existing.prompt_version = refs.prompt_version
+        existing.model_version = refs.model_version
+        existing.rubric_version = refs.rubric_version
+        existing.corpus_version = refs.corpus_version
+        existing.feedback_schema_version = refs.feedback_schema_version
         return existing
 
     def _route_submission_to_review(self, job: FeedbackJob) -> None:

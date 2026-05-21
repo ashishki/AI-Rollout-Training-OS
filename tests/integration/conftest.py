@@ -22,7 +22,10 @@ def alembic_config(url: str) -> Config:
 
 def reset_database(engine: Engine) -> None:
     with engine.begin() as connection:
+        connection.execute(text("DROP TABLE IF EXISTS feedback_adjudication_labels"))
+        connection.execute(text("DROP TABLE IF EXISTS feedback_sample_reviews"))
         connection.execute(text("DROP TABLE IF EXISTS reminder_jobs"))
+        connection.execute(text("DROP TABLE IF EXISTS model_registry_records"))
         connection.execute(text("DROP TABLE IF EXISTS progress_reports"))
         connection.execute(text("DROP TABLE IF EXISTS feedback_results"))
         connection.execute(text("DROP TABLE IF EXISTS feedback_jobs"))
