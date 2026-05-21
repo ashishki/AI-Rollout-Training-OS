@@ -1,10 +1,11 @@
 from collections.abc import Generator
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
 from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
+from ai_rollout_os.governance.risk_taxonomy import UnknownRiskFlagError
 from ai_rollout_os.reporting.reports import ReportRead, ReportService, report_read
 
 router = APIRouter(prefix="/manager")
@@ -26,6 +27,12 @@ def create_report(
     actor: ActorContext = CREATE_REPORT,
     session: Session = DB_SESSION,
 ) -> ReportRead:
-    report = ReportService(session).create_report(cohort_id=cohort_id, actor=actor)
+    try:
+        report = ReportService(session).create_report(cohort_id=cohort_id, actor=actor)
+    except UnknownRiskFlagError:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail="Unsupported risk flag",
+        ) from None
     session.commit()
     return report_read(report)

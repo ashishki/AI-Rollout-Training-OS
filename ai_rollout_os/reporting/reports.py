@@ -13,6 +13,10 @@ from ai_rollout_os.db.models import (
     ProgressReport,
     Submission,
 )
+from ai_rollout_os.governance.risk_taxonomy import (
+    RISK_TAXONOMY_VERSION,
+    normalize_risk_flags,
+)
 from ai_rollout_os.reporting.dashboard import DashboardService
 
 
@@ -56,6 +60,7 @@ class ReportService:
             },
             "dashboard_metrics": metrics.model_dump(),
             "approved_workflow_changes": approved_changes,
+            "risk_taxonomy_version": RISK_TAXONOMY_VERSION,
             "open_risk_flags": open_risks,
         }
         report = ProgressReport(
@@ -116,7 +121,9 @@ class ReportService:
                 FeedbackResult.submission_id.in_(submission_ids)
             )
         ).all()
-        return sorted({flag for result in results for flag in result.risk_flags})
+        return normalize_risk_flags(
+            [flag for result in results for flag in result.risk_flags]
+        )
 
     def _next_report_version(self, cohort_id: str, workspace_id: str) -> int:
         current = self._session.scalar(
