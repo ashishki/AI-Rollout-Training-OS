@@ -24,6 +24,7 @@ MANAGER_REVIEW_BACKLOG_REMINDER = "manager_review_backlog"
 STALE_FEEDBACK_JOB_REMINDER = "stale_feedback_job"
 QUEUED_WITHOUT_DELIVERY = "queued_without_delivery"
 QUEUED_FOR_DELIVERY = "queued"
+RETRYABLE_DELIVERY_FAILED = "retryable_failed"
 
 DateProvider = Callable[[], date]
 
@@ -170,9 +171,14 @@ class ReminderScheduler:
         )
         self._session.add(reminder)
         if self._settings.reminder_delivery_enabled:
-            result = self._delivery.deliver(reminder)
-            reminder.delivery_channel = result.channel
-            reminder.status = result.status or QUEUED_FOR_DELIVERY
+            reminder.delivery_channel = self._settings.reminder_delivery_channel
+            try:
+                result = self._delivery.deliver(reminder)
+            except Exception:
+                reminder.status = RETRYABLE_DELIVERY_FAILED
+            else:
+                reminder.delivery_channel = result.channel
+                reminder.status = result.status or QUEUED_FOR_DELIVERY
         AuditEventRepository(self._session).append(
             actor_id="system",
             action="reminder.job_created",

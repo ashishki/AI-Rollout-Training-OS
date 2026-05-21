@@ -29,6 +29,9 @@ TEST_DEFAULTS = {
     "FEEDBACK_TIMEOUT_SECONDS": "60",
     "REMINDER_WINDOW_DAYS": "3",
     "REMINDER_DELIVERY_ENABLED": "false",
+    "REMINDER_DELIVERY_CHANNEL": "",
+    "SLACK_WEBHOOK_URL": "",
+    "TEAMS_WEBHOOK_URL": "",
     "RETENTION_DAYS": "365",
     "SSO_ENABLED": "false",
 }
@@ -48,6 +51,9 @@ class Settings:
     feedback_timeout_seconds: int = 60
     reminder_window_days: int = 3
     reminder_delivery_enabled: bool = False
+    reminder_delivery_channel: str | None = None
+    slack_webhook_url: str | None = None
+    teams_webhook_url: str | None = None
     retention_days: int = 365
     sso_enabled: bool = False
     oidc_issuer_url: str | None = None
@@ -84,6 +90,21 @@ def get_settings(environ: Mapping[str, str] | None = None) -> Settings:
             joined = ", ".join(sorted(missing_oidc))
             raise ConfigError(f"Missing required SSO environment variables: {joined}")
 
+    reminder_delivery_enabled = _bool_env(
+        source.get("REMINDER_DELIVERY_ENABLED", "false")
+    )
+    reminder_delivery_channel = _blank_to_none(
+        source.get("REMINDER_DELIVERY_CHANNEL", "")
+    )
+    slack_webhook_url = _blank_to_none(source.get("SLACK_WEBHOOK_URL", ""))
+    teams_webhook_url = _blank_to_none(source.get("TEAMS_WEBHOOK_URL", ""))
+    if reminder_delivery_enabled:
+        _validate_reminder_delivery(
+            channel=reminder_delivery_channel,
+            slack_webhook_url=slack_webhook_url,
+            teams_webhook_url=teams_webhook_url,
+        )
+
     return Settings(
         app_env=app_env,
         database_url=values["DATABASE_URL"] or TEST_DEFAULTS["DATABASE_URL"],
@@ -96,9 +117,10 @@ def get_settings(environ: Mapping[str, str] | None = None) -> Settings:
         index_max_age_days=int(source.get("INDEX_MAX_AGE_DAYS", "7")),
         feedback_timeout_seconds=int(source.get("FEEDBACK_TIMEOUT_SECONDS", "60")),
         reminder_window_days=int(source.get("REMINDER_WINDOW_DAYS", "3")),
-        reminder_delivery_enabled=_bool_env(
-            source.get("REMINDER_DELIVERY_ENABLED", "false")
-        ),
+        reminder_delivery_enabled=reminder_delivery_enabled,
+        reminder_delivery_channel=reminder_delivery_channel,
+        slack_webhook_url=slack_webhook_url,
+        teams_webhook_url=teams_webhook_url,
         retention_days=int(source.get("RETENTION_DAYS", "365")),
         sso_enabled=sso_enabled,
         oidc_issuer_url=oidc_values["OIDC_ISSUER_URL"],
@@ -110,3 +132,31 @@ def get_settings(environ: Mapping[str, str] | None = None) -> Settings:
 
 def _bool_env(value: str) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _blank_to_none(value: str | None) -> str | None:
+    if value is None:
+        return None
+    stripped = value.strip()
+    return stripped or None
+
+
+def _validate_reminder_delivery(
+    *,
+    channel: str | None,
+    slack_webhook_url: str | None,
+    teams_webhook_url: str | None,
+) -> None:
+    if channel not in {"slack", "teams"}:
+        raise ConfigError(
+            "REMINDER_DELIVERY_CHANNEL must be slack or teams when "
+            "reminder delivery is enabled"
+        )
+    if channel == "slack" and not slack_webhook_url:
+        raise ConfigError(
+            "SLACK_WEBHOOK_URL is required when Slack reminder delivery is enabled"
+        )
+    if channel == "teams" and not teams_webhook_url:
+        raise ConfigError(
+            "TEAMS_WEBHOOK_URL is required when Teams reminder delivery is enabled"
+        )

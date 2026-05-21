@@ -275,7 +275,7 @@ No PII or proprietary workflow text may appear in logs, span attributes, metrics
 |-------------|---------|-------------|------------------|
 | LLM provider API | Classification, feedback, synthesis, role-pack drafting, embeddings. | API key from environment. | Provider-specific; app enforces retry and timeout budgets. |
 | Google Drive/Docs or Notion | Optional policy/SOP import after manual upload path exists. | OAuth or service token, future ADR before production. | Integration-specific; out of initial critical path. |
-| Slack or Telegram | Optional reminders and manager alerts after deterministic reminder scheduler exists. | Bot token from environment. | Provider-specific; retries idempotent by reminder ID. |
+| Slack or Teams | Optional reminders and manager alerts after deterministic reminder scheduler exists. | Webhook URL from environment. | Provider-specific; retries idempotent by reminder ID. |
 | CSV/Markdown export | Exportable progress report. | No external credential required. | Local generation. |
 
 ## File Layout
