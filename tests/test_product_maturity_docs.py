@@ -14,6 +14,7 @@ def test_product_maturity_roadmap_has_required_phases() -> None:
         "## Phase 12 - Reliability & Scale",
         "## Phase 13 - Commercial Packaging",
         "## Phase 14 - GA Readiness",
+        "## Phase 15 - Solo Showcase And Small-Team Rollout",
     ]:
         assert heading in doc
 
@@ -21,7 +22,19 @@ def test_product_maturity_roadmap_has_required_phases() -> None:
 def test_product_maturity_task_graph_is_ai_loop_ready() -> None:
     graph = Path("docs/product_maturity_task_graph.md").read_text()
 
-    for task in ["T25", "T30", "T35", "T39", "T43", "T47", "T51", "T55", "T61"]:
+    for task in [
+        "T25",
+        "T30",
+        "T35",
+        "T39",
+        "T43",
+        "T47",
+        "T51",
+        "T55",
+        "T61",
+        "T62",
+        "T68",
+    ]:
         assert f"## {task}:" in graph
 
     assert "Acceptance-Criteria:" in graph

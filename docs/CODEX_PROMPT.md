@@ -10,11 +10,11 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Current State
 
-- Phase: 14
-- Baseline: 153 passing tests
+- Phase: 15
+- Baseline: 172 passing tests
 - Ruff: `ruff check scripts ai_rollout_os frontend tests migrations` and `ruff format --check scripts ai_rollout_os frontend tests migrations` passing
 - Last CI run: not yet configured
-- Last updated: 2026-05-21
+- Last updated: 2026-05-23
 - Session tokens: not yet tracked
 - Cumulative phase tokens: not yet tracked
 - Execution model: Codex-only current session; no external AI worker process
@@ -22,13 +22,13 @@ This file is the single source of truth for session state. Update it at task and
 
 ## Summary State
 
-- Current phase: 14 GA Readiness
-- Current baseline: 153 passing tests
-- Most recent task: T61 Final Production Readiness Audit
+- Current phase: 15 Solo Showcase And Small-Team Rollout
+- Current baseline: 172 passing tests
+- Most recent task: T68 Solo Rollout Readiness Review
 - Active next task: none
 - Planned MVP task graph: complete through T24
-- Post-MVP production maturity graph: complete through T61
-- Recent phase boundary: final production readiness audit completed with GA NO-GO, no open P0/P1 findings, and GA blockers recorded
+- Post-MVP production maturity graph: complete through T68
+- Recent phase boundary: Phase 15 solo rollout readiness review completed with READY FOR INTERNAL HANDOFF, no open P0/P1 findings, and P2-UX-001 still open. The artifact set can be handed to Lead Response SLA Agent as an internal support artifact only.
 - Older completed-task and phase rows are preserved in archive sections below.
 
 ## Continuity Pointers
@@ -54,6 +54,7 @@ empty
 ## Open Findings
 
 - P2-UX-001 (T34): Browser automation is not yet installed; current e2e coverage uses HTTP UI surfaces rather than a real browser rendering engine. Not blocking Phase 9, but required before claiming full UX readiness for GA-grade non-engineer operation.
+- If Phase 15 lacks policy/SOP data, follow `docs/open_source_research_protocol.md` and gather public sources with citations instead of stopping at "data missing".
 
 ## Profile State: RAG
 
@@ -134,6 +135,7 @@ none
 | Date | Task | Profile | Key metric | Score | Baseline | Delta | Regression? |
 |------|------|---------|------------|-------|----------|-------|-------------|
 | 2026-05-21 | T48 | Feedback Quality | Automated feedback quality eval | faithfulness=1.00; completeness=1.00; relevance=1.00; unsupported_claim_rate=0.00; human_review_routing_accuracy=1.00 | first automated feedback quality baseline | n/a | No |
+| 2026-05-23 | T63 | RAG public demo corpus | Public source register validation | source register >=15 public policy/SOP/workflow sources; active eval-corpus-v1 documents unchanged | public-demo-corpus-v1 bootstrap | n/a | No |
 | 2026-05-21 | T39 | RAG | Approval-gated retrieval eval | hit@3=1.00; hit@5=1.00; MRR=0.94; no_answer_accuracy=1.00 | T22 automated baseline | no quality regression | No |
 | 2026-05-19 | T22 | RAG | Automated retrieval eval | hit@3=1.00; hit@5=1.00; MRR=0.94; no_answer_accuracy=1.00 | first automated baseline | n/a | No |
 | 2026-05-19 | T15 | RAG | Answer quality bootstrap | schema validation added; metrics not yet measured | n/a | n/a | No |
@@ -144,6 +146,13 @@ none
 
 | Date | Task | Summary | Evidence |
 |------|------|---------|----------|
+| 2026-05-23 | T68: Solo Rollout Readiness Review | Added the Phase 15 readiness review with READY FOR INTERNAL HANDOFF decision, evidence links to the source register/role pack/mini-cohort/report/UX decision, accepted limits, and next action to hand off to Lead Response SLA Agent as an internal support artifact only. | `.venv/bin/pytest -q` -> 172 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-23 | T67: UX Demo Gap Decision | Recorded the solo-showcase UX proof decision: defer browser automation and screenshots for this pass, use Markdown/API artifacts for internal review, and keep P2-UX-001 open until browser automation exists. | `.venv/bin/pytest -q` -> 170 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-23 | T66: Training Artifact Report Pack | Added the lead-response operator training artifact report pack with source register links, mission set, example feedback, approval record, metrics, limits, and unsupported-claim boundaries for public/synthetic demo data. | `.venv/bin/pytest -q` -> 168 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-23 | T65: Solo Mini-Cohort Simulation | Added a seeded solo mini-cohort fixture with one synthetic learner, one reviewer, four assignments, two submissions, two feedback results, one reviewer-approved workflow change, and a demo-only report artifact that labels source citations, limitations, and unsupported claims. | `.venv/bin/pytest -q` -> 165 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-23 | T64: Lead-Response Operator Role Pack | Added a structured lead-response operator demo role pack with missions for acknowledgement, qualification, insufficient-evidence handling, and human handoff; added guardrail topics, rubric criteria, allowed/forbidden examples, and public source citations in fixture metadata and the showcase plan. | `.venv/bin/pytest -q` -> 163 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-23 | T63: Public Policy And SOP Corpus Research | Added a public demo source register with 18 public AI policy, responsible-use, support workflow, and lead-qualification sources; indexed the public-demo source metadata in the retrieval fixture without changing the active eval corpus documents; updated retrieval eval notes for the bootstrap corpus. | `.venv/bin/pytest -q` -> 159 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
+| 2026-05-23 | T62: Solo Rollout Showcase Strategy | Added claim-safe solo showcase strategy for a lead-response operator demo, including target role, demo scope, non-goals, artifacts, success criteria, and explicit public-demo claim boundaries. | `.venv/bin/pytest -q` -> 156 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-21 | T61: Final Production Readiness Audit | Added final production readiness audit with GA NO-GO decision, evidence links, open GA blockers, accepted pilot risks, and final readiness result for controlled pilot/expansion-prep only. | `.venv/bin/pytest -q` -> 153 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-21 | T60: Release Notes And Upgrade Guide | Added pilot-to-expansion release notes and upgrade guide documenting customer-visible behavior, major changes, migrations, rollback, validation, communication, and upgrade impact. | `.venv/bin/pytest -q` -> 152 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
 | 2026-05-21 | T59: GA Readiness Checklist | Added GA readiness checklist across product, security, reliability, AI quality, support, and GTM gates, with current decision marked not ready for GA due missing production evidence, customer admin docs, paid expansion evidence, and inherited browser automation gap. | `.venv/bin/pytest -q` -> 151 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed |
@@ -215,6 +224,7 @@ none
 
 | Date | Phase | Summary | Evidence | Open P0/P1 |
 |------|-------|---------|----------|------------|
+| 2026-05-23 | Phase 15 | Completed T62-T68 solo showcase and small-team rollout: strategy, public source register, lead-response role pack, mini-cohort replay, training artifact report, UX proof decision, and readiness review. READY FOR INTERNAL HANDOFF to Lead Response SLA Agent as an internal support artifact only; P2-UX-001 remains open. | `docs/audit/SOLO_ROLLOUT_READINESS_REVIEW.md`; `.venv/bin/pytest -q` -> 172 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-21 | Phase 14 | Completed T59-T61 GA readiness: GA checklist, release notes and upgrade guide, and final production readiness audit. Final decision is NO-GO for GA with no open P0/P1 findings and GA blockers recorded. | `docs/audit/PRODUCTION_READINESS_AUDIT.md`; `.venv/bin/pytest -q` -> 153 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-21 | Phase 13 | Completed T55-T58 commercial packaging: package tiers/pricing, ROI calculator, procurement packet, and implementation success plan. PASS for Phase 14 with inherited P2 browser automation finding still open. | `docs/audit/PHASE13_COMMERCIAL_AUDIT.md`; `.venv/bin/pytest -q` -> 150 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |
 | 2026-05-21 | Phase 12 | Completed T51-T54 reliability and scale: service SLOs, load-test harness, incident response runbook, and migration rehearsal gate. PASS for Phase 13 with inherited P2 browser automation finding still open. | `docs/audit/PHASE12_RELIABILITY_AUDIT.md`; `.venv/bin/pytest -q` -> 144 passed; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` -> passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` -> passed | 0 |

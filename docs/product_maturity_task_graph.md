@@ -963,3 +963,234 @@ Files:
 
 Context-Refs:
   - docs/product_maturity_roadmap.md#phase-14---ga-readiness
+
+---
+
+## Phase 15 - Solo Showcase And Small-Team Rollout
+
+Goal: reposition the product for a solo operator without enterprise access.
+Instead of waiting for a corporate design partner, create a public-source,
+claim-safe mini-rollout that demonstrates role missions, policy-grounded
+feedback, manager approval, and report artifacts on open evidence.
+
+Boundary:
+
+- public policy/SOP research and synthetic demo submissions are allowed;
+- public-source demos do not prove enterprise adoption, productivity lift,
+  compliance readiness, or paid expansion;
+- if the current repository lacks policy/SOP examples, the agent must follow
+  `docs/open_source_research_protocol.md` and collect public sources with
+  citations;
+- broad GA, enterprise procurement, and customer-specific legal promises remain
+  blocked until real deployment evidence exists.
+
+Exit gate:
+
+- at least one public-source role pack exists for a lead-response operator or
+  small support team;
+- a solo mini-cohort can run from mission assignment through feedback, manager
+  approval, and report export;
+- the demo report labels every adoption/productivity claim as unsupported unless
+  backed by real cohort evidence;
+- the showcase can hand off to Lead Response SLA Agent as operator training.
+
+## T62: Solo Rollout Showcase Strategy
+
+Owner:      codex
+Phase:      15
+Type:       product strategy
+Depends-On: T61
+
+Objective: |
+  Create the solo/small-team rollout strategy and narrow the next demo around
+  training an operator to safely use a lead-response workflow.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "`docs/solo_showcase_plan.md` defines target role, demo scope, non-goals, artifacts, and success criteria."
+    test: "tests/test_solo_showcase_plan_doc.py::test_solo_showcase_plan_defines_demo_strategy"
+  - id: AC-2
+    description: "The plan blocks enterprise, productivity, compliance, and GA claims from public demo data."
+    test: "tests/test_solo_showcase_plan_doc.py::test_solo_showcase_plan_blocks_public_demo_overclaims"
+
+Files:
+  - docs/solo_showcase_plan.md
+  - docs/product_maturity_roadmap.md
+  - tests/test_solo_showcase_plan_doc.py
+
+Context-Refs:
+  - docs/ga_readiness.md
+  - docs/product_maturity_roadmap.md#strategic-non-goals-until-pmf
+
+## T63: Public Policy And SOP Corpus Research
+
+Owner:      codex
+Phase:      15
+Type:       rag:ingestion research
+Depends-On: T62
+
+Objective: |
+  Gather public AI policy, allowed/forbidden use, support workflow, and
+  lead-response SOP examples for a demo-safe training corpus.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Source register includes at least 15 public policy/SOP/workflow sources with extracted facts and limitations."
+    test: "tests/test_public_corpus_source_register.py::test_public_source_register_has_required_sources_and_fields"
+  - id: AC-2
+    description: "Corpus entries cite source URLs or mark assumptions."
+    test: "tests/test_public_corpus_source_register.py::test_seed_fixture_indexes_public_sources_without_eval_corpus_change"
+  - id: AC-3
+    description: "No private company policy or employee data is committed."
+    test: "tests/test_public_corpus_source_register.py::test_public_source_register_blocks_private_data_and_overclaims"
+
+Files:
+  - docs/open_source_research_protocol.md
+  - docs/public_corpus/ai_rollout_source_register.md
+  - tests/fixtures/seed_training_documents.json
+  - tests/test_public_corpus_source_register.py
+
+Context-Refs:
+  - docs/open_source_research_protocol.md
+  - docs/retrieval_eval.md
+
+## T64: Lead-Response Operator Role Pack
+
+Owner:      codex
+Phase:      15
+Type:       product demo
+Depends-On: T63
+
+Objective: |
+  Build a demo role pack for an operator learning to use a lead-response agent:
+  safe acknowledgement, qualification, unsupported-answer handling, and human
+  handoff.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Role pack includes missions, guardrail quiz, rubric, allowed/forbidden examples, and policy citations."
+    test: "tests/test_lead_response_role_pack.py::test_lead_response_role_pack_definition_is_complete"
+  - id: AC-2
+    description: "Role pack avoids regulated advice and autonomous business-commitment claims."
+    test: "tests/test_lead_response_role_pack.py::test_lead_response_role_pack_blocks_regulated_and_autonomous_claims"
+
+Files:
+  - docs/solo_showcase_plan.md
+  - tests/fixtures/pilot_data.py
+  - tests/fixtures/seed_training_documents.json
+  - tests/test_lead_response_role_pack.py
+
+Context-Refs:
+  - docs/open_source_research_protocol.md
+  - docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries
+
+## T65: Solo Mini-Cohort Simulation
+
+Owner:      codex
+Phase:      15
+Type:       product demo
+Depends-On: T64
+
+Objective: |
+  Run a local mini-cohort simulation with operator, learner, manager/reviewer,
+  submissions, feedback, revision, approval, and report export.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Mini-cohort fixture creates the demo role pack, one learner, one reviewer, at least two submissions, feedback, and one approval."
+    test: "tests/integration/test_solo_mini_cohort.py::test_solo_mini_cohort_fixture_creates_demo_flow"
+  - id: AC-2
+    description: "Generated report identifies demo data, source citations, limitations, and unsupported claims."
+    test: "tests/integration/test_solo_mini_cohort.py::test_solo_mini_cohort_report_labels_demo_limits"
+
+Files:
+  - tests/fixtures/pilot_data.py
+  - docs/solo_showcase_artifacts/
+  - docs/pilot_readiness.md
+  - tests/integration/test_solo_mini_cohort.py
+
+Context-Refs:
+  - docs/pilot_success_rubric.md
+  - docs/ga_readiness.md
+
+## T66: Training Artifact Report Pack
+
+Owner:      codex
+Phase:      15
+Type:       report artifact
+Depends-On: T65
+
+Objective: |
+  Package the solo mini-cohort into a polished report showing missions,
+  submissions, feedback, manager approval, risk flags, and rollout limitations.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Report includes source register, mission set, example feedback, approval record, metrics, and limits."
+    test: "tests/test_training_artifact_report_pack.py::test_training_artifact_report_pack_has_required_sections"
+  - id: AC-2
+    description: "Report states that public/synthetic demo data does not prove adoption or productivity gains."
+    test: "tests/test_training_artifact_report_pack.py::test_training_artifact_report_pack_blocks_demo_overclaims"
+
+Files:
+  - docs/solo_showcase_artifacts/report.md
+  - docs/solo_showcase_plan.md
+  - tests/test_training_artifact_report_pack.py
+
+Context-Refs:
+  - docs/open_source_research_protocol.md
+
+## T67: UX Demo Gap Decision
+
+Owner:      human + codex
+Phase:      15
+Type:       ux decision
+Depends-On: T66
+
+Objective: |
+  Decide whether the solo showcase needs browser screenshots, a local demo run,
+  or whether Markdown/API artifacts are sufficient for now.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Decision records whether to install browser automation, create screenshots, or defer UI proof."
+    test: "tests/test_ux_demo_gap_decision.py::test_ux_demo_gap_decision_records_demo_proof_choice"
+  - id: AC-2
+    description: "Decision explicitly addresses existing P2-UX-001."
+    test: "tests/test_ux_demo_gap_decision.py::test_ux_demo_gap_decision_keeps_p2_ux_finding_open"
+
+Files:
+  - docs/solo_showcase_plan.md
+  - docs/DECISION_LOG.md
+  - tests/test_ux_demo_gap_decision.py
+
+Context-Refs:
+  - docs/CODEX_PROMPT.md#open-findings
+
+## T68: Solo Rollout Readiness Review
+
+Owner:      human + codex
+Phase:      15
+Type:       audit decision
+Depends-On: T66, T67
+
+Objective: |
+  Decide whether the solo rollout showcase is ready to show as an internal
+  support artifact for Lead Response SLA Agent or needs another pass.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Review cites source register, role pack, mini-cohort artifacts, report pack, and UX decision."
+    test: "tests/test_solo_rollout_readiness_review.py::test_solo_rollout_readiness_review_cites_required_artifacts"
+  - id: AC-2
+    description: "Review records next action: hand off to Lead Response SLA Agent, improve demo, or pause."
+    test: "tests/test_solo_rollout_readiness_review.py::test_solo_rollout_readiness_review_records_next_action_and_limits"
+
+Files:
+  - docs/audit/SOLO_ROLLOUT_READINESS_REVIEW.md
+  - docs/CODEX_PROMPT.md
+  - docs/audit/AUDIT_INDEX.md
+  - tests/test_solo_rollout_readiness_review.py
+
+Context-Refs:
+  - docs/ga_readiness.md

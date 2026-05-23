@@ -56,6 +56,7 @@ to pay.
 | 12 | Reliability & Scale | Can the product run for many teams without operator babysitting? | SLOs, monitoring, load tests, backup/restore, and incident runbooks exist. |
 | 13 | Commercial Packaging | Can sales, security, and procurement close repeatable deals? | Pricing, packaging, ROI proof, security packet, and onboarding playbook are ready. |
 | 14 | GA Readiness | Is the product mature enough for general availability? | GA checklist passes with no P0/P1 findings. |
+| 15 | Solo Showcase And Small-Team Rollout | Can a solo operator show the training loop without corporate access? | Public-source role pack, mini-cohort, approval report, and claim-safe demo artifacts are ready. |
 
 ## Phase 6 - PMF Pilot System
 
@@ -238,6 +239,30 @@ Exit gate:
 - Production readiness checklist passes.
 - At least one paid customer or signed expansion path exists.
 
+## Phase 15 - Solo Showcase And Small-Team Rollout
+
+Goal: produce a useful, claim-safe demo for a solo operator while corporate
+design partners are unavailable.
+
+Build:
+
+- Lead-response operator showcase strategy in
+  `docs/solo_showcase_plan.md`.
+- Public AI policy and SOP source register.
+- Lead-response operator role pack.
+- Solo mini-cohort simulation.
+- Training artifact report pack.
+- UX demo gap decision.
+- Readiness review for handoff to Lead Response SLA Agent.
+
+Exit gate:
+
+- Demo artifacts are source-linked and reproducible.
+- Public/synthetic data is labeled as demo-only.
+- No productivity, adoption, compliance, enterprise, or GA claim is made from
+  public demo data.
+- The next manual action is clear: show the artifact, improve it, or pause.
+
 ## Metrics That Matter
 
 Product:
@@ -277,3 +302,5 @@ Business:
 - Productivity guarantees.
 - SaaS-grade multi-tenant security claims without ADR and isolation tests.
 - Deep integrations before a repeatable pilot workflow exists.
+- Enterprise-facing rollout claims before solo/public-source demo artifacts are
+  coherent and claim-safe.

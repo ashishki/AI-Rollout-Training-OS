@@ -2,6 +2,211 @@
   "workspace_id": "ws-eval",
   "created_by": "eval-runner",
   "corpus_version": "eval-corpus-v1",
+  "public_demo_corpus_version": "public-demo-corpus-v1",
+  "lead_response_role_pack": {
+    "role": "lead_response_operator",
+    "title": "Lead-response operator public demo role pack",
+    "mission_ids": [
+      "lead-response-acknowledge",
+      "lead-response-qualify",
+      "lead-response-insufficient-evidence",
+      "lead-response-human-handoff"
+    ],
+    "guardrail_topics": [
+      "synthetic-only lead data",
+      "human review for external use",
+      "insufficient_evidence for unsupported claims"
+    ],
+    "rubric_criteria": [
+      "uses synthetic context and public-source citations",
+      "separates facts from assumptions",
+      "routes unsupported or regulated claims to review",
+      "avoids autonomous business commitments"
+    ],
+    "allowed_examples": [
+      "draft a first-pass acknowledgement for reviewer approval",
+      "summarize qualification facts and missing evidence",
+      "suggest neutral follow-up questions"
+    ],
+    "forbidden_examples": [
+      "promise discounts, SLAs, contract terms, implementation dates, or guaranteed outcomes",
+      "give legal, medical, financial, or regulated compliance advice",
+      "use real customer, employee, lead, or prospect data",
+      "mark AI-generated responses as approved without human reviewer action"
+    ],
+    "citation_urls": [
+      "https://openai.com/policies/usage-policies/",
+      "https://www.ingenuiti.com/ai-usage-policy/",
+      "https://www.approachmarketing.com/ai-usage-policy",
+      "https://www.salesforce.com/blog/sales/lead-qualification/",
+      "https://blog.hubspot.com/sales/ultimate-guide-to-sales-qualification",
+      "https://handbook.gitlab.com/handbook/support/workflows/ticket_lifecycle/"
+    ]
+  },
+  "public_demo_source_register": [
+    {
+      "source_url_or_locator": "https://openai.com/policies/usage-policies/",
+      "captured_at": "2026-05-23",
+      "source_type": "AI usage policy",
+      "role_or_policy_use": "Forbidden use and human review boundaries",
+      "extracted_fact": "OpenAI disallows licensed professional advice without appropriate professional involvement and high-stakes automation without human review.",
+      "demo_use": "Create guardrail quiz cases for regulated advice and human review routing.",
+      "limitation": "Vendor policy for OpenAI services; not a customer internal policy."
+    },
+    {
+      "source_url_or_locator": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "captured_at": "2026-05-23",
+      "source_type": "AI governance framework",
+      "role_or_policy_use": "Risk management structure",
+      "extracted_fact": "NIST AI RMF frames AI risk management around trustworthiness considerations across design, development, use, and evaluation.",
+      "demo_use": "Ground source-register fields for risk, evidence, and limitations.",
+      "limitation": "Voluntary framework; not a compliance attestation."
+    },
+    {
+      "source_url_or_locator": "https://learn.microsoft.com/en-us/legal/ai-code-of-conduct",
+      "captured_at": "2026-05-23",
+      "source_type": "AI service code of conduct",
+      "role_or_policy_use": "Human oversight and content rights",
+      "extracted_fact": "Microsoft requires testing, appropriate human oversight, feedback channels, notices/consents, and security controls for AI service use.",
+      "demo_use": "Build reviewer checklist for AI-assisted lead-response output.",
+      "limitation": "Service-specific conduct rules; not a general internal SOP."
+    },
+    {
+      "source_url_or_locator": "https://aws.amazon.com/ai/responsible-ai/policy/",
+      "captured_at": "2026-05-23",
+      "source_type": "AI service policy",
+      "role_or_policy_use": "Consequential decision safeguards",
+      "extracted_fact": "AWS requires risk evaluation, human oversight, testing, and safeguards for consequential decisions.",
+      "demo_use": "Define forbidden autonomous decision examples for the role pack.",
+      "limitation": "Applies to AWS AI/ML services; demo must not infer broader legal duties."
+    },
+    {
+      "source_url_or_locator": "https://developers.google.com/machine-learning/guides/intro-responsible-ai",
+      "captured_at": "2026-05-23",
+      "source_type": "Responsible AI guidance",
+      "role_or_policy_use": "Responsible AI dimensions",
+      "extracted_fact": "Google lists responsible AI dimensions including fairness, accountability, safety, and privacy.",
+      "demo_use": "Provide high-level rubric categories for safe AI use.",
+      "limitation": "Training guidance; not an enforceable company policy."
+    },
+    {
+      "source_url_or_locator": "https://doit.illinois.gov/content/dam/soi/en/web/doit/documents/support/policies/2021/20250401-DoIT-AI%20Policy-v2-%20A11Y.pdf",
+      "captured_at": "2026-05-23",
+      "source_type": "Public-sector AI policy",
+      "role_or_policy_use": "Data protection and oversight",
+      "extracted_fact": "Illinois policy requires clear AI disclosure, human oversight roles, vetted data sources, and documented authorization for protected data use.",
+      "demo_use": "Model source limitations and protected-data handling in demo policy.",
+      "limitation": "Public-sector policy; not directly transferable to private support teams."
+    },
+    {
+      "source_url_or_locator": "https://www.testlio.com/ai-use-policy",
+      "captured_at": "2026-05-23",
+      "source_type": "Company AI acceptable-use policy",
+      "role_or_policy_use": "Confidentiality and output review",
+      "extracted_fact": "Testlio's policy emphasizes protecting client confidential information, trade secrets, IP, bias awareness, and output accuracy.",
+      "demo_use": "Create allowed/forbidden examples around customer and client data.",
+      "limitation": "One company example; not universal best practice."
+    },
+    {
+      "source_url_or_locator": "https://www.ingenuiti.com/ai-usage-policy/",
+      "captured_at": "2026-05-23",
+      "source_type": "Company AI usage policy",
+      "role_or_policy_use": "First-draft and approved-tool rules",
+      "extracted_fact": "Ingenuiti treats AI output as preliminary, requires responsible employee review before external use, and routes new tools through approval.",
+      "demo_use": "Train learner to present AI drafts as draft-only until reviewed.",
+      "limitation": "Public webpage summary; internal approved-tool list is not public."
+    },
+    {
+      "source_url_or_locator": "https://www.approachmarketing.com/ai-usage-policy",
+      "captured_at": "2026-05-23",
+      "source_type": "Company AI usage policy",
+      "role_or_policy_use": "Sensitive data and client delivery",
+      "extracted_fact": "Approach Marketing forbids sensitive client data in unapproved tools and autonomous publishing or client delivery without human review.",
+      "demo_use": "Add lead-response examples that require review before external sending.",
+      "limitation": "Agency policy; role-pack must label it as example evidence."
+    },
+    {
+      "source_url_or_locator": "https://www.avaya.com/en/trust-center/artificial-intelligence/",
+      "captured_at": "2026-05-23",
+      "source_type": "AI trust-center policy summary",
+      "role_or_policy_use": "AI tool registration and quality checking",
+      "extracted_fact": "Avaya describes AI use policy, tool registration, quality checking for factual errors, and privacy review for personal-data processing.",
+      "demo_use": "Add operator mission requiring tool/source check before reuse.",
+      "limitation": "Trust-center summary, not full internal procedure."
+    },
+    {
+      "source_url_or_locator": "https://workforce-central.org/policy/ai-usage/",
+      "captured_at": "2026-05-23",
+      "source_type": "Public AI usage policy",
+      "role_or_policy_use": "Public trust and accountability",
+      "extracted_fact": "WorkForce Central frames GenAI use around ethical, transparent, and accountable implementation.",
+      "demo_use": "Support concise policy language for public-demo guardrails.",
+      "limitation": "High-level policy page with limited operational detail."
+    },
+    {
+      "source_url_or_locator": "https://handbook.gitlab.com/handbook/support/workflows/",
+      "captured_at": "2026-05-23",
+      "source_type": "Support workflow index",
+      "role_or_policy_use": "Support workflow navigation",
+      "extracted_fact": "GitLab publishes support workflow categories, including AI workflow and ticket-closing workflows.",
+      "demo_use": "Identify support SOP areas to cite in lead-response role-pack design.",
+      "limitation": "Index page; individual workflows require separate review."
+    },
+    {
+      "source_url_or_locator": "https://handbook.gitlab.com/handbook/support/workflows/ticket_lifecycle/",
+      "captured_at": "2026-05-23",
+      "source_type": "Support SOP",
+      "role_or_policy_use": "Ticket lifecycle",
+      "extracted_fact": "GitLab describes ticket lifecycle as shared language from customer contact to closing the loop.",
+      "demo_use": "Create mission steps for acknowledging, tracking, and closing customer requests.",
+      "limitation": "GitLab-specific workflow, not a generic SLA policy."
+    },
+    {
+      "source_url_or_locator": "https://handbook.gitlab.com/handbook/support/workflows/customer_calls/",
+      "captured_at": "2026-05-23",
+      "source_type": "Support SOP",
+      "role_or_policy_use": "Customer call follow-up",
+      "extracted_fact": "GitLab customer-call workflow covers scheduling, preparation, follow-up, and post-call summary practices.",
+      "demo_use": "Add handoff mission for summarizing human calls and next steps.",
+      "limitation": "Call workflow, not an inbound lead qualification SOP."
+    },
+    {
+      "source_url_or_locator": "https://handbook.gitlab.com/handbook/customer-success/csm/support/",
+      "captured_at": "2026-05-23",
+      "source_type": "Customer success/support SOP",
+      "role_or_policy_use": "Support contact setup and ticket quality",
+      "extracted_fact": "GitLab CSM guidance covers establishing support users, SLA-guided tickets, and customer education on ticket best practices.",
+      "demo_use": "Add reviewer checklist for sufficient context before support escalation.",
+      "limitation": "Customer-success context; adapt only as public workflow evidence."
+    },
+    {
+      "source_url_or_locator": "https://www.salesforce.com/blog/sales/lead-qualification/",
+      "captured_at": "2026-05-23",
+      "source_type": "Lead qualification guidance",
+      "role_or_policy_use": "Lead fit and sales handoff",
+      "extracted_fact": "Salesforce describes lead qualification as judging fit based on factors such as fit, finances, interest, and need, with MQL/SQL handoff concepts.",
+      "demo_use": "Build lead-response qualification mission and handoff rubric.",
+      "limitation": "Vendor blog guidance; not proof of conversion lift."
+    },
+    {
+      "source_url_or_locator": "https://www.hubspot.com/improve-lead-quality-conversion",
+      "captured_at": "2026-05-23",
+      "source_type": "Lead-management workflow guidance",
+      "role_or_policy_use": "Qualification tracking and handoff",
+      "extracted_fact": "HubSpot describes segmenting by qualification criteria, routing to sales, tracking qualified leads, and avoiding handoff gaps.",
+      "demo_use": "Add workflow mission for capturing qualification notes before routing.",
+      "limitation": "Product marketing page with vendor claims; use workflow facts only."
+    },
+    {
+      "source_url_or_locator": "https://blog.hubspot.com/sales/ultimate-guide-to-sales-qualification",
+      "captured_at": "2026-05-23",
+      "source_type": "Sales qualification framework",
+      "role_or_policy_use": "BANT qualification",
+      "extracted_fact": "HubSpot summarizes BANT as Budget, Authority, Need, and Timeline, and notes limitations around stakeholders and timing.",
+      "demo_use": "Create qualification questions and limitations for synthetic lead responses.",
+      "limitation": "Sales framework article; not a required standard."
+    }
+  ],
   "documents": [
     {
       "logical_document_id": "company_ai_policy",

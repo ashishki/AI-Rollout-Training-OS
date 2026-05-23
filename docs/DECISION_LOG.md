@@ -1,7 +1,7 @@
 # Decision Log - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-19
+Last updated: 2026-05-23
 
 This file is a retrieval index. Canonical documents win on conflict.
 
@@ -27,6 +27,8 @@ This file is a retrieval index. Canonical documents win on conflict.
 | D-007 | 2026-05-19 | Active | Adapt RAG and retrieval evaluation from Dream Motif Interpreter. | Reuses a proven pgvector, hybrid FTS/vector retrieval, insufficient-evidence, and markdown eval pattern while requiring domain adaptation to policy/SOP evidence. | `docs/reference/dream_motif_rag_reuse.md` | none |
 | D-008 | 2026-05-19 | Active | Use Codex-only orchestration with no external AI worker process. | The project will not use nested Codex worker commands; the current Codex session runs implementation, verification, review passes, and state updates directly. | `docs/prompts/ORCHESTRATOR.md` | none |
 | D-009 | 2026-05-19 | Active | Run development as a nonstop Codex loop across phase boundaries. | Prevents idle handoff gaps; phase boundaries remain mandatory checks, but Codex continues to the next task/phase automatically when no blocker exists. | `docs/prompts/ORCHESTRATOR.md#phase-boundary` | none |
+| D-010 | 2026-05-22 | Active | Prioritize a solo/small-team public-source rollout showcase before further enterprise or GA expansion. | The operator has limited corporate access, so the next useful proof is a claim-safe mini-cohort and role-pack demo that can support the Lead Response SLA Agent showcase. | `docs/product_maturity_task_graph.md#phase-15---solo-showcase-and-small-team-rollout`, `docs/open_source_research_protocol.md` | none |
+| D-011 | 2026-05-23 | Active | Defer browser automation and screenshots for the solo showcase; use Markdown/API artifacts for this pass. | The showcase is an internal support artifact, not GA-grade UX proof. P2-UX-001 remains open until browser automation exists. | `docs/solo_showcase_plan.md#ux-demo-gap-decision` | none |
 
 ## Retrieval Notes
 

@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-21
+Last updated: 2026-05-23
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,69 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-05-23 - T68 - Solo Rollout Readiness Review
+
+- Scope: `docs/audit/SOLO_ROLLOUT_READINESS_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_solo_rollout_readiness_review.py`, `docs/product_maturity_task_graph.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T68 after the UX demo gap decision completed.
+- Decisions applied: `docs/ga_readiness.md`, `docs/solo_showcase_artifacts/report.md`, `docs/solo_showcase_plan.md#ux-demo-gap-decision`
+- Evidence collected: `.venv/bin/pytest -q` passed with 172 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: Hand off the artifact set to Lead Response SLA Agent as an internal support artifact; do not use it for GA, enterprise procurement, compliance, paid conversion, or productivity claims.
+- Notes for next agent: Phase 15 is complete. The only open finding remains P2-UX-001; browser automation is still deferred and not resolved by the Markdown/API artifact handoff.
+
+### 2026-05-23 - T67 - UX Demo Gap Decision
+
+- Scope: `docs/solo_showcase_plan.md`, `docs/DECISION_LOG.md`, `tests/test_ux_demo_gap_decision.py`, `docs/product_maturity_task_graph.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T67 after the training artifact report pack completed.
+- Decisions applied: `docs/CODEX_PROMPT.md#open-findings`, `docs/solo_showcase_plan.md#ux-demo-gap-decision`
+- Evidence collected: `.venv/bin/pytest -q` passed with 170 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T68 Solo Rollout Readiness Review.
+- Notes for next agent: Browser automation and screenshots are deferred for this internal solo showcase pass. P2-UX-001 remains open and must not be represented as resolved.
+
+### 2026-05-23 - T66 - Training Artifact Report Pack
+
+- Scope: `docs/solo_showcase_artifacts/report.md`, `docs/solo_showcase_plan.md`, `tests/test_training_artifact_report_pack.py`, `docs/product_maturity_task_graph.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T66 after the solo mini-cohort simulation completed.
+- Decisions applied: `docs/open_source_research_protocol.md`, `docs/solo_showcase_artifacts/mini_cohort_replay.md`, `docs/ga_readiness.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 168 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T67 UX Demo Gap Decision.
+- Notes for next agent: `docs/solo_showcase_artifacts/report.md` is the polished report pack. It includes source register links, mission set, example feedback, approval record, metrics, limits, and explicit unsupported adoption/productivity/compliance/enterprise/paid/GA claims.
+
+### 2026-05-23 - T65 - Solo Mini-Cohort Simulation
+
+- Scope: `tests/fixtures/pilot_data.py`, `docs/solo_showcase_artifacts/mini_cohort_replay.md`, `docs/pilot_readiness.md`, `tests/integration/test_solo_mini_cohort.py`, `docs/product_maturity_task_graph.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T65 after the lead-response role pack artifact completed.
+- Decisions applied: `docs/pilot_success_rubric.md`, `docs/ga_readiness.md`, `docs/solo_showcase_plan.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 165 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T66 Training Artifact Report Pack.
+- Notes for next agent: The mini-cohort fixture is synthetic and demo-only. It creates one learner, one reviewer, two submissions, two feedback results, one approval, and a ProgressReport whose JSON/Markdown explicitly labels source citations, limitations, and unsupported claims.
+
+### 2026-05-23 - T64 - Lead-Response Operator Role Pack
+
+- Scope: `docs/solo_showcase_plan.md`, `tests/fixtures/pilot_data.py`, `tests/fixtures/seed_training_documents.json`, `tests/test_lead_response_role_pack.py`, `docs/product_maturity_task_graph.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T64 after public-source corpus research completed.
+- Decisions applied: `docs/open_source_research_protocol.md`, `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`, `docs/solo_showcase_plan.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 163 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T65 Solo Mini-Cohort Simulation.
+- Notes for next agent: The role pack is fixture/document metadata, not a production customer role pack. It includes four missions, guardrail topics, rubric criteria, allowed/forbidden examples, and public citation URLs while blocking regulated advice and autonomous business commitments.
+
+### 2026-05-23 - T63 - Public Policy And SOP Corpus Research
+
+- Scope: `docs/public_corpus/ai_rollout_source_register.md`, `tests/fixtures/seed_training_documents.json`, `tests/test_public_corpus_source_register.py`, `docs/retrieval_eval.md`, `docs/product_maturity_task_graph.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T63 after the solo showcase strategy narrowed Phase 15 to a lead-response operator demo.
+- Decisions applied: `docs/open_source_research_protocol.md`, `docs/retrieval_eval.md`, `docs/solo_showcase_plan.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 159 tests; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T64 Lead-Response Operator Role Pack.
+- Notes for next agent: `public_demo_source_register` is fixture metadata only; the active `eval-corpus-v1` `documents` array remains unchanged to preserve retrieval baseline comparability. Use the source register as public demo evidence, not as enterprise validation or compliance proof.
+
+### 2026-05-23 - T62 - Solo Rollout Showcase Strategy
+
+- Scope: `docs/solo_showcase_plan.md`, `docs/product_maturity_roadmap.md`, `docs/product_maturity_task_graph.md`, `tests/test_solo_showcase_plan_doc.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T62 after Phase 15 was opened for solo/public-source showcase work.
+- Decisions applied: `docs/ga_readiness.md`, `docs/product_maturity_roadmap.md#strategic-non-goals-until-pmf`, `docs/open_source_research_protocol.md`
+- Evidence collected: `.venv/bin/pytest -q` passed with 156 tests after starting local Docker Postgres with test credentials; `.venv/bin/ruff check scripts ai_rollout_os frontend tests migrations` passed; `.venv/bin/ruff format --check scripts ai_rollout_os frontend tests migrations` passed.
+- Follow-ups: T63 Public Policy And SOP Corpus Research.
+- Notes for next agent: The plan narrows Phase 15 to a lead-response operator showcase and blocks enterprise, productivity, compliance, paid-conversion, PMF, SaaS tenant-isolation, and GA claims from public/synthetic demo data.
 
 ### 2026-05-21 - T61 - Final Production Readiness Audit
 

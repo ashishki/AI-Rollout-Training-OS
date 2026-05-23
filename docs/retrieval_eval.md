@@ -1,8 +1,8 @@
 # Retrieval Evaluation - AI Rollout Training OS
 
 Version: 1
-Last updated: 2026-05-21
-Changed by: T48 - Feedback Quality Eval Runner
+Last updated: 2026-05-23
+Changed by: T63 - Public Policy And SOP Corpus Research
 
 Retrieval quality is evaluated separately from code quality. Green unit tests do not prove retrieval quality.
 
@@ -41,6 +41,16 @@ Retrieval quality measures whether the system surfaced the right evidence. Answe
 ## Implementation Reference
 
 The retrieval eval mechanics should adapt the Dream Motif Interpreter pattern mapped in `docs/reference/dream_motif_rag_reuse.md`: markdown dataset parsing, seeded synthetic corpus, stub embeddings for CI-safe runs, metrics calculation, no-answer checks, and eval-history updates with Eval Source, Date, and Corpus Version.
+
+## Public Demo Corpus Note
+
+T63 added `docs/public_corpus/ai_rollout_source_register.md` and
+`public_demo_source_register` metadata in
+`tests/fixtures/seed_training_documents.json` for Phase 15 public-source demo
+planning. The active automated retrieval eval corpus remains
+`eval-corpus-v1`; the `documents` array was intentionally unchanged so the
+T22/T39 baseline comparison remains valid. Public source metadata becomes
+eligible for role-pack/demo ingestion in T64 after claim boundaries are reviewed.
 
 ## Evaluation Dataset
 
@@ -144,11 +154,13 @@ Text-only is the only v1 modality.
 
 | ID | Hypothesis | Change | Metric(s) targeted | Result vs. baseline | Decision |
 |----|------------|--------|--------------------|---------------------|----------|
+| T63-public-demo-register | Public AI policy, support workflow, and lead-qualification sources can bootstrap a demo corpus without private customer data. | Added a source register and fixture metadata; active eval documents unchanged. | Source-register completeness and claim-boundary checks. | Not a retrieval metric change; `.venv/bin/pytest -q` includes retrieval regression tests and source-register tests. | Use public-demo metadata for T64 role-pack work; do not claim retrieval quality improvement. |
 
 ## Evaluation History
 
 | Date | Task | Eval Source | Corpus Version | Metrics | Result | Notes |
 |------|------|-------------|----------------|---------|--------|-------|
+| 2026-05-23 | T63: Public Policy And SOP Corpus Research | tests/test_public_corpus_source_register.py and tests/eval/test_retrieval_eval.py, run 2026-05-23 | `public-demo-corpus-v1` source register metadata; active `eval-corpus-v1` documents unchanged | source register >=15 public sources; retrieval baseline test still passes | bootstrap valid | Public demo metadata only; no retrieval ranking change or new metric baseline. |
 | 2026-05-21 | T39: Policy Approval Workflow | scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset, run 2026-05-21 | `eval-corpus-v1`; approved source-document snapshots only | hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=60.53; p95_latency_ms=90.07 | pass | Revalidated after retrieval query filtering changed to require approved source document snapshots. |
 | 2026-05-19 | T22: Retrieval Evaluation Automation | scripts/eval.py against docs/retrieval_eval.md#evaluation-dataset, run 2026-05-19 | `eval-corpus-v1` | hit@3=1.00; hit@5=1.00; MRR=0.94; citation_precision=0.58; no_answer_accuracy=1.00; median_latency_ms=61.83; p95_latency_ms=92.19 | pass | Automated retrieval eval. |
 | 2026-05-19 | T13: Text Retrieval Ingestion Pipeline | `.venv/bin/pytest -q tests/integration/test_retrieval_ingestion.py tests/unit/test_retrieval_ingestion.py tests/test_retrieval_eval_doc.py`, run 2026-05-19 | `index_schema_version=v1`; corpus versions are created per ingested snapshot | not yet measured | bootstrap valid | Ingestion now records source ID, snapshot ID, section path, vectors, and corpus version metadata. Retrieval metrics wait for T14 query service and T22 eval runner. |

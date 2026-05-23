@@ -8,6 +8,7 @@ Append-only. One row per review cycle.
 
 | Cycle | Phase | Date | Scope | Stop-Ship | P0 | P1 | P2 |
 |-------|-------|------|-------|-----------|----|----|----|
+| SOLO-ROLLOUT-READINESS | Phase 15 | 2026-05-23 | Solo showcase readiness review after T62-T67 | No | 0 | 0 | 1 |
 | PRODUCTION-READINESS | Phase 14 | 2026-05-21 | Final production readiness review after T59-T60 | Yes | 0 | 0 | 3 |
 | PHASE13-COMMERCIAL | Phase 13 | 2026-05-21 | Phase 13 commercial packaging review after T55-T58 | No | 0 | 0 | 1 |
 | PHASE12-RELIABILITY | Phase 12 | 2026-05-21 | Phase 12 reliability and scale review after T51-T54 | No | 0 | 0 | 1 |
@@ -28,6 +29,7 @@ Append-only. One row per review cycle.
 
 | Cycle | File | Phase | Health |
 |-------|------|-------|--------|
+| SOLO-ROLLOUT-READINESS | `docs/audit/SOLO_ROLLOUT_READINESS_REVIEW.md` | Phase 15 | READY_FOR_INTERNAL_HANDOFF |
 | PRODUCTION-READINESS | `docs/audit/PRODUCTION_READINESS_AUDIT.md` | Phase 14 | NO-GO |
 | PHASE13-COMMERCIAL | `docs/audit/PHASE13_COMMERCIAL_AUDIT.md` | Phase 13 | PASS |
 | PHASE12-RELIABILITY | `docs/audit/PHASE12_RELIABILITY_AUDIT.md` | Phase 12 | PASS |
