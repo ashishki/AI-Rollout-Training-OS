@@ -7,6 +7,9 @@ from ai_rollout_os.auth.dependencies import get_settings_from_app
 from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.db.models import MissionAssignment
+from ai_rollout_os.permissions import score_decision
+from ai_rollout_os.permissions.demo import demo_permission_scenarios
+from ai_rollout_os.permissions.scenarios import PermissionScenario
 from ai_rollout_os.reporting.dashboard import DashboardService
 from ai_rollout_os.reporting.reports import ReportService
 from ai_rollout_os.retrieval.document_models import DocumentCreate
@@ -94,6 +97,77 @@ def app_shell(actor: ActorContext = APP_SHELL) -> HTMLResponse:
             detail="Access denied",
         )
     return HTMLResponse(_shell_html(role=actor.role, navigation=navigation))
+
+
+@router.get("/app/permission-simulator", response_class=HTMLResponse)
+def permission_simulator(actor: ActorContext = APP_SHELL) -> HTMLResponse:
+    scenario = _permission_scenarios()[0]
+    return HTMLResponse(
+        _permission_simulator_html(
+            role=actor.role,
+            scenario=scenario,
+            form_action="/app/permission-simulator/decisions",
+        )
+    )
+
+
+@router.post("/app/permission-simulator/decisions", response_class=HTMLResponse)
+async def submit_permission_decision(
+    request: Request,
+    actor: ActorContext = APP_SHELL,
+) -> HTMLResponse:
+    form = await _form_values(request)
+    scenario_id = _form_value(form, "scenario_id")
+    decision = _form_value(form, "decision")
+    scenarios = {scenario.id: scenario for scenario in _permission_scenarios()}
+    scenario = scenarios.get(scenario_id)
+    if scenario is None:
+        raise HTTPException(status_code=404, detail="Scenario not found")
+    score = score_decision(scenario, decision)
+    return HTMLResponse(
+        _permission_result_html(role=actor.role, scenario=scenario, score=score)
+    )
+
+
+# Public by D-012: this route renders only static demo scenario content and does
+# not read workspace, user, policy, submission, or customer data.
+@router.get("/demo/permission-simulator", response_class=HTMLResponse)
+def public_permission_simulator_demo() -> HTMLResponse:
+    scenario = _permission_scenarios()[0]
+    return HTMLResponse(
+        _permission_simulator_html(
+            role="demo",
+            scenario=scenario,
+            form_action="/demo/permission-simulator/decisions",
+        )
+    )
+
+
+public_permission_simulator_demo.public_design_decision = (
+    "D-012 static public permission simulator demo"
+)
+
+
+# Public by D-012: this route scores only static demo scenario choices and does
+# not mutate durable state or read workspace data.
+@router.post("/demo/permission-simulator/decisions", response_class=HTMLResponse)
+async def submit_public_permission_demo_decision(request: Request) -> HTMLResponse:
+    form = await _form_values(request)
+    scenario_id = _form_value(form, "scenario_id")
+    decision = _form_value(form, "decision")
+    scenarios = {scenario.id: scenario for scenario in _permission_scenarios()}
+    scenario = scenarios.get(scenario_id)
+    if scenario is None:
+        raise HTTPException(status_code=404, detail="Scenario not found")
+    score = score_decision(scenario, decision)
+    return HTMLResponse(
+        _permission_result_html(role="demo", scenario=scenario, score=score)
+    )
+
+
+submit_public_permission_demo_decision.public_design_decision = (
+    "D-012 static public permission simulator demo"
+)
 
 
 @router.get("/app/operator/{section}", response_class=HTMLResponse)
@@ -752,6 +826,167 @@ def _operator_admin_html(*, section: str, role: str) -> str:
     <main data-role="{escape(role)}" data-operator-admin-section="{escape(section)}">
       <h1>{escape(title)}</h1>
       {forms}
+    </main>
+  </body>
+</html>"""
+
+
+def _permission_scenarios() -> list[PermissionScenario]:
+    return demo_permission_scenarios()
+
+
+def _permission_simulator_html(
+    *, role: str, scenario: PermissionScenario, form_action: str
+) -> str:
+    buttons = "\n".join(
+        (
+            '<button type="submit" name="decision" '
+            f'value="{escape(choice)}" data-decision-action="{escape(choice)}">'
+            f"{escape(choice.replace('_', ' ').title())}</button>"
+        )
+        for choice in scenario.choices
+    )
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agent Permission Simulator</title>
+    <style>
+      body {{
+        margin: 0;
+        color: #17202a;
+        background: #f7f9fb;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }}
+      main {{
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(260px, 34vw) 1fr;
+      }}
+      .scenario-rail {{
+        background: #101820;
+        color: #f8fafc;
+        padding: 28px;
+      }}
+      .scenario-rail h1 {{
+        margin: 0 0 12px;
+        font-size: 28px;
+      }}
+      .scenario-rail p {{
+        margin: 0;
+        color: #cbd5e1;
+        line-height: 1.5;
+      }}
+      .workspace {{
+        padding: 28px;
+      }}
+      .scenario-card {{
+        max-width: 820px;
+        border: 1px solid #d8dee5;
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 22px;
+      }}
+      .scenario-card h2 {{
+        margin: 0 0 14px;
+        font-size: 22px;
+      }}
+      .scenario-copy {{
+        display: grid;
+        gap: 12px;
+        margin-bottom: 18px;
+      }}
+      .scenario-copy section {{
+        border-left: 4px solid #0f766e;
+        padding-left: 12px;
+      }}
+      .scenario-copy h3 {{
+        margin: 0 0 4px;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: #64707d;
+      }}
+      .actions {{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }}
+      button {{
+        min-height: 40px;
+        border: 1px solid #0f766e;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #0f514b;
+        font-weight: 700;
+        padding: 8px 12px;
+      }}
+      button:hover,
+      button:focus {{
+        background: #e8f3f1;
+      }}
+      @media (max-width: 760px) {{
+        main {{ grid-template-columns: 1fr; }}
+      }}
+    </style>
+  </head>
+  <body>
+    <main data-role="{escape(role)}" data-permission-simulator="true">
+      <aside class="scenario-rail">
+        <h1>Agent Permission Simulator</h1>
+        <p>Judge the request before an agent crosses a file, command, network,
+        or approval boundary.</p>
+      </aside>
+      <section class="workspace">
+        <article class="scenario-card" data-scenario-card="{escape(scenario.id)}">
+          <h2>{escape(scenario.title)}</h2>
+          <div class="scenario-copy">
+            <section data-scenario-request="true">
+              <h3>Request</h3>
+              <p>{escape(scenario.request)}</p>
+            </section>
+            <section data-scenario-context="true">
+              <h3>Context</h3>
+              <p>{escape(scenario.context)}</p>
+            </section>
+          </div>
+          <form method="post" action="{escape(form_action)}"
+            data-form="permission-decision">
+            <input type="hidden" name="scenario_id" value="{escape(scenario.id)}">
+            <div class="actions" aria-label="Decision actions">
+              {buttons}
+            </div>
+          </form>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>"""
+
+
+def _permission_result_html(*, role: str, scenario: PermissionScenario, score) -> str:
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Permission Decision Result</title>
+  </head>
+  <body>
+    <main data-role="{escape(role)}" data-permission-result="true">
+      <section data-score-outcome="{escape(score.outcome)}">
+        <h1>{escape(score.outcome.title())}</h1>
+        <p data-consequence="true">{escape(score.feedback)}</p>
+        <p data-safer-path="true">{escape(score.safer_alternative)}</p>
+        <p data-risk-category="{escape(score.risk_category)}">
+          Risk category: {escape(score.risk_category)}
+        </p>
+        <p data-score-summary="true">
+          Selected {escape(score.selected_decision)} for
+          {escape(scenario.permission_boundary)} boundary.
+        </p>
+      </section>
     </main>
   </body>
 </html>"""

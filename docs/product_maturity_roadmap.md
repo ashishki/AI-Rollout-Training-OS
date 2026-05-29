@@ -12,30 +12,38 @@ It is written for the Codex-only AI loop and pairs with
 
 ## Strategic Thesis
 
-The product should not mature into a generic LMS. The durable market position is:
+The active v1 product direction is the **Agent Permission Training Simulator**.
+The product should not mature into a generic LMS or broad prompt-training
+library. The sharper market wedge is permission judgment for teams adopting AI
+agents:
 
-> AI adoption operating system for role-based enablement, policy-grounded
-> feedback, and manager-approved workflow change.
+> Teach teams when to approve, deny, clarify, sandbox, or escalate agent
+> requests before those habits become unsafe operational defaults.
 
-The buyer pain is not "employees need prompt training." The higher-value pain is
-that companies cannot prove AI adoption is safe, policy-aligned, role-specific,
-measurable, and manager-governed.
+The buyer pain is not "employees need prompt training." The urgent pain is that
+teams are being asked to approve agent actions around files, commands, secrets,
+dependencies, CI, logs, and network calls without a shared decision model.
 
 ## Target Market Wedge
 
-- ICP: B2B SaaS, business services, or regulated-adjacent companies with active
-  customer support teams.
-- Initial buyer: VP Support, Enablement, RevOps, or AI Transformation lead.
-- Internal blockers: Security, Legal, Compliance, IT, Procurement.
-- First use case: support teams learning safe AI-assisted customer reply and
-  workflow reuse.
+- ICP: engineering, support, enablement, or operations teams adopting Cursor,
+  Codex, Claude Code, or similar AI agent tools.
+- Initial buyer: AI Transformation lead, Engineering Enablement, Security,
+  Developer Productivity, Support Enablement, or team lead responsible for safe
+  AI rollout.
+- Internal blockers: Security, Legal, Compliance, IT, Procurement, and managers
+  worried about unsafe approvals.
+- First use case: a fast workshop/demo that teaches permission decisions before
+  broad platform rollout.
 
-Avoid broad horizontal positioning until 3-5 pilots prove repeated willingness
-to pay.
+Avoid broad horizontal positioning until the simulator proves repeated
+willingness to pay as a focused workshop/demo pack.
 
 ## Maturity Principles
 
 - Prove value before expanding surface area.
+- Make the permission simulator useful before adding LMS or enterprise platform
+  workflows.
 - Treat security, auditability, and governance as product features.
 - Keep human approval boundaries explicit and tested.
 - Make retrieval and feedback quality measurable before adding more AI behavior.
@@ -61,10 +69,11 @@ to pay.
 
 ## Pivot: Visual Permission Simulator
 
-The next product direction is an Agent Permission Training Simulator. The
-product should teach teams how to evaluate agent requests such as reading
-secrets, editing command surfaces, running tests after script changes, installing
-dependencies, or following instructions embedded in logs.
+The next product direction and active v1 is an Agent Permission Training
+Simulator. The product should teach teams how to evaluate agent requests such as
+reading secrets, editing command surfaces, running tests after script changes,
+installing dependencies, deleting files, editing CI workflows, making network
+calls, or following instructions embedded in test output and logs.
 
 The v1 user action set is:
 
@@ -78,6 +87,16 @@ The simulator should prioritize visual clarity, scenario quality, scoring, and
 lesson text over enterprise LMS features. It remains grounded in the existing
 governance/evidence model, but the first monetizable artifact is a demo/workshop
 experience.
+
+The v1 teaching taxonomy is:
+
+- allowed: action is low-risk and inside the approved scope.
+- needs approval: action may be valid but requires reviewer, manager, security,
+  or policy-owner approval.
+- blocked: action should be denied because it exposes secrets, destroys
+  evidence, exceeds scope, or crosses a forbidden boundary.
+- unknown: action needs clarification because the request lacks enough context
+  for a safe decision.
 
 ## Phase 6 - PMF Pilot System
 

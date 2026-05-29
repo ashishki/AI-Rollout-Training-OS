@@ -178,6 +178,8 @@ PERMISSIONS = {
 
 ROUTE_PERMISSIONS = {
     ("GET", "/app"): "app.shell.view",
+    ("GET", "/app/permission-simulator"): "app.shell.view",
+    ("POST", "/app/permission-simulator/decisions"): "app.shell.view",
     ("GET", "/app/operator/{section}"): "app.operator.view",
     ("GET", "/app/learner/{section}"): "app.learner.view",
     ("GET", "/app/manager/{section}"): "app.manager.view",

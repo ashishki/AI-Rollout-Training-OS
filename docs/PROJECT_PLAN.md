@@ -15,7 +15,7 @@ agent actions.
 
 ## Product Direction
 
-New product framing:
+Active v1 product framing:
 
 **Agent Permission Training Simulator**
 
@@ -28,6 +28,12 @@ The user faces realistic agent requests and chooses:
 - escalate to reviewer
 
 The simulator explains the risk, shows the safer path, and scores the decision.
+The decision is taught as one of four permission-boundary outcomes:
+
+- allowed
+- needs approval
+- blocked
+- unknown
 
 ## Near-Term Roadmap
 
@@ -36,6 +42,8 @@ The simulator explains the risk, shows the safer path, and scores the decision.
 - Update README around permission simulator.
 - Keep rollout/training system as broader context, not v1 scope.
 - Add visual demo goal: scenario card -> decision -> consequence -> lesson.
+- Keep `docs/tasks.md`, `docs/product_maturity_task_graph.md`, and
+  `docs/CODEX_PROMPT.md` aligned on Phase 16.
 
 ### P0 - Scenario Library
 

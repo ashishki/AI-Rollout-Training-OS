@@ -1,8 +1,8 @@
 # Solo Showcase Plan
 
-Version: 1.0
-Last updated: 2026-05-23
-Status: Phase 15 strategy baseline
+Version: 1.1
+Last updated: 2026-05-29
+Status: Phase 15 strategy baseline plus Phase 16 permission simulator pivot
 
 ## Purpose
 
@@ -116,6 +116,23 @@ Forbidden examples:
   conversion, or GA claim must be marked unsupported in the report.
 - If the system lacks sufficient public evidence for a feedback claim, the demo
   must use `insufficient_evidence` or route to human review.
+
+## Phase 16 Permission Simulator Workshop Pack
+
+The Phase 16 pivot packages the permission simulator as a small workshop/demo
+offer in `docs/permission_simulator_workshop_pack.md`.
+
+The workshop pack is a GTM artifact for teams adopting AI agents. It may show:
+
+- realistic permission scenarios;
+- decision outcomes across allowed, needs approval, blocked, and unknown;
+- consequence and safer-path explanations;
+- team discussion notes about risky approval patterns.
+
+It must not be used as evidence of certified safety, compliance approval,
+production readiness, GA readiness, productivity lift, incident reduction, PMF,
+or paid conversion. Any customer-specific policy mapping remains a separate
+human-owned review.
 
 ## UX Demo Gap Decision
 

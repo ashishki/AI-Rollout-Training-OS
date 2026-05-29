@@ -5,6 +5,20 @@ Last updated: 2026-05-19
 
 ---
 
+## Active Work After MVP
+
+This file remains the canonical MVP implementation graph for T01-T24. Current
+active work has moved to the Post-MVP production maturity graph in
+`docs/product_maturity_task_graph.md`.
+
+Active phase: Phase 16 - Visual Permission Simulator Pivot.
+Active next task: none. Phase 16 is complete through `T74: Permission Simulator
+Readiness Review`.
+
+The active v1 product direction is the Agent Permission Training Simulator:
+visual permission scenarios that teach allowed, needs approval, blocked, and
+unknown decisions for AI agent requests.
+
 ## Phase 1 - Foundation
 
 Goal: establish the Python service skeleton, CI, first tests, configuration, observability, database migrations, and append-only audit base.

@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-23
+Last updated: 2026-05-29
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,78 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-05-29 - P2-UX-001 - Permission Simulator Browser Evidence
+
+- Scope: `scripts/capture_permission_simulator_demo.py`, `docs/audit/artifacts/permission_simulator_demo.png`, `tests/test_permission_demo_browser_artifact.py`, `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md`, `docs/EVIDENCE_INDEX.md`, `docs/CODEX_PROMPT.md`
+- Why this work happened: The public simulator route made it possible to replace the Phase 16 "no screenshots" limit with real browser evidence for the demo surface.
+- Decisions applied: `docs/DECISION_LOG.md#decision-index`, `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md#next-action`
+- Evidence collected: Headless Chrome wrote `docs/audit/artifacts/permission_simulator_demo.png` from `http://127.0.0.1:8000/demo/permission-simulator`; visual inspection confirmed nonblank rendered content. `.venv/bin/python -m pytest tests/test_permission_demo_browser_artifact.py tests/test_permission_ui.py tests/test_permissions_matrix.py -q` passed with 9 tests; full `.venv/bin/python -m pytest -q` passed with 183 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: P2-UX-001 remains open for broader browser-level e2e coverage across app-shell workflows before full UX readiness or GA-grade browser claims.
+- Notes for next agent: The screenshot proves the public demo route renders in a real browser. It does not prove authenticated operator, learner, manager, or end-to-end workflow UX.
+
+### 2026-05-29 - D-012 - Public Static Permission Simulator Demo Route
+
+- Scope: `frontend/app_shell.py`, `tests/test_permission_ui.py`, `tests/test_permissions_matrix.py`, `docs/DECISION_LOG.md`, `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Human asked to continue after Phase 16 completed; the recorded next action was show demo, but the app route required bearer auth headers that normal browser navigation cannot set.
+- Decisions applied: `docs/IMPLEMENTATION_CONTRACT.md#authorization`, `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md#next-action`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_ui.py tests/test_permissions_matrix.py -q` passed with 7 tests; full `.venv/bin/python -m pytest -q` passed with 181 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: Use `/demo/permission-simulator` for local browser demos; keep protected `/app/permission-simulator` for authenticated app access.
+- Notes for next agent: D-012 allows only static demo content and deterministic scoring. The public route must not read workspace records, policy documents, learner submissions, customer data, or user state.
+
+### 2026-05-29 - T74 - Permission Simulator Readiness Review
+
+- Scope: `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator reached the Phase 16 readiness decision after T69-T73 completed.
+- Decisions applied: `docs/product_maturity_task_graph.md#t74-permission-simulator-readiness-review`, `docs/permission_simulator_workshop_pack.md#claim-boundaries`
+- Evidence collected: Manual audit review cites scenario coverage, scoring behavior, visual prototype, and workshop pack; next action is SHOW DEMO; full `.venv/bin/python -m pytest -q` passed with 178 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: Show the current simulator and workshop pack in a bounded manual buyer/team conversation; keep P2-UX-001 open until browser automation or screenshots are added.
+- Notes for next agent: Phase 16 is complete with no P0/P1 blockers. Do not claim certified safety, compliance approval, production readiness, GA readiness, productivity gains, incident reduction, PMF, or paid conversion from this prototype.
+
+### 2026-05-29 - T73 - Workshop And Monetization Pack
+
+- Scope: `docs/permission_simulator_workshop_pack.md`, `docs/solo_showcase_plan.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T73 after the visual simulator prototype was available.
+- Decisions applied: `docs/product_maturity_task_graph.md#t73-workshop-and-monetization-pack`, `docs/solo_showcase_plan.md#claim-rules`
+- Evidence collected: Manual artifact review scope: audience, scenario set, learning outcomes, pricing hypothesis, delivery format, and claim boundaries present; full `.venv/bin/python -m pytest -q` passed with 178 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T74 Permission Simulator Readiness Review.
+- Notes for next agent: The workshop pack is a service-led demo offer only. It explicitly blocks certified safety, compliance approval, production readiness, GA readiness, productivity guarantees, incident reduction, and customer security approval claims.
+
+### 2026-05-29 - T72 - Visual Simulator Prototype
+
+- Scope: `frontend/app_shell.py`, `ai_rollout_os/permissions/demo.py`, `ai_rollout_os/auth/permissions.py`, `tests/test_permission_ui.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T72 after deterministic permission scenarios and scoring were available.
+- Decisions applied: `docs/product_maturity_task_graph.md#t72-visual-simulator-prototype`, `docs/IMPLEMENTATION_CONTRACT.md#authorization`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_ui.py tests/test_permissions_matrix.py -q` passed with 4 tests; full `.venv/bin/python -m pytest -q` passed with 178 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T73 Workshop And Monetization Pack.
+- Notes for next agent: `/app/permission-simulator` and `/app/permission-simulator/decisions` are authenticated with `app.shell.view`. The prototype intentionally stays small: scenario card, decision buttons, consequence, safer path, and score summary only.
+
+### 2026-05-29 - T71 - Simulator Decision And Scoring Engine
+
+- Scope: `ai_rollout_os/permissions/scoring.py`, `ai_rollout_os/permissions/__init__.py`, `tests/test_permission_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T71 after the seed permission scenario library was available.
+- Decisions applied: `docs/product_maturity_task_graph.md#t71-simulator-decision-and-scoring-engine`, `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_scoring.py tests/test_permission_scenarios.py -q` passed with 4 tests; full `.venv/bin/python -m pytest -q` passed with 176 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T72 Visual Simulator Prototype.
+- Notes for next agent: `score_decision` returns correct, partial, or unsafe and includes risk category, safer alternative, and lesson-backed feedback. `permission_fatigue_warning` triggers after repeated approvals on non-allowed scenarios.
+
+### 2026-05-29 - T70 - Permission Scenario Library
+
+- Scope: `ai_rollout_os/permissions/`, `tests/fixtures/permission_scenarios.json`, `tests/test_permission_scenarios.py`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Orchestrator advanced to T70 after the product reframe aligned Phase 16 around the Agent Permission Training Simulator.
+- Decisions applied: `docs/PROJECT_PLAN.md#near-term-roadmap`, `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_scenarios.py -q` passed with 2 tests; full `.venv/bin/python -m pytest -q` passed with 174 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T71 Simulator Decision And Scoring Engine.
+- Notes for next agent: The seed fixture includes 10 required risk categories: secrets, command surfaces, test-output injection, package scripts, CI edits, out-of-scope refactors, network calls, deletes, dependency install, and log exposure. `permission_boundary` is already present for allowed, needs approval, blocked, and unknown scoring work.
+
+### 2026-05-29 - T69 - Permission Simulator Product Reframe
+
+- Scope: `README.md`, `docs/product_maturity_roadmap.md`, `docs/PROJECT_PLAN.md`, `docs/tasks.md`, `docs/CODEX_PROMPT.md`, `docs/IMPLEMENTATION_JOURNAL.md`
+- Why this work happened: Orchestrator advanced to Phase 16 after the active pivot narrowed the product to a visual agent permission simulator.
+- Decisions applied: `docs/PROJECT_PLAN.md`, `docs/product_maturity_task_graph.md#phase-16---visual-permission-simulator-pivot`, `docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries`
+- Evidence collected: `.venv/bin/python -m pytest -q` passed with 172 tests after starting local Docker Postgres with test credentials; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T70 Permission Scenario Library.
+- Notes for next agent: The v1 product is now explicitly the Agent Permission Training Simulator. Keep scenario work focused on allowed, needs approval, blocked, and unknown boundaries; do not expand into LMS or generic prompt-training surfaces before the simulator is useful.
 
 ### 2026-05-23 - T68 - Solo Rollout Readiness Review
 
