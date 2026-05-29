@@ -76,6 +76,8 @@ Create 10 starter scenarios:
 - Use AI to draft scenario variants.
 - Use reviewer prompts to classify risks.
 - Keep final scenario validation deterministic.
+- Use `docs/entropy_core_gensyn_integration.md` for permission decision
+  receipts and bounded diverse scenario generation.
 - Link each lesson to Playbook principles:
   - Filesystem Reality
   - Runtime Verification
