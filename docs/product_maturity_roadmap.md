@@ -57,6 +57,27 @@ to pay.
 | 13 | Commercial Packaging | Can sales, security, and procurement close repeatable deals? | Pricing, packaging, ROI proof, security packet, and onboarding playbook are ready. |
 | 14 | GA Readiness | Is the product mature enough for general availability? | GA checklist passes with no P0/P1 findings. |
 | 15 | Solo Showcase And Small-Team Rollout | Can a solo operator show the training loop without corporate access? | Public-source role pack, mini-cohort, approval report, and claim-safe demo artifacts are ready. |
+| 16 | Visual Permission Simulator | Can the product teach agent permission judgment through a polished, monetizable simulator? | Scenario library, scoring, visual prototype, and workshop pack are ready. |
+
+## Pivot: Visual Permission Simulator
+
+The next product direction is an Agent Permission Training Simulator. The
+product should teach teams how to evaluate agent requests such as reading
+secrets, editing command surfaces, running tests after script changes, installing
+dependencies, or following instructions embedded in logs.
+
+The v1 user action set is:
+
+- approve
+- deny
+- ask for clarification
+- run in sandbox
+- escalate to reviewer
+
+The simulator should prioritize visual clarity, scenario quality, scoring, and
+lesson text over enterprise LMS features. It remains grounded in the existing
+governance/evidence model, but the first monetizable artifact is a demo/workshop
+experience.
 
 ## Phase 6 - PMF Pilot System
 

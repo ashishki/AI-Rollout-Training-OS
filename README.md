@@ -2,7 +2,7 @@
 
 AI Rollout Training OS - это система для измеримого внедрения AI в рабочих командах. Проект помогает компании перейти от разовых AI-воркшопов и общих prompt-библиотек к ролевым заданиям, проверяемым guardrail-сценариям, policy-grounded feedback и менеджерскому подтверждению реальных изменений в рабочих процессах.
 
-Статус: Phase 1, архитектура и task graph подготовлены. Реализация начинается с `T01: Project Skeleton`.
+Статус: active pivot. Проект переориентируется в visual Agent Permission Training Simulator: интерактивные сценарии approve/deny/defer/sandbox для команд, внедряющих AI agents. Детальный план: `docs/PROJECT_PLAN.md`.
 
 ## Зачем
 

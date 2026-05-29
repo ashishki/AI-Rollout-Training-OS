@@ -1020,6 +1020,160 @@ Files:
 
 Context-Refs:
   - docs/ga_readiness.md
+
+---
+
+## Phase 16 - Visual Permission Simulator Pivot
+
+Goal: turn the training product into a visual, quickly demonstrable agent
+permission simulator that teaches safe approve/deny/defer/sandbox decisions.
+
+## T69: Permission Simulator Product Reframe
+
+Owner:      human + codex
+Phase:      16
+Type:       docs strategy
+Depends-On: T68
+
+Objective: |
+  Reframe the product around agent permission judgment and update the core docs
+  so future implementation work does not drift back into generic AI training.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "README and docs/product_maturity_roadmap.md describe the Agent Permission Training Simulator as the v1 product direction."
+    test: "manual doc review"
+  - id: AC-2
+    description: "docs/PROJECT_PLAN.md, docs/tasks.md, docs/product_maturity_task_graph.md, and docs/CODEX_PROMPT.md agree on Phase 16 as the next active work."
+    test: "manual doc review"
+
+Files:
+  - README.md
+  - docs/product_maturity_roadmap.md
+  - docs/PROJECT_PLAN.md
+  - docs/CODEX_PROMPT.md
+
+## T70: Permission Scenario Library
+
+Owner:      codex
+Phase:      16
+Type:       tool:schema
+Depends-On: T69
+
+Objective: |
+  Define the first scenario library for realistic agent permission decisions.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "At least 10 scenario records cover secrets, command surfaces, test-output injection, package scripts, CI edits, out-of-scope refactors, network calls, deletes, dependency install, and log exposure."
+    test: "tests/test_permission_scenarios.py::test_seed_scenarios_cover_required_risk_categories"
+  - id: AC-2
+    description: "Each scenario includes request, context, choices, correct decision, risk category, safer alternative, and lesson text."
+    test: "tests/test_permission_scenarios.py::test_scenarios_have_required_fields"
+
+Files:
+  - ai_rollout_os/permissions/
+  - tests/fixtures/permission_scenarios.json
+  - tests/test_permission_scenarios.py
+
+Context-Refs:
+  - docs/PROJECT_PLAN.md#near-term-roadmap
+  - docs/IMPLEMENTATION_CONTRACT.md#human-approval-boundaries
+
+## T71: Simulator Decision And Scoring Engine
+
+Owner:      codex
+Phase:      16
+Type:       none
+Depends-On: T70
+
+Objective: |
+  Add deterministic scoring for approve/deny/defer/sandbox/escalate decisions.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Decision scoring returns correct/partial/unsafe outcomes with risk-specific feedback."
+    test: "tests/test_permission_scoring.py::test_decision_scoring_returns_expected_outcomes"
+  - id: AC-2
+    description: "Permission fatigue warning is triggered when a learner approves repeated risky scenarios."
+    test: "tests/test_permission_scoring.py::test_permission_fatigue_warning"
+
+Files:
+  - ai_rollout_os/permissions/scoring.py
+  - tests/test_permission_scoring.py
+
+## T72: Visual Simulator Prototype
+
+Owner:      codex
+Phase:      16
+Type:       product demo
+Depends-On: T70, T71
+
+Objective: |
+  Build a small visual prototype: scenario card, decision buttons,
+  consequence/lesson screen, and score summary.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "UI renders a scenario card with request, context, and decision actions."
+    test: "tests/test_permission_ui.py::test_permission_scenario_card_renders"
+  - id: AC-2
+    description: "Submitting a decision renders consequence, safer path, and score."
+    test: "tests/test_permission_ui.py::test_permission_decision_result_renders"
+
+Files:
+  - frontend/
+  - ai_rollout_os/permissions/
+  - tests/test_permission_ui.py
+
+Notes: |
+  Prefer a small polished demo over a broad LMS feature. Do not add team
+  dashboards in this task.
+
+## T73: Workshop And Monetization Pack
+
+Owner: human + codex
+Phase: 16
+Type: gtm artifact
+Depends-On: T72
+
+Objective: |
+  Package the simulator as a demo/workshop offer for teams adopting AI agents.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Workshop pack explains audience, scenario set, learning outcomes, pricing hypothesis, and delivery format."
+    test: "manual artifact review"
+  - id: AC-2
+    description: "Pack avoids claims about certified safety, compliance approval, or production readiness."
+    test: "manual artifact review"
+
+Files:
+  - docs/permission_simulator_workshop_pack.md
+  - docs/solo_showcase_plan.md
+
+## T74: Permission Simulator Readiness Review
+
+Owner: human + codex
+Phase: 16
+Type: audit decision
+Depends-On: T70, T72, T73
+
+Objective: |
+  Decide whether the permission simulator is ready to show, monetize manually,
+  or needs another prototype pass.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Review cites scenario coverage, scoring behavior, visual prototype, and workshop pack."
+    test: "manual audit review"
+  - id: AC-2
+    description: "Review records next action: show demo, improve simulator, or pause."
+    test: "manual audit review"
+
+Files:
+  - docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md
+  - docs/CODEX_PROMPT.md
   - docs/product_maturity_roadmap.md#strategic-non-goals-until-pmf
 
 ## T63: Public Policy And SOP Corpus Research
