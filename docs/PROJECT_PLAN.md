@@ -70,6 +70,8 @@ and audit trail habits into a 3 to 7 minute browser experience.
   - Not Everything Is Deny
 - Add Pydantic validation.
 - Add deterministic scoring, meter deltas, badges, final title, and share text.
+- Emit a `permission_decision_receipt` for each scored scenario using
+  `ai_rollout_os/permissions/proof.py`.
 - Add safety guards against real command execution, real secrets, real customer
   data, and unsupported claims.
 
@@ -93,6 +95,7 @@ and audit trail habits into a 3 to 7 minute browser experience.
 - Add facilitator notes and debrief.
 - Add safe aggregate team summary.
 - Add analytics-lite for local/session risk hotspots.
+- Use permission receipts as the local proof source for risk-hotspot claims.
 - Add buyer feedback template.
 - Review claim boundaries before public outreach.
 
@@ -147,6 +150,7 @@ Create 10 starter scenarios:
 - Keep final scenario validation deterministic.
 - Use `docs/entropy_core_gensyn_integration.md` for permission decision
   receipts and bounded diverse scenario generation.
+- Treat permission receipts as the proof source for outcome claims.
 - Link each lesson to Playbook principles:
   - Filesystem Reality
   - Runtime Verification

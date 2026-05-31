@@ -1,7 +1,7 @@
 # Entropy Core And Gensyn Integration
 
-Status: planned reference integration
-Last updated: 2026-05-29
+Status: implemented local permission decision receipt; Core runtime not adopted
+Last updated: 2026-05-31
 
 ## Purpose
 
@@ -19,12 +19,13 @@ vendored component, adapted code, pattern-only reuse, or rejection.
 
 ## Entropy Core Use
 
-Default level: receipt-compatible now; schema-compatible next.
+Default level: receipt-compatible for permission decision receipts.
 
-Planned local artifacts:
+Local artifacts:
 
 - `permission_judgment_record`
-- `scenario_decision_receipt`
+- `permission_decision_receipt` implemented in
+  `ai_rollout_os/permissions/proof.py`
 - `learner_error_pattern`
 - `referee_feedback_record`
 
@@ -71,11 +72,20 @@ autonomous training swarm.
 Training OS should use Entropy Core to prove scenario decisions and scoring
 outcomes, not to run the game.
 
-Implementation path:
+Implemented now:
 
-1. Define `scenario_decision_receipt` with schema id, scenario id, learner
-   action, expected permission boundary, score delta, evidence shown, and
-   verifier status.
+- `build_permission_decision_receipt(...)` records scenario id, selected
+  decision, expected decision, outcome, risk category, permission boundary, and
+  evidence refs for scenario context, boundary, and lesson.
+- Unsafe decisions become failed receipts; partial decisions become
+  `needs_review`.
+- `tests/test_permission_proof_receipts.py` covers passed, failed, and
+  mismatched-score paths.
+
+Next implementation tasks:
+
+1. Wire `build_permission_decision_receipt(...)` into the simulator/game result
+   persistence path.
 2. Use schema compatibility before changing scenario/scoring receipt formats.
 3. Keep UI, gameplay, facilitation, and learner feedback product-local.
 4. Block workshop/product claims when receipts lack verifier status or evidence

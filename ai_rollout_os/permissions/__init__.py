@@ -10,11 +10,19 @@ from ai_rollout_os.permissions.scoring import (
     permission_fatigue_warning,
     score_decision,
 )
+from ai_rollout_os.permissions.proof import (
+    PermissionDecisionProofReceipt,
+    PermissionEvidenceRef,
+    build_permission_decision_receipt,
+)
 
 __all__ = [
     "DecisionScore",
+    "PermissionDecisionProofReceipt",
+    "PermissionEvidenceRef",
     "PermissionScenario",
     "ScenarioValidationError",
+    "build_permission_decision_receipt",
     "load_scenarios",
     "permission_fatigue_warning",
     "score_decision",
