@@ -7,7 +7,11 @@ from ai_rollout_os.auth.dependencies import get_settings_from_app
 from ai_rollout_os.auth.permissions import require_permission
 from ai_rollout_os.auth.tokens import ActorContext
 from ai_rollout_os.db.models import MissionAssignment
-from ai_rollout_os.permissions import score_decision
+from ai_rollout_os.permissions import (
+    PermissionDecisionProofReceipt,
+    build_permission_decision_receipt,
+    score_decision,
+)
 from ai_rollout_os.permissions.demo import demo_permission_scenarios
 from ai_rollout_os.permissions.scenarios import PermissionScenario
 from ai_rollout_os.reporting.dashboard import DashboardService
@@ -124,8 +128,11 @@ async def submit_permission_decision(
     if scenario is None:
         raise HTTPException(status_code=404, detail="Scenario not found")
     score = score_decision(scenario, decision)
+    receipt = build_permission_decision_receipt(scenario=scenario, score=score)
     return HTMLResponse(
-        _permission_result_html(role=actor.role, scenario=scenario, score=score)
+        _permission_result_html(
+            role=actor.role, scenario=scenario, score=score, receipt=receipt
+        )
     )
 
 
@@ -160,8 +167,11 @@ async def submit_public_permission_demo_decision(request: Request) -> HTMLRespon
     if scenario is None:
         raise HTTPException(status_code=404, detail="Scenario not found")
     score = score_decision(scenario, decision)
+    receipt = build_permission_decision_receipt(scenario=scenario, score=score)
     return HTMLResponse(
-        _permission_result_html(role="demo", scenario=scenario, score=score)
+        _permission_result_html(
+            role="demo", scenario=scenario, score=score, receipt=receipt
+        )
     )
 
 
@@ -965,7 +975,22 @@ def _permission_simulator_html(
 </html>"""
 
 
-def _permission_result_html(*, role: str, scenario: PermissionScenario, score) -> str:
+def _permission_result_html(
+    *,
+    role: str,
+    scenario: PermissionScenario,
+    score,
+    receipt: PermissionDecisionProofReceipt,
+) -> str:
+    evidence_items = "\n".join(
+        (
+            f'<li data-evidence-ref="{escape(ref.ref_id)}" '
+            f'data-evidence-type="{escape(ref.ref_type)}" '
+            f'data-evidence-supports="{escape(ref.supports)}">'
+            f"{escape(ref.ref_id)}</li>"
+        )
+        for ref in receipt.evidence_refs
+    )
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -986,6 +1011,21 @@ def _permission_result_html(*, role: str, scenario: PermissionScenario, score) -
           Selected {escape(score.selected_decision)} for
           {escape(scenario.permission_boundary)} boundary.
         </p>
+        <aside
+          data-permission-decision-receipt="true"
+          data-receipt-type="{escape(receipt.type)}"
+          data-receipt-id="{escape(receipt.receipt_id)}"
+          data-receipt-schema-version="{escape(receipt.schema_version)}"
+          data-verifier-status="{escape(receipt.verifier_status)}"
+          data-receipt-sha256="{escape(receipt.receipt_sha256())}">
+          <h2>Audit receipt</h2>
+          <p data-proof-boundary="{escape(receipt.permission_boundary)}">
+            Receipt status: {escape(receipt.verifier_status)}
+          </p>
+          <ul>
+            {evidence_items}
+          </ul>
+        </aside>
       </section>
     </main>
   </body>

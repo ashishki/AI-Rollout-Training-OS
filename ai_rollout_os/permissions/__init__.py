@@ -1,5 +1,10 @@
 """Permission simulator scenario schema and seed loading helpers."""
 
+from ai_rollout_os.permissions.proof import (
+    PermissionDecisionProofReceipt,
+    PermissionEvidenceRef,
+    build_permission_decision_receipt,
+)
 from ai_rollout_os.permissions.scenarios import (
     PermissionScenario,
     ScenarioValidationError,
@@ -9,11 +14,6 @@ from ai_rollout_os.permissions.scoring import (
     DecisionScore,
     permission_fatigue_warning,
     score_decision,
-)
-from ai_rollout_os.permissions.proof import (
-    PermissionDecisionProofReceipt,
-    PermissionEvidenceRef,
-    build_permission_decision_receipt,
 )
 
 __all__ = [

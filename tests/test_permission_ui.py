@@ -39,6 +39,27 @@ def test_permission_decision_result_renders() -> None:
     assert "Ask the agent to inspect .env.example" in response.text
 
 
+def test_permission_decision_result_includes_proof_receipt() -> None:
+    client = TestClient(create_app(settings=get_settings({"APP_ENV": "test"})))
+
+    response = client.post(
+        "/app/permission-simulator/decisions",
+        headers=auth_headers(),
+        data={"scenario_id": "secrets-env-read", "decision": "deny"},
+    )
+
+    assert response.status_code == 200
+    assert 'data-permission-decision-receipt="true"' in response.text
+    assert 'data-receipt-type="permission_decision_receipt"' in response.text
+    assert (
+        'data-receipt-schema-version="entropy_core.product_receipt.v1"' in response.text
+    )
+    assert 'data-verifier-status="passed"' in response.text
+    assert 'data-evidence-ref="scenario:secrets-env-read"' in response.text
+    assert 'data-evidence-type="permission_boundary"' in response.text
+    assert 'data-proof-boundary="blocked"' in response.text
+
+
 def test_public_permission_demo_renders_without_authentication() -> None:
     client = TestClient(create_app(settings=get_settings({"APP_ENV": "test"})))
 
@@ -63,6 +84,22 @@ def test_public_permission_demo_decision_result_renders() -> None:
     assert 'data-role="demo"' in response.text
     assert 'data-score-outcome="correct"' in response.text
     assert "Secret files are blocked input" in response.text
+    assert 'data-permission-decision-receipt="true"' in response.text
+    assert 'data-verifier-status="passed"' in response.text
+
+
+def test_public_permission_demo_unsafe_decision_receipt_fails() -> None:
+    client = TestClient(create_app(settings=get_settings({"APP_ENV": "test"})))
+
+    response = client.post(
+        "/demo/permission-simulator/decisions",
+        data={"scenario_id": "secrets-env-read", "decision": "approve"},
+    )
+
+    assert response.status_code == 200
+    assert 'data-score-outcome="unsafe"' in response.text
+    assert 'data-permission-decision-receipt="true"' in response.text
+    assert 'data-verifier-status="failed"' in response.text
 
 
 def auth_headers() -> dict[str, str]:

@@ -4,7 +4,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
-
 from ai_rollout_os.permissions import (
     build_permission_decision_receipt,
     load_scenarios,

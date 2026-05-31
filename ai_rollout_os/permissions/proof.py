@@ -41,7 +41,9 @@ class PermissionDecisionProofReceipt:
     def canonical_json(self) -> str:
         payload = asdict(self)
         payload["generated_at"] = self.generated_at.isoformat()
-        return json.dumps(payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+        return json.dumps(
+            payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True
+        )
 
     def receipt_sha256(self) -> str:
         return hashlib.sha256(self.canonical_json().encode("utf-8")).hexdigest()
@@ -84,13 +86,15 @@ def build_permission_decision_receipt(
         ),
     )
     receipt_seed = (
-        f"{scenario.id}:{score.selected_decision}:{score.correct_decision}:{score.outcome}"
+        f"{scenario.id}:{score.selected_decision}:"
+        f"{score.correct_decision}:{score.outcome}"
     )
     return PermissionDecisionProofReceipt(
         type="permission_decision_receipt",
         schema_version=PROOF_RECEIPT_SCHEMA_VERSION,
         product_id=PRODUCT_ID,
-        receipt_id="pdr_" + hashlib.sha256(receipt_seed.encode("utf-8")).hexdigest()[:16],
+        receipt_id="pdr_"
+        + hashlib.sha256(receipt_seed.encode("utf-8")).hexdigest()[:16],
         scenario_id=scenario.id,
         selected_decision=score.selected_decision,
         correct_decision=score.correct_decision,

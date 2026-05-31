@@ -77,15 +77,20 @@ Implemented now:
 - `build_permission_decision_receipt(...)` records scenario id, selected
   decision, expected decision, outcome, risk category, permission boundary, and
   evidence refs for scenario context, boundary, and lesson.
+- The existing permission simulator result loop builds a receipt after scoring
+  in `/app/permission-simulator/decisions` and
+  `/demo/permission-simulator/decisions`, then exposes verifier status, receipt
+  hash, and evidence refs in the result markup.
 - Unsafe decisions become failed receipts; partial decisions become
   `needs_review`.
 - `tests/test_permission_proof_receipts.py` covers passed, failed, and
-  mismatched-score paths.
+  mismatched-score paths. `tests/test_permission_ui.py` covers route-level
+  receipt wiring for passed and failed simulator decisions.
 
 Next implementation tasks:
 
-1. Wire `build_permission_decision_receipt(...)` into the simulator/game result
-   persistence path.
+1. Reuse `build_permission_decision_receipt(...)` in the Ship It? Y/N game
+   result path when the React/Vite game scoring loop is implemented.
 2. Use schema compatibility before changing scenario/scoring receipt formats.
 3. Keep UI, gameplay, facilitation, and learner feedback product-local.
 4. Block workshop/product claims when receipts lack verifier status or evidence
