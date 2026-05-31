@@ -12,6 +12,11 @@ boundary applied, and what correction feedback was produced.
 Gensyn is only a design reference for diverse scenario/candidate generation and
 evaluator/referee roles.
 
+Before building custom Gensyn-shaped logic, run the Gensyn OSS reuse gate from
+`repo://AI_workflow_playbook/docs/entropy_core_and_gensyn_reference_policy.md`.
+Check official Gensyn repos first and record whether the result is dependency,
+vendored component, adapted code, pattern-only reuse, or rejection.
+
 ## Entropy Core Use
 
 Default level: receipt-compatible.
