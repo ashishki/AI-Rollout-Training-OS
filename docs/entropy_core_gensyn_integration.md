@@ -19,7 +19,7 @@ vendored component, adapted code, pattern-only reuse, or rejection.
 
 ## Entropy Core Use
 
-Default level: receipt-compatible.
+Default level: receipt-compatible now; schema-compatible next.
 
 Planned local artifacts:
 
@@ -65,6 +65,24 @@ diverse scenario variants -> learner answer -> evaluator/referee verdict -> feed
 
 This can help produce varied training cases without turning the product into an
 autonomous training swarm.
+
+## Proof Layer Implementation
+
+Training OS should use Entropy Core to prove scenario decisions and scoring
+outcomes, not to run the game.
+
+Implementation path:
+
+1. Define `scenario_decision_receipt` with schema id, scenario id, learner
+   action, expected permission boundary, score delta, evidence shown, and
+   verifier status.
+2. Use schema compatibility before changing scenario/scoring receipt formats.
+3. Keep UI, gameplay, facilitation, and learner feedback product-local.
+4. Block workshop/product claims when receipts lack verifier status or evidence
+   for the expected boundary.
+
+Core value here: make permission training outcomes explainable and auditable
+without turning the game into a compliance platform.
 
 Not adopted: decentralized runtime, token incentives, on-chain coordination,
 model training, or P2P agent swarms.
