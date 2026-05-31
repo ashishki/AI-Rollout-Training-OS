@@ -15,6 +15,12 @@ def test_product_maturity_roadmap_has_required_phases() -> None:
         "## Phase 13 - Commercial Packaging",
         "## Phase 14 - GA Readiness",
         "## Phase 15 - Solo Showcase And Small-Team Rollout",
+        "## Phase 16 - Visual Permission Simulator Pivot",
+        "## Phase 17 - Ship It? Y/N Product And Architecture Blueprint",
+        "## Phase 18 - Scenario And Scoring Core",
+        "## Phase 19 - React/Vite Playable Game",
+        "## Phase 20 - Browser Polish And Public Demo Evidence",
+        "## Phase 21 - Workshop, Analytics, And Buyer Validation",
     ]:
         assert heading in doc
 
@@ -34,6 +40,10 @@ def test_product_maturity_task_graph_is_ai_loop_ready() -> None:
         "T61",
         "T62",
         "T68",
+        "T75",
+        "T85",
+        "T98",
+        "T105",
     ]:
         assert f"## {task}:" in graph
 

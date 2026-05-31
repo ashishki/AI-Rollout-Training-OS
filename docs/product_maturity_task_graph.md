@@ -1176,6 +1176,789 @@ Files:
   - docs/CODEX_PROMPT.md
   - docs/product_maturity_roadmap.md#strategic-non-goals-until-pmf
 
+---
+
+## Phase 17 - Ship It? Y/N Product And Architecture Blueprint
+
+Goal: define the full mini-game product, scenario contract, React/Vite
+architecture, and AI development plan without shrinking the idea into a quiz.
+
+## T75: Ship It? Y/N Product Spec
+
+Owner:      human + codex
+Phase:      17
+Type:       product strategy
+Depends-On: T74
+
+Objective: |
+  Create the canonical product spec for Ship It? Y/N: a polished terminal-style
+  AI agent permission game built on the Agent Permission Training Simulator.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "The spec defines positioning, target users, MVP flow, seven levels, scoring categories, visual direction, final report, non-goals, and exit gate."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_ship_it_yn_product_spec_defines_full_mvp"
+  - id: AC-2
+    description: "The spec explicitly states that the MVP uses React/Vite, deterministic scoring, and no real command execution."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_ship_it_yn_product_spec_defines_full_mvp"
+
+Files:
+  - docs/ship_it_yn_product_spec.md
+  - docs/PROJECT_PLAN.md
+  - docs/CODEX_PROMPT.md
+
+Context-Refs:
+  - docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md
+  - docs/permission_simulator_workshop_pack.md
+
+Notes: |
+  Preserve the full game ambition. Do not reduce this to a text quiz, LMS
+  module, or single-card simulator.
+
+## T76: Permission Game Scenario Schema
+
+Owner:      codex
+Phase:      17
+Type:       tool:schema
+Depends-On: T75
+
+Objective: |
+  Define the scenario schema for the seven-level game, including tool-call
+  metadata, inspect artifacts, choices, feedback, meter deltas, badges, and
+  facilitator notes.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "The schema document defines required fields, allowed choices, permission boundaries, risk categories, feedback outcomes, and validation rules."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_permission_game_schema_defines_required_contract"
+  - id: AC-2
+    description: "The schema blocks real secrets, real customer data, real command execution, and unsupported safety/compliance claims."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_permission_game_schema_defines_required_contract"
+
+Files:
+  - docs/permission_game_scenario_schema.md
+
+Context-Refs:
+  - ai_rollout_os/permissions/scenarios.py
+  - tests/fixtures/permission_scenarios.json
+
+## T77: React/Vite Frontend Architecture
+
+Owner:      codex
+Phase:      17
+Type:       frontend architecture
+Depends-On: T75
+
+Objective: |
+  Specify the React/Vite/TypeScript/Tailwind app architecture, component
+  boundaries, FastAPI static serving plan, state model, browser evidence, and
+  accessibility requirements.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Architecture document selects React + Vite + TypeScript + Tailwind and isolates the game under frontend/permission_game/."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_frontend_architecture_requires_react_vite_and_browser_evidence"
+  - id: AC-2
+    description: "Architecture document requires browser e2e, desktop/mobile screenshots, and nonblank route evidence."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_frontend_architecture_requires_react_vite_and_browser_evidence"
+
+Files:
+  - docs/ship_it_yn_frontend_architecture.md
+
+Context-Refs:
+  - frontend/app_shell.py
+  - docs/audit/artifacts/permission_simulator_demo.png
+
+## T78: Ship It? Y/N AI Development Plan
+
+Owner:      human + codex
+Phase:      17
+Type:       planning
+Depends-On: T75, T76, T77
+
+Objective: |
+  Define the end-to-end AI-assisted build phases from product blueprint through
+  scenario core, React/Vite game, browser polish, workshop integration, and
+  buyer validation.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Development plan lists Phase 17 through Phase 21 with goals, outputs, and exit gates."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_ai_development_plan_lists_next_phases_end_to_end"
+  - id: AC-2
+    description: "Task graph and CODEX state set T79 as the active next implementation task after the planning package is complete."
+    test: "tests/test_ship_it_yn_planning_docs.py::test_task_graph_sets_ship_it_yn_next_implementation_work"
+
+Files:
+  - docs/ship_it_yn_ai_development_plan.md
+  - docs/product_maturity_roadmap.md
+  - docs/product_maturity_task_graph.md
+  - docs/tasks.md
+  - docs/CODEX_PROMPT.md
+
+---
+
+## Phase 18 - Scenario And Scoring Core
+
+Goal: make Ship It? Y/N data-driven, deterministic, safe, and testable before
+building the polished React UI.
+
+## T79: Game Scenario Pydantic Schema
+
+Owner:      codex
+Phase:      18
+Type:       tool:schema
+Depends-On: T76
+
+Objective: |
+  Implement Pydantic models for Ship It? Y/N scenario records and validate all
+  fields needed by scoring, UI, browser replay, and workshop notes.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Game scenario models validate id, level, title, agent message, tool call, context, inspect artifacts, choices, feedback, meters, badges, and facilitator notes."
+    test: "tests/test_permission_game_scenarios.py::test_game_scenario_schema_validates_required_fields"
+  - id: AC-2
+    description: "Invalid choices, unknown risk categories, missing feedback, or out-of-range levels raise validation errors."
+    test: "tests/test_permission_game_scenarios.py::test_game_scenario_schema_rejects_invalid_records"
+
+Files:
+  - ai_rollout_os/permissions/game_schema.py
+  - tests/test_permission_game_scenarios.py
+
+Context-Refs:
+  - docs/permission_game_scenario_schema.md
+
+## T80: Seven Starter Game Scenarios
+
+Owner:      human + codex
+Phase:      18
+Type:       content
+Depends-On: T79
+
+Objective: |
+  Add the seven Ship It? Y/N starter levels as JSON scenario records.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Seven scenario files exist for Tiny Cleanup, One-Line Diff, Flaky Tests Must Go, The Helpful Issue, One Permission To Rule Them All, Eval Is Red, Demo Is Soon, and Not Everything Is Deny."
+    test: "tests/test_permission_game_scenarios.py::test_seven_ship_it_yn_scenarios_exist"
+  - id: AC-2
+    description: "Every scenario has best, acceptable, unsafe, and overblock behavior where relevant, plus consequence, lesson, safer alternative, and facilitator notes."
+    test: "tests/test_permission_game_scenarios.py::test_game_scenarios_have_feedback_for_every_choice"
+
+Files:
+  - ai_rollout_os/permissions/game_scenarios/
+  - tests/test_permission_game_scenarios.py
+
+Context-Refs:
+  - docs/ship_it_yn_product_spec.md#seven-starter-levels
+
+## T81: Game Scoring Engine
+
+Owner:      codex
+Phase:      18
+Type:       none
+Depends-On: T79, T80
+
+Objective: |
+  Implement deterministic game scoring for correct, partial, unsafe, and
+  overblock outcomes, including final score categories.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Scoring returns outcome, consequence, lesson, safer alternative, meter deltas, score delta, and audit events for each decision."
+    test: "tests/test_permission_game_scoring.py::test_game_scoring_returns_decision_result"
+  - id: AC-2
+    description: "Overblocking a legitimate bounded action reduces velocity without marking the player unsafe."
+    test: "tests/test_permission_game_scoring.py::test_overblock_penalty_preserves_safety_score"
+
+Files:
+  - ai_rollout_os/permissions/game_scoring.py
+  - tests/test_permission_game_scoring.py
+
+Context-Refs:
+  - docs/ship_it_yn_product_spec.md#scoring-model
+
+## T82: Meter And Badge Model
+
+Owner:      codex
+Phase:      18
+Type:       none
+Depends-On: T81
+
+Objective: |
+  Add deterministic meter accumulation, combo detection, badges, final titles,
+  and shareable result text.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Meter accumulation tracks velocity, blast radius, trust, eval confidence, and audit trail across a session."
+    test: "tests/test_permission_game_scoring.py::test_game_session_accumulates_meters"
+  - id: AC-2
+    description: "Badges and titles are deterministic from decision history and do not reward unsafe speed."
+    test: "tests/test_permission_game_scoring.py::test_badges_and_titles_are_deterministic"
+
+Files:
+  - ai_rollout_os/permissions/game_scoring.py
+  - tests/test_permission_game_scoring.py
+
+## T83: Local Game Session Model
+
+Owner:      codex
+Phase:      18
+Type:       none
+Depends-On: T81, T82
+
+Objective: |
+  Add a public-demo session model that can be mirrored in localStorage without
+  storing personal data or raw artifacts.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Session state includes session id, scenario order, decisions, inspected artifacts, elapsed time, meter totals, badges, and final report fields."
+    test: "tests/test_permission_game_scoring.py::test_game_session_summary_has_public_safe_fields"
+  - id: AC-2
+    description: "Session state excludes actor id, workspace id, raw customer data, raw prompts, credentials, and local file contents."
+    test: "tests/test_permission_game_scoring.py::test_game_session_summary_excludes_sensitive_fields"
+
+Files:
+  - ai_rollout_os/permissions/game_session.py
+  - tests/test_permission_game_scoring.py
+
+## T84: Scenario Safety Guard Tests
+
+Owner:      codex
+Phase:      18
+Type:       security
+Depends-On: T80
+
+Objective: |
+  Add tests that prevent game scenarios from containing real secrets, real
+  customer data, copy-paste dangerous commands, or unsupported safety claims.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Scenario fixtures fail tests if they include secret-like values, real domains marked as customer data, or shell commands presented as executable instructions."
+    test: "tests/test_permission_game_safety.py::test_game_scenarios_do_not_contain_real_execution_or_secret_material"
+  - id: AC-2
+    description: "Scenario and feedback text do not claim certification, compliance approval, production safety, PMF, or paid conversion."
+    test: "tests/test_permission_game_safety.py::test_game_scenarios_block_unsupported_claims"
+
+Files:
+  - tests/test_permission_game_safety.py
+  - ai_rollout_os/permissions/game_scenarios/
+
+---
+
+## Phase 19 - React/Vite Playable Game
+
+Goal: build the beautiful, convenient, full seven-level public game.
+
+## T85: React/Vite Permission Game Scaffold
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T77, T80
+
+Objective: |
+  Add an isolated React + Vite + TypeScript + Tailwind app for Ship It? Y/N.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "frontend/permission_game contains package scripts for dev, build, lint, test, and typecheck."
+    test: "tests/test_permission_game_frontend_files.py::test_permission_game_frontend_scaffold_exists"
+  - id: AC-2
+    description: "The Vite app imports typed scenario data and renders a nonblank app root in test mode."
+    test: "frontend/permission_game/src/App.test.tsx"
+
+Files:
+  - frontend/permission_game/
+  - tests/test_permission_game_frontend_files.py
+
+Context-Refs:
+  - docs/ship_it_yn_frontend_architecture.md
+
+## T86: Terminal Layout Shell
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T85
+
+Objective: |
+  Implement the desktop and mobile terminal-style shell with stable regions for
+  log/history, active scenario, meters, audit trail, and final report.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Desktop layout uses three stable regions and mobile layout collapses to a single-column flow without overlapping text."
+    test: "frontend/permission_game/src/components/TerminalLayout.test.tsx"
+  - id: AC-2
+    description: "The shell contains no LMS-style dashboard chrome or marketing hero."
+    test: "tests/test_permission_game_frontend_files.py::test_permission_game_shell_blocks_lms_chrome"
+
+Files:
+  - frontend/permission_game/src/App.tsx
+  - frontend/permission_game/src/components/TerminalLog.tsx
+  - frontend/permission_game/src/styles.css
+
+## T87: Scenario Card And Decision Controls
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T85, T86
+
+Objective: |
+  Render the active agent request, tool-call metadata, context, and first-class
+  decision controls with keyboard shortcuts.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Scenario card displays agent message, tool call, scope, risk, context, and level progress."
+    test: "frontend/permission_game/src/components/ScenarioCard.test.tsx"
+  - id: AC-2
+    description: "Decision buttons support mouse and keyboard activation for approve, deny, inspect, sandbox, eval, scope, escalate, and rollback when available."
+    test: "frontend/permission_game/src/components/DecisionButtons.test.tsx"
+
+Files:
+  - frontend/permission_game/src/components/ScenarioCard.tsx
+  - frontend/permission_game/src/components/DecisionButtons.tsx
+
+## T88: Inspect Diff And Hidden Risk Reveal
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T87
+
+Objective: |
+  Add the inspect/diff drawer and hidden risk reveal mechanic.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Inspecting a scenario opens an accessible drawer with diff/source/log artifacts and highlights the relevant risk boundary."
+    test: "frontend/permission_game/src/components/DiffPreview.test.tsx"
+  - id: AC-2
+    description: "Scoring can distinguish blind approval from approval after inspection."
+    test: "tests/test_permission_game_scoring.py::test_inspection_changes_audit_trail_quality"
+
+Files:
+  - frontend/permission_game/src/components/DiffPreview.tsx
+  - ai_rollout_os/permissions/game_scoring.py
+
+## T89: Risk Meters And Audit Trail
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T82, T87
+
+Objective: |
+  Implement meter updates and audit trail rendering for each player decision.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Velocity, blast radius, trust, eval confidence, and audit trail meters update after each decision without layout shift."
+    test: "frontend/permission_game/src/components/RiskMeters.test.tsx"
+  - id: AC-2
+    description: "Audit trail lists concise decision events and flags audit gaps without exposing sensitive data."
+    test: "frontend/permission_game/src/components/AuditTrail.test.tsx"
+
+Files:
+  - frontend/permission_game/src/components/RiskMeters.tsx
+  - frontend/permission_game/src/components/AuditTrail.tsx
+
+## T90: Consequence Panel And Badge Toasts
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T81, T89
+
+Objective: |
+  Render consequence feedback, safer alternatives, lessons, and badges in a
+  polished way after every decision.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Consequence panel renders outcome, consequence, score change, lesson, and safer alternative in that order."
+    test: "frontend/permission_game/src/components/ConsequencePanel.test.tsx"
+  - id: AC-2
+    description: "Badge toasts are subtle, deterministic, dismissible, and do not obscure action controls."
+    test: "frontend/permission_game/src/components/BadgeToast.test.tsx"
+
+Files:
+  - frontend/permission_game/src/components/ConsequencePanel.tsx
+  - frontend/permission_game/src/components/BadgeToast.tsx
+
+## T91: Final Result And Share Card
+
+Owner:      codex
+Phase:      19
+Type:       frontend
+Depends-On: T82, T90
+
+Objective: |
+  Implement the final report screen with score, title, risk hotspots, strongest
+  habit, weakest habit, badges, and shareable text.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Final report renders score, title, demo result, prod status, unsafe approvals, overblocks, strongest habit, weakest risk area, and recommended next habit."
+    test: "frontend/permission_game/src/components/ResultScreen.test.tsx"
+  - id: AC-2
+    description: "Share text contains no personal data and can be copied from the browser."
+    test: "frontend/permission_game/src/game/shareText.test.ts"
+
+Files:
+  - frontend/permission_game/src/components/ResultScreen.tsx
+  - frontend/permission_game/src/game/shareText.ts
+
+---
+
+## Phase 20 - Browser Polish And Public Demo Evidence
+
+Goal: make the game demo-ready with browser automation, screenshots, README
+visuals, and UX readiness review.
+
+## T92: FastAPI Static Game Route
+
+Owner:      codex
+Phase:      20
+Type:       frontend integration
+Depends-On: T85, T91
+
+Objective: |
+  Serve the built React/Vite game from FastAPI at `/demo/ship-it-yn`.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "GET /demo/ship-it-yn returns the built game shell with no authentication requirement and no workspace data reads."
+    test: "tests/test_permission_game_public_demo.py::test_public_ship_it_yn_route_renders"
+  - id: AC-2
+    description: "If the Vite build is missing in local dev, the route returns a clear developer message rather than a blank screen."
+    test: "tests/test_permission_game_public_demo.py::test_public_ship_it_yn_route_handles_missing_build"
+
+Files:
+  - frontend/app_shell.py
+  - frontend/permission_game/dist/
+  - tests/test_permission_game_public_demo.py
+
+Context-Refs:
+  - docs/DECISION_LOG.md#decision-index
+  - tests/test_permissions_matrix.py
+
+## T93: Responsive Visual Polish
+
+Owner:      codex
+Phase:      20
+Type:       frontend polish
+Depends-On: T86, T92
+
+Objective: |
+  Polish desktop and mobile layouts so the game is comfortable, readable, and
+  stable across common viewports.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Desktop, tablet, and mobile browser screenshots show no overlapping text, clipped controls, or unreadable meters."
+    test: "tests/browser/test_ship_it_yn_visual.py::test_ship_it_yn_responsive_screenshots"
+  - id: AC-2
+    description: "Action controls preserve stable dimensions during hover, focus, disabled, and feedback states."
+    test: "tests/browser/test_ship_it_yn_visual.py::test_ship_it_yn_controls_do_not_shift_layout"
+
+Files:
+  - frontend/permission_game/src/styles.css
+  - tests/browser/test_ship_it_yn_visual.py
+
+## T94: Motion And Accessibility Pass
+
+Owner:      codex
+Phase:      20
+Type:       frontend polish
+Depends-On: T87, T90
+
+Objective: |
+  Add subtle motion and accessibility support without turning the game into a
+  noisy arcade interface.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Animations respect reduced-motion preference and do not block reading or decision input."
+    test: "frontend/permission_game/src/game/accessibility.test.ts"
+  - id: AC-2
+    description: "All decisions, drawer controls, final report actions, and reset controls are keyboard reachable with visible focus."
+    test: "tests/browser/test_ship_it_yn_accessibility.py::test_ship_it_yn_keyboard_path"
+
+Files:
+  - frontend/permission_game/src/styles.css
+  - tests/browser/test_ship_it_yn_accessibility.py
+
+## T95: Full Public Game Browser E2E
+
+Owner:      codex
+Phase:      20
+Type:       browser test
+Depends-On: T92, T93, T94
+
+Objective: |
+  Add browser-level coverage for a full public game run.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Browser test starts at /demo/ship-it-yn, plays all seven levels, uses inspect at least once, uses sandbox/scope/eval actions, and reaches final report."
+    test: "tests/browser/test_ship_it_yn_gameplay.py::test_public_ship_it_yn_full_run"
+  - id: AC-2
+    description: "Browser test confirms no network calls to real external tools, no local file reads, and no auth token requirement."
+    test: "tests/browser/test_ship_it_yn_gameplay.py::test_public_ship_it_yn_has_no_external_execution"
+
+Files:
+  - tests/browser/test_ship_it_yn_gameplay.py
+
+## T96: Screenshot And README Visual Artifact
+
+Owner:      codex
+Phase:      20
+Type:       demo evidence
+Depends-On: T95
+
+Objective: |
+  Capture durable desktop/mobile screenshots and optional GIF for the public
+  game, then reference them from README.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Desktop and mobile PNG screenshots are generated from the real browser route and checked into docs/audit/artifacts/."
+    test: "tests/test_permission_game_browser_artifacts.py::test_ship_it_yn_browser_artifacts_exist"
+  - id: AC-2
+    description: "README references the game route and at least one visual artifact."
+    test: "tests/test_permission_game_browser_artifacts.py::test_readme_references_ship_it_yn_visual_artifact"
+
+Files:
+  - docs/audit/artifacts/
+  - scripts/capture_ship_it_yn_demo.py
+  - README.md
+  - tests/test_permission_game_browser_artifacts.py
+
+## T97: README And Public Pitch Update
+
+Owner:      human + codex
+Phase:      20
+Type:       marketing
+Depends-On: T96
+
+Objective: |
+  Update README and public pitch copy around Ship It? Y/N as the front door to
+  AI Rollout Training OS.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "README headline and first screen messaging present Ship It? Y/N without positioning it as an LMS, compliance certificate, or real agent runner."
+    test: "tests/test_permission_game_marketing.py::test_readme_positions_ship_it_yn_as_permission_game"
+  - id: AC-2
+    description: "README includes CTA, route, visual artifact, target users, and blocked claims."
+    test: "tests/test_permission_game_marketing.py::test_readme_includes_ship_it_yn_cta_and_claim_boundaries"
+
+Files:
+  - README.md
+  - tests/test_permission_game_marketing.py
+
+## T98: Ship It? Y/N UX Readiness Review
+
+Owner:      human + codex
+Phase:      20
+Type:       audit decision
+Depends-On: T92, T95, T96, T97
+
+Objective: |
+  Review whether the public game is ready to show broadly, needs another polish
+  pass, or should be limited to internal demos.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Readiness review cites public route, scenario coverage, scoring, React/Vite UI, browser e2e, screenshots, README visual, and claim boundaries."
+    test: "tests/test_ship_it_yn_readiness_review.py::test_ship_it_yn_readiness_review_cites_required_evidence"
+  - id: AC-2
+    description: "Readiness review explicitly updates the status of P2-UX-001 for public game scope."
+    test: "tests/test_ship_it_yn_readiness_review.py::test_ship_it_yn_readiness_review_updates_p2_ux_001"
+
+Files:
+  - docs/audit/SHIP_IT_YN_UX_READINESS_REVIEW.md
+  - docs/audit/AUDIT_INDEX.md
+  - docs/CODEX_PROMPT.md
+  - tests/test_ship_it_yn_readiness_review.py
+
+---
+
+## Phase 21 - Workshop, Analytics, And Buyer Validation
+
+Goal: turn the polished game into a workshop wedge and learning loop without
+overclaiming enterprise or paid-market proof.
+
+## T99: Facilitator Debrief Pack
+
+Owner:      human + codex
+Phase:      21
+Type:       workshop artifact
+Depends-On: T98
+
+Objective: |
+  Add facilitator notes and debrief prompts for running Ship It? Y/N with a
+  developer team or AI adoption workshop.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Debrief pack maps each level to real-world AI agent workflow lessons and discussion prompts."
+    test: "tests/test_ship_it_yn_workshop_pack.py::test_facilitator_debrief_maps_levels_to_lessons"
+  - id: AC-2
+    description: "Debrief pack avoids personal shame mechanics and focuses on team risk hotspots."
+    test: "tests/test_ship_it_yn_workshop_pack.py::test_facilitator_debrief_blocks_shame_leaderboard"
+
+Files:
+  - docs/ship_it_yn_facilitator_pack.md
+  - tests/test_ship_it_yn_workshop_pack.py
+
+## T100: Safe Team Summary Report
+
+Owner:      codex
+Phase:      21
+Type:       reporting
+Depends-On: T83, T99
+
+Objective: |
+  Define and implement a safe aggregate team summary for workshop sessions.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Team summary reports aggregate risk hotspots, common unsafe approvals, common overblocks, and recommended habits without naming or ranking individuals."
+    test: "tests/test_ship_it_yn_team_summary.py::test_team_summary_aggregates_without_personal_ranking"
+  - id: AC-2
+    description: "Summary excludes raw prompts, code, credentials, customer data, and personal identifiers."
+    test: "tests/test_ship_it_yn_team_summary.py::test_team_summary_excludes_sensitive_data"
+
+Files:
+  - ai_rollout_os/permissions/game_summary.py
+  - tests/test_ship_it_yn_team_summary.py
+
+## T101: Analytics Lite For Public Demo
+
+Owner:      codex
+Phase:      21
+Type:       analytics
+Depends-On: T83, T95
+
+Objective: |
+  Add local/session analytics for public demo improvement without server-side
+  tracking or personal data collection.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Public analytics track only local session counts, risk category outcomes, time-to-decision buckets, inspected artifact counts, and final score."
+    test: "frontend/permission_game/src/game/analytics.test.ts"
+  - id: AC-2
+    description: "Public analytics do not send network events or persist personal identifiers."
+    test: "tests/browser/test_ship_it_yn_gameplay.py::test_public_ship_it_yn_has_no_tracking_network_calls"
+
+Files:
+  - frontend/permission_game/src/game/analytics.ts
+  - tests/browser/test_ship_it_yn_gameplay.py
+
+## T102: Buyer Feedback Loop
+
+Owner:      human + codex
+Phase:      21
+Type:       customer discovery
+Depends-On: T98, T99
+
+Objective: |
+  Create the buyer feedback template and evidence log for manual demos.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Feedback template captures buyer role, team agent usage, strongest scenario, weakest scenario, willingness to run workshop, objections, and next action."
+    test: "tests/test_ship_it_yn_buyer_feedback.py::test_buyer_feedback_template_has_required_fields"
+  - id: AC-2
+    description: "Feedback log separates observed evidence from founder/operator assumptions."
+    test: "tests/test_ship_it_yn_buyer_feedback.py::test_buyer_feedback_log_separates_observed_and_assumed"
+
+Files:
+  - docs/ship_it_yn_buyer_feedback.md
+  - tests/test_ship_it_yn_buyer_feedback.py
+
+## T103: AI-Assisted Scenario Authoring Workflow
+
+Owner:      codex
+Phase:      21
+Type:       ai authoring
+Depends-On: T80, T84, T102
+
+Objective: |
+  Define a safe AI-assisted workflow for drafting new scenario packs while
+  keeping validation deterministic and human-owned.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Authoring workflow documents prompt boundaries, required human review, schema validation, safety tests, and blocked live scoring usage."
+    test: "tests/test_ship_it_yn_scenario_authoring.py::test_scenario_authoring_workflow_has_required_controls"
+  - id: AC-2
+    description: "Authoring workflow includes examples for Dev, Support, Ops, Data, and Internal Tools scenario packs."
+    test: "tests/test_ship_it_yn_scenario_authoring.py::test_scenario_authoring_workflow_lists_pack_examples"
+
+Files:
+  - docs/ship_it_yn_scenario_authoring.md
+  - tests/test_ship_it_yn_scenario_authoring.py
+
+## T104: Claim Boundary And Security Review
+
+Owner:      human + codex
+Phase:      21
+Type:       audit
+Depends-On: T99, T100, T101, T102, T103
+
+Objective: |
+  Review the public game, workshop pack, analytics, and buyer feedback docs for
+  overclaims, privacy risk, and unsafe product implications.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Review blocks claims about compliance approval, certified safety, production readiness, incident reduction, PMF, or paid conversion unless evidence exists."
+    test: "tests/test_ship_it_yn_claim_boundary_review.py::test_claim_boundary_review_blocks_unsupported_claims"
+  - id: AC-2
+    description: "Review confirms public game and analytics do not collect sensitive data or execute real agent actions."
+    test: "tests/test_ship_it_yn_claim_boundary_review.py::test_claim_boundary_review_confirms_public_demo_safety"
+
+Files:
+  - docs/audit/SHIP_IT_YN_CLAIM_BOUNDARY_REVIEW.md
+  - tests/test_ship_it_yn_claim_boundary_review.py
+
+## T105: Ship It? Y/N Buyer Demo Readiness Review
+
+Owner:      human + codex
+Phase:      21
+Type:       audit decision
+Depends-On: T98, T99, T100, T102, T104
+
+Objective: |
+  Decide whether Ship It? Y/N is ready for manual buyer demos, needs another
+  game polish pass, or should pause pending stronger scenario evidence.
+
+Acceptance-Criteria:
+  - id: AC-1
+    description: "Readiness review cites game route, scenario coverage, scoring, browser evidence, facilitator pack, team summary, buyer feedback template, and claim boundary review."
+    test: "tests/test_ship_it_yn_buyer_demo_readiness.py::test_buyer_demo_readiness_cites_required_artifacts"
+  - id: AC-2
+    description: "Readiness review records one of: show buyer demos, improve game, or pause; it does not claim PMF or paid conversion without evidence."
+    test: "tests/test_ship_it_yn_buyer_demo_readiness.py::test_buyer_demo_readiness_records_claim_safe_decision"
+
+Files:
+  - docs/audit/SHIP_IT_YN_BUYER_DEMO_READINESS_REVIEW.md
+  - docs/audit/AUDIT_INDEX.md
+  - docs/CODEX_PROMPT.md
+  - tests/test_ship_it_yn_buyer_demo_readiness.py
+
 ## T63: Public Policy And SOP Corpus Research
 
 Owner:      codex

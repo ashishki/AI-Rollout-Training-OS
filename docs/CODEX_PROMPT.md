@@ -1,7 +1,7 @@
 # AI Rollout Training OS - Compact Session State
 
-Version: 2.1
-Date: 2026-05-29
+Version: 2.2
+Date: 2026-05-31
 Status: active-pivot
 
 Full historical prompt archived at
@@ -9,16 +9,21 @@ Full historical prompt archived at
 
 ## Current State
 
-- Current phase: Phase 16 - Visual Permission Simulator Pivot.
-- Active pivot: visual Agent Permission Training Simulator.
-- Reference direction: fast, visual, showable, monetizable permission-judgment
-  training experience.
+- Current phase: Phase 18 - Scenario And Scoring Core.
+- Active pivot: polished React/Vite permission mini-game built on the Agent
+  Permission Training Simulator.
+- Reference direction: beautiful, convenient, showable, monetizable
+  permission-judgment game with terminal-style interaction, risk meters,
+  inspect/diff, sandbox, scope, eval, escalation, final report, and browser
+  evidence.
 - Active task source: Post-MVP production maturity graph,
   `docs/product_maturity_task_graph.md`.
-- Phase status: Phase 16 readiness review complete; local browser demo route is
-  available at `/demo/permission-simulator`, with a captured Chrome screenshot
-  at `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 183 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
+  complete through T78; Phase 18 implementation starts at T79. Local browser
+  demo route remains available at `/demo/permission-simulator`, with a captured
+  Chrome screenshot at
+  `docs/audit/artifacts/permission_simulator_demo.png`.
+- Baseline: 188 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -30,12 +35,22 @@ Full historical prompt archived at
 - `docs/product_maturity_roadmap.md`
 - `docs/product_maturity_task_graph.md`
 - `docs/IMPLEMENTATION_CONTRACT.md`
+- `docs/ship_it_yn_product_spec.md`
+- `docs/permission_game_scenario_schema.md`
+- `docs/ship_it_yn_frontend_architecture.md`
+- `docs/ship_it_yn_ai_development_plan.md`
 
 ## Product Direction
 
 The v1 product is the Agent Permission Training Simulator. It teaches teams to
 judge AI agent requests through visual scenarios, consequence feedback, scoring,
 safer alternatives, and lesson text.
+
+The next public product surface is Ship It? Y/N: a React/Vite/TypeScript/
+Tailwind terminal-style game served from FastAPI at `/demo/ship-it-yn`.
+It must be polished and convenient, not a compressed quiz. It should include
+seven levels, inspect/diff mechanics, risk meters, deterministic scoring,
+badges, final report, share text, and browser evidence.
 
 Decision outcomes:
 
@@ -66,20 +81,23 @@ the simulator works as a focused demo/workshop experience.
 - `D-012: Public Static Permission Simulator Demo Route` recorded on 2026-05-29.
 - `P2-UX-001: Permission Simulator Browser Evidence` partially addressed on
   2026-05-29 with a reproducible public-demo screenshot.
+- `T75-T78 planning package` completed on 2026-05-31 for Ship It? Y/N product
+  spec, scenario schema, frontend architecture, and AI development plan.
 
 ## Next Task
 
-Active next task: none. Phase 16 task graph is complete through T74.
+Active next task: T79: Game Scenario Pydantic Schema.
 
 ## Open Findings
 
 | ID | Severity | Status | Notes |
 |----|----------|--------|-------|
-| P2-UX-001 | P2 | Partial | Public permission simulator screenshot and capture script exist; broader app-shell browser e2e coverage remains open before full UX readiness claims. |
+| P2-UX-001 | P2 | Partial | Public permission simulator screenshot and capture script exist; Phase 20 must add browser e2e and screenshots for `/demo/ship-it-yn`, while broader app-shell browser e2e remains open before full UX readiness claims. |
 
 ## Fix Queue
 
-- None blocking Phase 16.
+- Complete T75-T105 for Ship It? Y/N before expanding into LMS or enterprise
+  dashboards.
 
 ## Active Profiles And Eval State
 
@@ -103,9 +121,13 @@ Active next task: none. Phase 16 task graph is complete through T74.
 | 2026-05-29 | T74: Permission Simulator Readiness Review | Phase 16 decision is SHOW DEMO with P2-UX-001 still open and no P0/P1 blockers. |
 | 2026-05-29 | D-012: Public Static Permission Simulator Demo Route | `/demo/permission-simulator` added for browser demo access without workspace data reads. |
 | 2026-05-29 | P2-UX-001: Permission Simulator Browser Evidence | Captured public demo screenshot with headless Chrome and added a reproducible capture script; broader app-shell browser e2e remains open. |
+| 2026-05-31 | T75-T78 planning package | Added Ship It? Y/N product spec, scenario schema, React/Vite frontend architecture, AI development plan, and Phase 17-21 task graph. Next implementation task is T79. |
 
 ## Rules
 
 - Build a visual permission-judgment product, not a generic course.
+- Ship It? Y/N must use React/Vite for the polished public game UI.
 - Scenarios must teach boundaries: allowed, needs approval, blocked, unknown.
 - Keep monetization small and concrete: workshop/demo pack before platform.
+- Do not execute real commands, read real local files, request real credentials,
+  or use live LLM scoring in the game.

@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-29
+Last updated: 2026-05-31
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-05-31 - T75-T105 Planning - Ship It? Y/N AI Development Roadmap
+
+- Scope: `docs/ship_it_yn_product_spec.md`, `docs/permission_game_scenario_schema.md`, `docs/ship_it_yn_frontend_architecture.md`, `docs/ship_it_yn_ai_development_plan.md`, `docs/product_maturity_roadmap.md`, `docs/product_maturity_task_graph.md`, `docs/PROJECT_PLAN.md`, `docs/tasks.md`, `docs/CODEX_PROMPT.md`, `tests/test_ship_it_yn_planning_docs.py`, `tests/test_product_maturity_docs.py`
+- Why this work happened: Human accepted Ship It? Y/N direction but explicitly asked not to compress the idea and required React/Vite so the game can be beautiful and convenient from the start.
+- Decisions applied: `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md`, `docs/ship_it_yn_frontend_architecture.md`, `docs/ship_it_yn_ai_development_plan.md`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_ship_it_yn_planning_docs.py tests/test_product_maturity_docs.py tests/test_codex_prompt_state.py -q` passed with 10 tests; full `.venv/bin/python -m pytest -q` passed with 188 tests after starting local Docker Postgres; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: Start T75, then execute Phase 17 through Phase 21 task-by-task. Do not implement a reduced quiz, real command runner, LMS, or live LLM scorer.
+- Notes for next agent: React + Vite + TypeScript + Tailwind is now the chosen frontend stack for the polished public game under `frontend/permission_game/`, served from FastAPI at `/demo/ship-it-yn`.
 
 ### 2026-05-29 - P2-UX-001 - Permission Simulator Browser Evidence
 

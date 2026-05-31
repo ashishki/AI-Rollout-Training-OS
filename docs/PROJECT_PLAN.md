@@ -1,7 +1,7 @@
 # AI Rollout Training OS - Project Plan
 
-Status: active pivot
-Role: visual agent permission and rollout training simulator
+Status: active game build planning
+Role: visual agent permission game and rollout training simulator
 Priority: P0
 
 ## Strategic Role
@@ -35,7 +35,68 @@ The decision is taught as one of four permission-boundary outcomes:
 - blocked
 - unknown
 
+Next public product surface:
+
+**Ship It? Y/N**
+
+Ship It? Y/N is a polished React/Vite terminal-style mini-game built on top of
+the Agent Permission Training Simulator. It should be beautiful, convenient,
+and immediately playable. The goal is not to shrink the idea into a quiz. The
+goal is to turn permission fatigue, blast radius, scoped access, eval gates,
+and audit trail habits into a 3 to 7 minute browser experience.
+
 ## Near-Term Roadmap
+
+### P0 - Ship It? Y/N Product And Architecture Blueprint
+
+- Create `docs/ship_it_yn_product_spec.md`.
+- Create `docs/permission_game_scenario_schema.md`.
+- Create `docs/ship_it_yn_frontend_architecture.md`.
+- Create `docs/ship_it_yn_ai_development_plan.md`.
+- Align `docs/product_maturity_task_graph.md`, `docs/tasks.md`, and
+  `docs/CODEX_PROMPT.md` on Phase 17 and T75.
+- Keep React + Vite + TypeScript + Tailwind as the selected frontend stack for
+  the public game.
+
+### P0 - Scenario And Scoring Core
+
+- Build seven level scenarios:
+  - Tiny Cleanup
+  - One-Line Diff
+  - Flaky Tests Must Go
+  - The Helpful Issue
+  - One Permission To Rule Them All
+  - Eval Is Red, Demo Is Soon
+  - Not Everything Is Deny
+- Add Pydantic validation.
+- Add deterministic scoring, meter deltas, badges, final title, and share text.
+- Add safety guards against real command execution, real secrets, real customer
+  data, and unsupported claims.
+
+### P0 - React/Vite Playable Game
+
+- Add isolated `frontend/permission_game/` app.
+- Implement terminal shell, scenario card, inspect/diff drawer, action buttons,
+  meters, audit trail, consequence panel, badge toast, and final report.
+- Serve the built game from FastAPI at `/demo/ship-it-yn`.
+- Prioritize polish, keyboard usability, mobile layout, and visual stability.
+
+### P1 - Browser Polish And Public Evidence
+
+- Add browser e2e for the full public game.
+- Capture desktop and mobile screenshots.
+- Add README GIF or screenshot.
+- Complete UX readiness review.
+
+### P1 - Workshop And Buyer Validation
+
+- Add facilitator notes and debrief.
+- Add safe aggregate team summary.
+- Add analytics-lite for local/session risk hotspots.
+- Add buyer feedback template.
+- Review claim boundaries before public outreach.
+
+## Completed Phase 16 Roadmap
 
 ### P0 - Reframe README and Product Docs
 

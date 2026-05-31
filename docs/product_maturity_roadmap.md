@@ -66,8 +66,13 @@ willingness to pay as a focused workshop/demo pack.
 | 14 | GA Readiness | Is the product mature enough for general availability? | GA checklist passes with no P0/P1 findings. |
 | 15 | Solo Showcase And Small-Team Rollout | Can a solo operator show the training loop without corporate access? | Public-source role pack, mini-cohort, approval report, and claim-safe demo artifacts are ready. |
 | 16 | Visual Permission Simulator | Can the product teach agent permission judgment through a polished, monetizable simulator? | Scenario library, scoring, visual prototype, and workshop pack are ready. |
+| 17 | Ship It? Y/N Product And Architecture Blueprint | Can the mini-game be specified as the next polished public product surface without shrinking the idea? | Product spec, scenario schema, React/Vite architecture, visual direction, and task graph are aligned. |
+| 18 | Scenario And Scoring Core | Can the full seven-level game be driven by validated data and deterministic scoring? | Seven scenarios, Pydantic validation, meter deltas, badges, and safety guards pass tests. |
+| 19 | React/Vite Playable Game | Can the game feel beautiful, convenient, and playable in one browser session? | React/Vite public game runs through all seven levels with terminal UI, inspect/diff, meters, badges, and final report. |
+| 20 | Browser Polish And Public Demo Evidence | Can the public game be shown without caveats? | Browser e2e, desktop/mobile screenshots, README visual artifact, and UX readiness review pass. |
+| 21 | Workshop, Analytics, And Buyer Validation | Can the game become a workshop wedge and evidence loop? | Facilitator pack, safe aggregate summary, analytics-lite, buyer feedback loop, and claim-boundary review are ready. |
 
-## Pivot: Visual Permission Simulator
+## Phase 16 - Visual Permission Simulator Pivot
 
 The next product direction and active v1 is an Agent Permission Training
 Simulator. The product should teach teams how to evaluate agent requests such as
@@ -97,6 +102,144 @@ The v1 teaching taxonomy is:
   evidence, exceeds scope, or crosses a forbidden boundary.
 - unknown: action needs clarification because the request lacks enough context
   for a safe decision.
+
+## Next Pivot: Ship It? Y/N
+
+Phase 17 starts the next AI-assisted development cycle. The goal is not to
+compress the simulator into a small quiz. The goal is a polished
+React/Vite-powered public mini-game that makes agent permission risk feel real
+through pressure, tradeoffs, consequence feedback, meters, and a shareable final
+report.
+
+Ship It? Y/N is the front door for the Agent Permission Training Simulator:
+
+- a 3 to 7 minute public game;
+- seven memorable scripted levels;
+- terminal-style developer UI;
+- inspect/diff, sandbox, scope, eval, escalation, and rollback mechanics;
+- deterministic scoring;
+- browser-level evidence;
+- workshop integration after the playable demo is polished.
+
+Frontend decision:
+
+- build the game as React + Vite + TypeScript + Tailwind under
+  `frontend/permission_game/`;
+- serve the built bundle from FastAPI at `/demo/ship-it-yn`;
+- keep public game persistence local-only until a later authenticated workshop
+  surface exists.
+
+Do not build a real agent runner. Do not execute commands, read local files,
+request real credentials, or use live LLM scoring.
+
+## Phase 17 - Ship It? Y/N Product And Architecture Blueprint
+
+Goal: define the complete product, scenario, visual, and technical blueprint
+before implementation.
+
+Build:
+
+- product spec;
+- scenario schema;
+- React/Vite frontend architecture;
+- visual and copy direction;
+- AI development plan;
+- task graph and state alignment.
+
+Exit gate:
+
+- `docs/ship_it_yn_product_spec.md`,
+  `docs/permission_game_scenario_schema.md`,
+  `docs/ship_it_yn_frontend_architecture.md`, and
+  `docs/ship_it_yn_ai_development_plan.md` agree on the game shape.
+- Active next task is T75.
+- React/Vite is explicitly selected for the polished game UI.
+
+## Phase 18 - Scenario And Scoring Core
+
+Goal: make the game data-driven and deterministic.
+
+Build:
+
+- seven starter scenarios;
+- Pydantic validation;
+- scoring outcomes for correct, partial, unsafe, and overblock choices;
+- meter deltas for velocity, blast radius, trust, eval confidence, and audit
+  trail;
+- badge/title logic;
+- local session model;
+- safety guards against real execution, real secrets, and unsafe claims.
+
+Exit gate:
+
+- all seven scenarios validate;
+- every playable choice has feedback;
+- scoring and badges are tested;
+- no live LLM or real command execution path exists.
+
+## Phase 19 - React/Vite Playable Game
+
+Goal: build the beautiful public game, not just a form.
+
+Build:
+
+- React/Vite/TypeScript/Tailwind scaffold;
+- terminal layout;
+- scenario card;
+- decision buttons and keyboard shortcuts;
+- inspect/diff drawer;
+- risk meters;
+- audit trail;
+- consequence panel;
+- badge notifications;
+- final report and share text.
+
+Exit gate:
+
+- one full seven-level run works locally;
+- desktop and mobile layouts are stable;
+- UI is polished enough to show without explaining unfinished controls.
+
+## Phase 20 - Browser Polish And Public Demo Evidence
+
+Goal: make `/demo/ship-it-yn` demo-ready with real browser proof.
+
+Build:
+
+- FastAPI static serving for the Vite bundle;
+- browser e2e for the public game path;
+- desktop and mobile screenshots;
+- README GIF or screenshot;
+- accessibility pass;
+- UX readiness review.
+
+Exit gate:
+
+- browser automation passes;
+- screenshots are nonblank and correctly framed;
+- README points to the game and visual artifact;
+- P2-UX-001 is narrowed or closed for the public game scope.
+
+## Phase 21 - Workshop, Analytics, And Buyer Validation
+
+Goal: turn the game into a credible workshop and buyer-learning wedge.
+
+Build:
+
+- facilitator debrief;
+- team summary report;
+- safe local/session analytics;
+- buyer feedback template;
+- scenario authoring workflow;
+- claim boundary and security review;
+- readiness review for manual buyer demos.
+
+Exit gate:
+
+- the game can start a team discussion about risk hotspots;
+- aggregate reporting avoids personal shame mechanics;
+- no unsupported claims are made about compliance, production readiness, PMF, or
+  paid conversion.
 
 ## Phase 6 - PMF Pilot System
 

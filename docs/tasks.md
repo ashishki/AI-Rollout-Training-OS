@@ -11,13 +11,20 @@ This file remains the canonical MVP implementation graph for T01-T24. Current
 active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
-Active phase: Phase 16 - Visual Permission Simulator Pivot.
-Active next task: none. Phase 16 is complete through `T74: Permission Simulator
-Readiness Review`.
+Active phase: Phase 18 - Scenario And Scoring Core.
+Active next task: `T79: Game Scenario Pydantic Schema`.
+Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
+Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
+Development Plan`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and
 unknown decisions for AI agent requests.
+
+The next public product surface is Ship It? Y/N: a polished React/Vite
+terminal-style mini-game served at `/demo/ship-it-yn` that teaches permission
+fatigue, blast radius, scoped access, eval gates, and audit trail habits without
+real command execution.
 
 ## Phase 1 - Foundation
 
