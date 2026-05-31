@@ -22,6 +22,7 @@ Repo-local map for architectural memory, adoption hypothesis evidence, retrieval
 - Canonical repo artifacts win over this manifest.
 - Obsidian and generated indexes are optional navigation layers.
 - Context packets must cite canonical paths before implementation or review relies on them.
+- The cognition vault is for navigation, context packets, and cross-project recall only; this repo remains authoritative.
 
 ## Project Identity
 
@@ -103,6 +104,10 @@ If an agent runs on the VPS, clone the vault next to `projects/` and pass packet
 
 Do not write canonical decisions, eval results, or findings directly into the vault. Write them into this repo first, then regenerate the vault.
 
+Use the vault when starting an agent cold, preparing a reviewer packet, comparing
+projects, or checking cross-project dependencies. Do not use it to close tasks,
+change project status, replace ADRs/evals/findings, or drive runtime behavior.
+
 ---
 
 ## Known Gaps
@@ -118,4 +123,3 @@ Do not write canonical decisions, eval results, or findings directly into the va
 |----------|------|--------|
 | Cognition index | `generated/cognition/index.json` | Optional generated artifact |
 | Context packets | `docs/context-packets/` | Commit only major review/regression packets |
-
