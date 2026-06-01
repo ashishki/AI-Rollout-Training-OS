@@ -74,3 +74,14 @@ export type PermissionGameScenario = {
 };
 
 export type PermissionGameScenarioSummary = PermissionGameScenario;
+
+export type GameRoleId = "manager" | "facilitator" | "developer";
+
+export type GameRolePack = {
+  id: GameRoleId;
+  label: string;
+  shortLabel: string;
+  description: string;
+  promise: string;
+  scenarios: PermissionGameScenarioSummary[];
+};

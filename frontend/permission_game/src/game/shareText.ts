@@ -19,12 +19,12 @@ const PERSONAL_DATA_PATTERNS = [
 
 export function buildShareText(result: ShareResultInput) {
   const text = [
-    `Ship It? Y/N score: ${result.score}/100`,
-    `Title: ${result.title}`,
-    `Unsafe approvals: ${result.unsafeApprovals}`,
-    `Overblocks: ${result.overblocks}`,
-    `Strongest habit: ${result.strongestHabit}`,
-    `Next habit: ${recommendedNextHabit(result.weakestRiskArea)}`,
+    `Ship It? Y/N счёт: ${result.score}/100`,
+    `Итог: ${result.title}`,
+    `Рискованные разрешения: ${result.unsafeApprovals}`,
+    `Лишние запреты: ${result.overblocks}`,
+    `Сильная привычка: ${result.strongestHabit}`,
+    `Следующая привычка: ${recommendedNextHabit(result.weakestRiskArea)}`,
   ].join(" | ");
 
   return redactPersonalData(text);
@@ -39,9 +39,9 @@ export async function copyShareText(
 
 export function recommendedNextHabit(weakestRiskArea: string) {
   if (weakestRiskArea === "none") {
-    return "keep inspecting before approval";
+    return "проверять доказательства перед разрешением";
   }
-  return `practice ${weakestRiskArea.replaceAll("_", " ")} boundaries`;
+  return `потренировать границы: ${weakestRiskArea.replaceAll("_", " ")}`;
 }
 
 function redactPersonalData(text: string) {

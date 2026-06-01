@@ -11,11 +11,13 @@ import {
   recordAnalyticsDecision,
   startAnalyticsSession,
 } from "../game/analytics";
-import type { GameChoiceId } from "../game/scenarioTypes";
+import type { GameChoiceId, GameRolePack } from "../game/scenarioTypes";
 import type { PermissionGameScenarioSummary } from "../game/scenarioTypes";
 
 type TerminalLayoutProps = {
+  role: GameRolePack;
   scenarios: PermissionGameScenarioSummary[];
+  onChangeRole: () => void;
 };
 
 const initialMeterValues: RiskMeterValues = {
@@ -26,7 +28,22 @@ const initialMeterValues: RiskMeterValues = {
   auditTrail: 51,
 };
 
-export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
+const CHOICE_LABELS: Record<GameChoiceId, string> = {
+  approve: "разрешить",
+  deny: "запретить",
+  inspect_diff: "проверить",
+  run_in_sandbox: "песочница",
+  require_eval: "запросить доказательства",
+  restrict_scope: "сузить область",
+  escalate_reviewer: "эскалировать",
+  rollback: "откатить",
+};
+
+export function TerminalLayout({
+  onChangeRole,
+  role,
+  scenarios,
+}: TerminalLayoutProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [completedDecisions, setCompletedDecisions] = useState<GameChoiceId[]>([]);
   const [showFinalReport, setShowFinalReport] = useState(false);
@@ -47,18 +64,18 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   const auditEvents: AuditTrailEvent[] = [
     {
       id: "scenario-loaded",
-      label: "Scenario loaded",
+      label: "Сценарий открыт",
       detail: activeScenario.id,
     },
     ...(selectedDecision
       ? [
           {
             id: "decision-selected",
-            label: `Selected ${selectedDecision}`,
+            label: `Выбрано: ${CHOICE_LABELS[selectedDecision]}`,
             detail:
               auditTrailQuality === "inspected"
-                ? `Inspected ${inspectedArtifactIds.join(", ")}`
-                : "Decision recorded before inspection",
+                ? `Проверено артефактов: ${inspectedArtifactIds.length}`
+                : "Решение записано до проверки",
           },
         ]
       : []),
@@ -70,6 +87,10 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
       startAnalyticsSession(storage);
     }
   }, []);
+
+  useEffect(() => {
+    resetRun();
+  }, [role.id]);
 
   function handleDecision(choice: GameChoiceId) {
     if (choice === "inspect_diff") {
@@ -131,23 +152,23 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
           <ResultScreen
             result={{
               score: Math.min(completedDecisions.length * 12, 100),
-              title: "Steady Release Reviewer",
-              demoResult: "Seven-level public demo complete",
-              prodStatus: "Not production evidence",
+              title: "Спокойный ревьюер разрешений",
+              demoResult: `${role.label}: демо завершено`,
+              prodStatus: "Не доказательство для продакшна",
               unsafeApprovals: completedDecisions.filter(
                 (decision) => decision === "approve"
               ).length,
               overblocks: completedDecisions.filter((decision) => decision === "deny")
                 .length,
               strongestHabit: completedDecisions.includes("restrict_scope")
-                ? "scoped access"
-                : "audit awareness",
+                ? "узкая область"
+                : "внимание к следу проверки",
               weakestRiskArea: "none",
               badges: ["clean_approval_trail"],
             }}
           />
           <button className="terminal-reset-button mt-4" onClick={resetRun} type="button">
-            Reset Run
+            Играть заново
           </button>
         </div>
       </main>
@@ -157,12 +178,16 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   return (
     <main className="min-h-screen bg-terminal-bg text-terminal-text">
       <div
-        aria-label="Ship It? Y/N terminal layout"
+        aria-label="Ship It? Y/N игровое поле"
         className="mx-auto grid min-h-screen max-w-7xl gap-4 px-4 py-4 md:px-6 lg:grid-cols-[minmax(15rem,0.8fr)_minmax(22rem,1.4fr)_minmax(16rem,0.9fr)]"
       >
         <TerminalLog scenarios={scenarios} />
 
-        <section aria-label="Active scenario" className="terminal-region">
+        <section aria-label="Активный сценарий" className="terminal-region">
+          <div className="game-mode-strip">
+            <span>{role.shortLabel}</span>
+            <p>{role.promise}</p>
+          </div>
           <ScenarioCard scenario={activeScenario} totalLevels={scenarios.length} />
           <DecisionButtons
             choices={activeScenario.choices}
@@ -180,7 +205,7 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
           />
           {selectedDecision ? (
             <button className="next-level-button" onClick={advanceLevel} type="button">
-              {activeIndex === scenarios.length - 1 ? "Show Final Report" : "Next Level"}
+              {activeIndex === scenarios.length - 1 ? "Показать итог" : "Следующий уровень"}
             </button>
           ) : null}
           <DiffPreview
@@ -191,12 +216,17 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
           />
         </section>
 
-        <aside aria-label="Risk meters and audit trail" className="terminal-region">
+        <aside aria-label="Риск-метры и аудит" className="terminal-region">
           <div className="terminal-region-header">
-            <span>meters</span>
-            <button className="terminal-reset-button" onClick={resetRun} type="button">
-              Reset Run
-            </button>
+            <span>метры</span>
+            <div className="terminal-header-actions">
+              <button className="terminal-reset-button" onClick={resetRun} type="button">
+                Заново
+              </button>
+              <button className="terminal-reset-button" onClick={onChangeRole} type="button">
+                Сменить роль
+              </button>
+            </div>
           </div>
           <RiskMeters values={meterValues} />
           <AuditTrail
@@ -206,15 +236,15 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
           <ResultScreen
             result={{
               score: selectedDecision ? 15 : 0,
-              title: selectedDecision ? "Permission Apprentice" : "Practice Run",
-              demoResult: "Local demo only",
-              prodStatus: "Not production evidence",
+              title: selectedDecision ? "Решение принято" : "Тренировка",
+              demoResult: "Локальное демо",
+              prodStatus: "Не доказательство для продакшна",
               unsafeApprovals: 0,
               overblocks: 0,
               strongestHabit:
                 auditTrailQuality === "inspected"
-                  ? "inspection discipline"
-                  : "audit awareness",
+                  ? "сначала доказательства"
+                  : "внимание к следу проверки",
               weakestRiskArea: activeScenario.riskCategory,
               badges: activeScenario.badges ?? [],
             }}
@@ -229,9 +259,9 @@ function fallbackFeedback(choice: GameChoiceId) {
   return {
     outcome: "partial" as const,
     scoreDelta: 5,
-    consequence: `Decision recorded: ${choice}`,
-    lesson: "The demo records this decision for the final report.",
-    saferAlternative: "Inspect context, preserve scope, and keep a reviewable trail.",
+    consequence: `Решение записано: ${CHOICE_LABELS[choice]}`,
+    lesson: "Демо сохраняет решение для итогового отчёта.",
+    saferAlternative: "Проверить контекст, сузить область и оставить след проверки.",
   };
 }
 

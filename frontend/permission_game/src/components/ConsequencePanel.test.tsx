@@ -1,15 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import scenarios from "../data/shipItYnScenarios.json";
-import type { PermissionGameScenario } from "../game/scenarioTypes";
+import { ROLE_PACKS } from "../game/rolePacks";
 import { ConsequencePanel } from "./ConsequencePanel";
 
-const typedScenarios = scenarios as PermissionGameScenario[];
+const managerScenario = ROLE_PACKS[0].scenarios[0];
 
 describe("ConsequencePanel", () => {
   it("renders consequence, lesson, safer alternative, and badge feedback", () => {
-    const scenario = typedScenarios[0];
+    const scenario = managerScenario;
 
     render(
       <ConsequencePanel
@@ -19,22 +18,20 @@ describe("ConsequencePanel", () => {
       />
     );
 
-    expect(screen.getByLabelText("Consequence panel")).toHaveAttribute(
+    expect(screen.getByLabelText("Панель последствий")).toHaveAttribute(
       "data-outcome",
       "correct"
     );
-    const panel = screen.getByLabelText("Consequence panel");
+    const panel = screen.getByLabelText("Панель последствий");
     expect(panel).toHaveTextContent(
-      /outcome\s*correct\s*Only generated cache files were removed.*Score change: \+15.*Scope turns a risky destructive request.*Safer path.*Limit cleanup to the listed/s
+      /исход\s*точно\s*Хорошее решение.*Очки: \+15.*Сильное разрешение.*Безопаснее/s
     );
-    expect(screen.getByLabelText("Badge earned")).toHaveTextContent(
-      "Scope Before Delete"
-    );
+    expect(screen.getByLabelText("Получен бейдж")).toHaveTextContent("Минимум данных");
   });
 
   it("shows a stable empty state before a decision", () => {
     render(<ConsequencePanel badges={[]} selectedChoice={null} />);
 
-    expect(screen.getByText("Choose a decision to reveal the result.")).toBeVisible();
+    expect(screen.getByText("Выберите решение, чтобы увидеть результат.")).toBeVisible();
   });
 });

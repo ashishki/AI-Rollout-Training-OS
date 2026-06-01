@@ -115,6 +115,7 @@ the simulator works as a focused demo/workshop experience.
 - `T103: AI-Assisted Scenario Authoring Workflow` completed on 2026-06-01.
 - `T104: Claim Boundary And Security Review` completed on 2026-06-01.
 - `T105: Ship It? Y/N Buyer Demo Readiness Review` completed on 2026-06-01.
+- Russian role-based UX polish completed on 2026-06-01.
 
 ## Next Task
 
@@ -183,6 +184,7 @@ Active next task: Manual buyer demos (human-owned evidence collection).
 | 2026-06-01 | T103: AI-Assisted Scenario Authoring Workflow | Added a safe AI-assisted scenario-pack authoring workflow with prompt boundaries, human review, schema validation, safety tests, blocked live scoring usage, and Dev/Support/Ops/Data/Internal Tools pack examples. Next implementation task is T104. |
 | 2026-06-01 | T104: Claim Boundary And Security Review | Added claim-boundary/security audit for the public game, workshop pack, team summary, local analytics, buyer feedback, and scenario authoring workflow; blocked unsupported compliance, certified safety, production readiness, incident reduction, PMF, and paid-conversion claims. Next implementation task is T105. |
 | 2026-06-01 | T105: Ship It? Y/N Buyer Demo Readiness Review | Recorded SHOW_BUYER_DEMOS decision citing game route, scenario coverage, scoring, browser evidence, facilitator pack, safe team summary, buyer feedback template, and claim-boundary review while blocking PMF and paid-conversion claims. Next loop is human-owned manual buyer demo evidence collection. |
+| 2026-06-01 | Russian Role-Based UX Polish | Added Russian-first role selection for Manager, Team Lead/Facilitator, and Developer modes, manager-friendly non-code scenarios, localized controls/results, refreshed visual styling, and updated desktop/mobile screenshots. Next loop remains human-owned manual buyer demo evidence collection. |
 
 ## Rules
 

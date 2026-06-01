@@ -6,10 +6,10 @@ type TerminalLogProps = {
 
 export function TerminalLog({ scenarios }: TerminalLogProps) {
   return (
-    <section aria-label="Decision history" className="terminal-region">
+    <section aria-label="История решений" className="terminal-region">
       <div className="terminal-region-header">
-        <span>history</span>
-        <span>{scenarios.length} levels</span>
+        <span>история</span>
+        <span>{scenarios.length} уров.</span>
       </div>
       <ol className="mt-4 space-y-3">
         {scenarios.slice(0, 4).map((scenario) => (

@@ -16,28 +16,28 @@ export function ConsequencePanel({
 }: ConsequencePanelProps) {
   if (!selectedChoice || !feedback) {
     return (
-      <section aria-label="Consequence panel" className="consequence-panel">
-        <h2>Consequence</h2>
-        <p>Choose a decision to reveal the result.</p>
+      <section aria-label="Панель последствий" className="consequence-panel">
+        <h2>Последствие</h2>
+        <p>Выберите решение, чтобы увидеть результат.</p>
       </section>
     );
   }
 
   return (
     <section
-      aria-label="Consequence panel"
+      aria-label="Панель последствий"
       className="consequence-panel"
       data-outcome={feedback.outcome}
     >
       <div className="terminal-region-header">
-        <span>outcome</span>
-        <span>{feedback.outcome}</span>
+        <span>исход</span>
+        <span>{OUTCOME_LABELS[feedback.outcome]}</span>
       </div>
       <h2>{feedback.consequence}</h2>
-      <p className="score-change">Score change: {formatScoreDelta(feedback.scoreDelta)}</p>
+      <p className="score-change">Очки: {formatScoreDelta(feedback.scoreDelta)}</p>
       <p>{feedback.lesson}</p>
       <div className="safer-alternative">
-        <span>Safer path</span>
+        <span>Безопаснее</span>
         <p>{feedback.saferAlternative}</p>
       </div>
       <BadgeToast
@@ -52,3 +52,10 @@ export function ConsequencePanel({
 function formatScoreDelta(scoreDelta: number) {
   return scoreDelta > 0 ? `+${scoreDelta}` : `${scoreDelta}`;
 }
+
+const OUTCOME_LABELS = {
+  correct: "точно",
+  partial: "частично",
+  unsafe: "рискованно",
+  overblock: "лишний запрет",
+};

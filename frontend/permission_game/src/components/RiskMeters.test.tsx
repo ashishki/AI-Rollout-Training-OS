@@ -17,7 +17,7 @@ describe("RiskMeters", () => {
 
     expect(screen.getAllByRole("progressbar")).toHaveLength(5);
     expect(container.querySelectorAll(".risk-meter-row")).toHaveLength(5);
-    expect(screen.getByRole("progressbar", { name: "Velocity" })).toHaveAttribute(
+    expect(screen.getByRole("progressbar", { name: "Скорость" })).toHaveAttribute(
       "aria-valuenow",
       "40"
     );
@@ -35,12 +35,12 @@ describe("RiskMeters", () => {
     );
 
     expect(container.querySelectorAll(".risk-meter-row")).toHaveLength(5);
-    expect(screen.getByRole("progressbar", { name: "Velocity" })).toHaveAttribute(
+    expect(screen.getByRole("progressbar", { name: "Скорость" })).toHaveAttribute(
       "aria-valuenow",
       "52"
     );
     expect(
-      screen.getByRole("progressbar", { name: "Audit trail" })
+      screen.getByRole("progressbar", { name: "След проверки" })
     ).toHaveAttribute("aria-valuenow", "64");
   });
 });

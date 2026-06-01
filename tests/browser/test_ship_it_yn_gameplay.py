@@ -22,37 +22,40 @@ def test_public_ship_it_yn_full_run() -> None:
         client = _DevToolsClient.from_debug_port(
             debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
         )
-        _wait_for_text(client, "Tiny Cleanup")
+        _wait_for_text(client, "Тренажёр разрешений")
+        _click_text(client, "Разработчик")
+        _wait_for_text(client, "Маленькая уборка")
 
-        _click_text(client, "Inspect")
-        _click_text(client, "Restrict Scope")
-        _click_text(client, "Next Level")
-        _click_text(client, "Require Eval")
-        _click_text(client, "Next Level")
-        _click_text(client, "Deny")
-        _click_text(client, "Next Level")
-        _click_text(client, "Escalate")
-        _click_text(client, "Next Level")
-        _click_text(client, "Sandbox")
-        _click_text(client, "Next Level")
-        _click_text(client, "Require Eval")
-        _click_text(client, "Next Level")
-        _click_text(client, "Sandbox")
-        _click_text(client, "Show Final Report")
+        _click_text(client, "Проверить")
+        _click_text(client, "Сузить область")
+        _click_text(client, "Следующий уровень")
+        _click_text(client, "Запросить доказательства")
+        _click_text(client, "Следующий уровень")
+        _click_text(client, "Запретить")
+        _click_text(client, "Следующий уровень")
+        _click_text(client, "Эскалировать")
+        _click_text(client, "Следующий уровень")
+        _click_text(client, "Песочница")
+        _click_text(client, "Следующий уровень")
+        _click_text(client, "Запросить доказательства")
+        _click_text(client, "Следующий уровень")
+        _click_text(client, "Песочница")
+        _click_text(client, "Показать итог")
 
         body_text = (
             client.evaluate("document.body.innerText")
             .get("result", {})
             .get("value", "")
         )
+        share_selector = 'textarea[aria-label="Текст для отправки"]'
         share_text = client.evaluate(
-            "document.querySelector('textarea[aria-label=\"Share text\"]').value"
+            f"document.querySelector({json.dumps(share_selector)}).value"
         )["result"]["value"]
-        assert "Seven-level public demo complete" in body_text
-        assert "FINAL REPORT" in body_text
+        assert "Разработчик: демо завершено" in body_text
+        assert "ИТОГ" in body_text
         assert "84/100" in body_text
-        assert "Copy Share" in body_text
-        assert "Ship It? Y/N score:" in share_text
+        assert "Скопировать итог" in body_text
+        assert "Ship It? Y/N счёт:" in share_text
     finally:
         browser.terminate()
         server.terminate()
@@ -71,7 +74,9 @@ def test_public_ship_it_yn_has_no_external_execution() -> None:
         client = _DevToolsClient.from_debug_port(
             debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
         )
-        _wait_for_text(client, "Tiny Cleanup")
+        _wait_for_text(client, "Тренажёр разрешений")
+        _click_text(client, "Менеджер")
+        _wait_for_text(client, "Все тикеты перед встречей")
         resources = client.evaluate(
             "performance.getEntriesByType('resource').map((entry) => entry.name)"
         )["result"]["value"]
@@ -103,7 +108,9 @@ def test_public_ship_it_yn_has_no_tracking_network_calls() -> None:
         client = _DevToolsClient.from_debug_port(
             debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
         )
-        _wait_for_text(client, "Tiny Cleanup")
+        _wait_for_text(client, "Тренажёр разрешений")
+        _click_text(client, "Менеджер")
+        _wait_for_text(client, "Все тикеты перед встречей")
         resources = client.evaluate(
             "performance.getEntriesByType('resource').map((entry) => entry.name)"
         )["result"]["value"]
@@ -187,7 +194,10 @@ def _start_server(port: int) -> subprocess.Popen:
 
 
 def _start_browser(app_port: int, debug_port: int) -> subprocess.Popen:
-    profile = tempfile.TemporaryDirectory(prefix="ship-it-yn-cdp-")
+    profile = tempfile.TemporaryDirectory(
+        prefix="ship-it-yn-cdp-",
+        ignore_cleanup_errors=True,
+    )
     process = subprocess.Popen(
         [
             _browser_bin(),

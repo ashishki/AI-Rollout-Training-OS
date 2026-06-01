@@ -16,8 +16,10 @@ describe("shareText", () => {
 
     await copyShareText(`${shareText} user_id=123 token=secret`, clipboard);
 
-    expect(shareText).toContain("Ship It? Y/N score: 82/100");
-    expect(shareText).toContain("Next habit: practice eval bypass boundaries");
+    expect(shareText).toContain("Ship It? Y/N счёт: 82/100");
+    expect(shareText).toContain(
+      "Следующая привычка: потренировать границы: eval bypass"
+    );
     expect(shareText).not.toMatch(/user_id|token|secret|@/);
     expect(clipboard.writeText).toHaveBeenCalledWith(
       expect.not.stringMatching(/user_id|token|secret|@/)

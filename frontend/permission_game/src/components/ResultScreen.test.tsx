@@ -11,31 +11,31 @@ describe("ResultScreen", () => {
           score: 82,
           title: "Least Privilege Operator",
           demoResult: "Demo-ready practice run",
-          prodStatus: "Not production evidence",
+          prodStatus: "Не доказательство для продакшна",
           unsafeApprovals: 0,
           overblocks: 1,
-          strongestHabit: "scoped access",
+          strongestHabit: "узкая область",
           weakestRiskArea: "eval_bypass",
           badges: ["least_privilege_operator", "eval_gate_preserved"],
         }}
       />
     );
 
-    expect(screen.getByLabelText("Final report")).toBeVisible();
+    expect(screen.getByLabelText("Итоговый отчёт")).toBeVisible();
     expect(screen.getByText("82/100")).toBeVisible();
     expect(screen.getByText("Least Privilege Operator")).toBeVisible();
     expect(screen.getByText("Demo-ready practice run")).toBeVisible();
-    expect(screen.getAllByText("Not production evidence")).toHaveLength(2);
+    expect(screen.getAllByText("Не доказательство для продакшна")).toHaveLength(2);
     expect(screen.getByText("0")).toBeVisible();
     expect(screen.getByText("1")).toBeVisible();
-    expect(screen.getByText("scoped access")).toBeVisible();
+    expect(screen.getByText("узкая область")).toBeVisible();
     expect(screen.getByText("eval_bypass")).toBeVisible();
-    expect(screen.getByText("practice eval bypass boundaries")).toBeVisible();
-    expect(screen.getByLabelText("Final badges")).toHaveTextContent(
-      "least privilege operator"
+    expect(screen.getByText("потренировать границы: eval bypass")).toBeVisible();
+    expect(screen.getByLabelText("Итоговые бейджи")).toHaveTextContent(
+      "Минимум прав"
     );
-    expect(screen.getByLabelText("Share text")).toHaveValue(
-      "Ship It? Y/N score: 82/100 | Title: Least Privilege Operator | Unsafe approvals: 0 | Overblocks: 1 | Strongest habit: scoped access | Next habit: practice eval bypass boundaries"
+    expect(screen.getByLabelText("Текст для отправки")).toHaveValue(
+      "Ship It? Y/N счёт: 82/100 | Итог: Least Privilege Operator | Рискованные разрешения: 0 | Лишние запреты: 1 | Сильная привычка: узкая область | Следующая привычка: потренировать границы: eval bypass"
     );
   });
 
@@ -49,22 +49,22 @@ describe("ResultScreen", () => {
           score: 82,
           title: "Least Privilege Operator",
           demoResult: "Demo-ready practice run",
-          prodStatus: "Not production evidence",
+          prodStatus: "Не доказательство для продакшна",
           unsafeApprovals: 0,
           overblocks: 1,
-          strongestHabit: "scoped access",
+          strongestHabit: "узкая область",
           weakestRiskArea: "eval_bypass",
           badges: ["least_privilege_operator"],
         }}
       />
     );
 
-    const button = screen.getByRole("button", { name: "Copy Share" });
+    const button = screen.getByRole("button", { name: "Скопировать итог" });
     button.focus();
     fireEvent.click(button);
 
     expect(button).toHaveFocus();
     expect(navigator.clipboard.writeText).toHaveBeenCalledOnce();
-    expect(await screen.findByText("Copied")).toBeVisible();
+    expect(await screen.findByText("Скопировано")).toBeVisible();
   });
 });

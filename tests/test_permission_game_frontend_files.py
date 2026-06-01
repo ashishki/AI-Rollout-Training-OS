@@ -24,6 +24,7 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/main.tsx",
         "src/App.tsx",
         "src/App.test.tsx",
+        "src/components/RoleSelector.tsx",
         "src/components/DecisionButtons.tsx",
         "src/components/DecisionButtons.test.tsx",
         "src/components/DiffPreview.tsx",
@@ -45,6 +46,7 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/components/TerminalLog.tsx",
         "src/styles.css",
         "src/game/scenarioTypes.ts",
+        "src/game/rolePacks.ts",
         "src/game/shareText.ts",
         "src/game/shareText.test.ts",
         "src/data/shipItYnScenarios.json",
@@ -54,12 +56,21 @@ def test_permission_game_frontend_scaffold_exists() -> None:
 
 def test_permission_game_imports_typed_scenario_data() -> None:
     app = (FRONTEND_DIR / "src/App.tsx").read_text()
+    role_packs = (FRONTEND_DIR / "src/game/rolePacks.ts").read_text()
     scenarios = json.loads(
         (FRONTEND_DIR / "src/data/shipItYnScenarios.json").read_text()
     )
 
-    assert "PermissionGameScenarioSummary" in app
-    assert "shipItYnScenarios.json" in app
+    assert "RoleSelector" in app
+    assert "ROLE_PACKS" in app
+    assert "PermissionGameScenarioSummary" in role_packs
+    assert "shipItYnScenarios.json" in role_packs
+    assert "managerScenarios" in role_packs
+    assert "developerScenarios" in role_packs
+    assert (
+        "Тренажёр разрешений"
+        in (FRONTEND_DIR / "src/components/RoleSelector.tsx").read_text()
+    )
     assert len(scenarios) == 7
     assert [scenario["level"] for scenario in scenarios] == list(range(1, 8))
     assert scenarios[0]["title"] == "Tiny Cleanup"

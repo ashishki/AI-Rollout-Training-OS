@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - Russian Role-Based UX Polish
+
+- Scope: `frontend/permission_game/src/App.tsx`, `frontend/permission_game/src/components/RoleSelector.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/game/rolePacks.ts`, localized game components/tests, browser tests, README, and `docs/audit/artifacts/ship_it_yn_*.png`
+- Why this work happened: Russian community testing needs a simpler, less technical entry mode and a more polished first screen before manual buyer/community demos.
+- Decisions applied: keep one core loop (`agent request -> decision -> consequence -> safer path`) while adding role-based scenario packs for `Менеджер`, `Тимлид / фасилитатор`, and `Разработчик`.
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; targeted browser/static tests passed for the public route and role selector.
+- Follow-ups: Run manual Russian community demos, then log observed evidence in `docs/ship_it_yn_buyer_feedback.md`.
+- Notes for next agent: Manager mode is now the simple Russian-first path. Developer mode preserves the deeper diff/CI/eval/sandbox flow. The screenshots now show the role selector first screen.
+
 ### 2026-06-01 - T105 - Ship It? Y/N Buyer Demo Readiness Review
 
 - Scope: `docs/audit/SHIP_IT_YN_BUYER_DEMO_READINESS_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_buyer_demo_readiness.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

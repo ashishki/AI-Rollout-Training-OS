@@ -11,16 +11,16 @@ type RiskMetersProps = {
 };
 
 const METER_ROWS = [
-  ["Velocity", "velocity", "terminal-meter-fill-safe"],
-  ["Blast radius", "blastRadius", "terminal-meter-fill-risk"],
-  ["Trust", "trust", "terminal-meter-fill-warn"],
-  ["Eval confidence", "evalConfidence", "terminal-meter-fill-action"],
-  ["Audit trail", "auditTrail", "terminal-meter-fill-warn"],
+  ["Скорость", "velocity", "terminal-meter-fill-safe"],
+  ["Радиус ущерба", "blastRadius", "terminal-meter-fill-risk"],
+  ["Доверие", "trust", "terminal-meter-fill-warn"],
+  ["Уверенность в проверке", "evalConfidence", "terminal-meter-fill-action"],
+  ["След проверки", "auditTrail", "terminal-meter-fill-warn"],
 ] as const;
 
 export function RiskMeters({ values }: RiskMetersProps) {
   return (
-    <section aria-label="Risk meters" className="risk-meter-stack">
+    <section aria-label="Риск-метры" className="risk-meter-stack">
       {METER_ROWS.map(([label, key, fillClass]) => {
         const value = values[key];
         return (

@@ -18,12 +18,12 @@ const SENSITIVE_PATTERNS = [
 
 export function AuditTrail({ events, auditTrailQuality }: AuditTrailProps) {
   return (
-    <section aria-label="Audit trail" className="audit-trail">
+    <section aria-label="След проверки" className="audit-trail">
       <h2 className="text-sm font-semibold uppercase text-terminal-muted">
-        Audit Trail
+        След проверки
       </h2>
       {auditTrailQuality === "blind" ? (
-        <p className="audit-gap">Audit gap: decision made before inspection.</p>
+        <p className="audit-gap">Пробел аудита: решение принято до проверки доказательств.</p>
       ) : null}
       <ol className="mt-3 space-y-2">
         {events.map((event) => (

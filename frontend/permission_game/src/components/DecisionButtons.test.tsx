@@ -22,14 +22,14 @@ describe("DecisionButtons", () => {
     render(<DecisionButtons choices={allChoices} onDecision={onDecision} />);
 
     for (const label of [
-      "Approve",
-      "Deny",
-      "Inspect",
-      "Sandbox",
-      "Require Eval",
-      "Restrict Scope",
-      "Escalate",
-      "Rollback",
+      "Разрешить",
+      "Запретить",
+      "Проверить",
+      "Песочница",
+      "Запросить доказательства",
+      "Сузить область",
+      "Эскалировать",
+      "Откатить",
     ]) {
       fireEvent.click(screen.getByRole("button", { name: new RegExp(label) }));
     }
@@ -42,7 +42,7 @@ describe("DecisionButtons", () => {
     const onDecision = vi.fn();
 
     render(<DecisionButtons choices={allChoices} onDecision={onDecision} />);
-    const controls = screen.getByLabelText("Decision controls");
+    const controls = screen.getByLabelText("Кнопки решения");
     controls.focus();
 
     for (const key of "adisecrb") {

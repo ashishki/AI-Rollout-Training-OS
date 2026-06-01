@@ -8,14 +8,14 @@ type DecisionButtonsProps = {
 };
 
 const CHOICE_CONFIG: Record<GameChoiceId, { label: string; shortcut: string }> = {
-  approve: { label: "Approve", shortcut: "A" },
-  deny: { label: "Deny", shortcut: "D" },
-  inspect_diff: { label: "Inspect", shortcut: "I" },
-  run_in_sandbox: { label: "Sandbox", shortcut: "S" },
-  require_eval: { label: "Require Eval", shortcut: "E" },
-  restrict_scope: { label: "Restrict Scope", shortcut: "C" },
-  escalate_reviewer: { label: "Escalate", shortcut: "R" },
-  rollback: { label: "Rollback", shortcut: "B" },
+  approve: { label: "Разрешить", shortcut: "A" },
+  deny: { label: "Запретить", shortcut: "D" },
+  inspect_diff: { label: "Проверить", shortcut: "I" },
+  run_in_sandbox: { label: "Песочница", shortcut: "S" },
+  require_eval: { label: "Запросить доказательства", shortcut: "E" },
+  restrict_scope: { label: "Сузить область", shortcut: "C" },
+  escalate_reviewer: { label: "Эскалировать", shortcut: "R" },
+  rollback: { label: "Откатить", shortcut: "B" },
 };
 
 export function DecisionButtons({ choices, onDecision }: DecisionButtonsProps) {
@@ -34,7 +34,7 @@ export function DecisionButtons({ choices, onDecision }: DecisionButtonsProps) {
 
   return (
     <section
-      aria-label="Decision controls"
+      aria-label="Кнопки решения"
       className="decision-control-grid"
       onKeyDown={handleKeyDown}
       tabIndex={0}

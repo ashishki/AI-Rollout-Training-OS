@@ -1,15 +1,18 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import App from "./App";
-import scenarios from "./data/shipItYnScenarios.json";
+import { ROLE_PACKS } from "./game/rolePacks";
 
 describe("Ship It? Y/N app scaffold", () => {
-  it("renders a nonblank root with typed scenario data", () => {
+  it("renders role selection and opens the Russian manager mode", () => {
     render(<App />);
 
-    expect(screen.getByLabelText("Ship It? Y/N terminal layout")).toBeVisible();
-    expect(screen.getAllByText("Tiny Cleanup")).toHaveLength(2);
-    expect(screen.getByText("7 levels")).toBeVisible();
-    expect(scenarios).toHaveLength(7);
+    expect(screen.getByLabelText("Выбор роли")).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: /Менеджер/ }));
+
+    expect(screen.getByLabelText("Ship It? Y/N игровое поле")).toBeVisible();
+    expect(screen.getAllByText("Все тикеты перед встречей")).toHaveLength(2);
+    expect(screen.getByText("4 уров.")).toBeVisible();
+    expect(ROLE_PACKS).toHaveLength(3);
   });
 });

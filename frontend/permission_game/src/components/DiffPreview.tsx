@@ -19,19 +19,19 @@ export function DiffPreview({
 
   return (
     <aside
-      aria-label="Inspect drawer"
+      aria-label="Панель проверки"
       aria-modal="false"
       className="diff-preview-drawer"
       role="dialog"
     >
       <div className="terminal-region-header">
-        <span>inspect</span>
+        <span>проверка</span>
         <button className="diff-preview-close" onClick={onClose} type="button">
-          Close
+          Закрыть
         </button>
       </div>
       <div className="risk-reveal" data-risk-category={riskCategory}>
-        Hidden risk revealed: {riskCategory}
+        Найден скрытый риск: {riskCategory}
       </div>
       <div className="mt-4 space-y-3">
         {artifacts.map((artifact) => (

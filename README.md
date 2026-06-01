@@ -6,6 +6,11 @@ It is not a generic LMS, not a compliance certificate, and not a real agent runn
 
 Local demo route: `/demo/ship-it-yn`
 
+Default player experience is now Russian-first with role selection:
+`Менеджер`, `Тимлид / фасилитатор`, and `Разработчик`. Manager mode uses
+less technical scenarios for buyer/community testing, while Developer mode keeps
+the deeper diff/CI/eval/sandbox flow.
+
 Primary CTA: build the React/Vite game, start FastAPI, and open `http://127.0.0.1:8000/demo/ship-it-yn`.
 
 ```bash

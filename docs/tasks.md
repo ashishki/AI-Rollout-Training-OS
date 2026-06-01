@@ -21,6 +21,9 @@ implementation and review are complete through `T91: Final Result And Share Card
 and `PHASE19-REACT-VITE-GAME`. Phase 20 implementation is complete through
 `T98: Ship It? Y/N UX Readiness Review` and `SHIP-IT-YN-UX-READINESS`.
 Phase 21 implementation is complete through `T105: Ship It? Y/N Buyer Demo Readiness Review`.
+Post-readiness UX polish added Russian-first role modes for `Менеджер`,
+`Тимлид / фасилитатор`, and `Разработчик`; active next work remains manual
+buyer/community demo evidence collection.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and

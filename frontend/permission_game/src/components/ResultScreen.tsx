@@ -20,45 +20,45 @@ type ResultScreenProps = {
 
 export function ResultScreen({ result }: ResultScreenProps) {
   const shareText = buildShareText(result);
-  const [copyStatus, setCopyStatus] = useState("Ready to copy");
+  const [copyStatus, setCopyStatus] = useState("Готово к копированию");
 
   async function handleCopy() {
     await copyShareText(shareText);
-    setCopyStatus("Copied");
+    setCopyStatus("Скопировано");
   }
 
   return (
-    <section aria-label="Final report" className="result-screen">
+    <section aria-label="Итоговый отчёт" className="result-screen">
       <div className="terminal-region-header">
-        <span>final report</span>
+        <span>итог</span>
         <span>{result.prodStatus}</span>
       </div>
       <h1>{result.title}</h1>
       <p className="result-score">{result.score}/100</p>
       <dl className="result-grid">
-        <ResultMetric label="Demo result" value={result.demoResult} />
-        <ResultMetric label="Prod status" value={result.prodStatus} />
-        <ResultMetric label="Unsafe approvals" value={result.unsafeApprovals} />
-        <ResultMetric label="Overblocks" value={result.overblocks} />
-        <ResultMetric label="Strongest habit" value={result.strongestHabit} />
-        <ResultMetric label="Weakest risk area" value={result.weakestRiskArea} />
+        <ResultMetric label="Результат" value={result.demoResult} />
+        <ResultMetric label="Статус" value={result.prodStatus} />
+        <ResultMetric label="Рискованные разрешения" value={result.unsafeApprovals} />
+        <ResultMetric label="Лишние запреты" value={result.overblocks} />
+        <ResultMetric label="Сильная привычка" value={result.strongestHabit} />
+        <ResultMetric label="Слабая зона" value={result.weakestRiskArea} />
         <ResultMetric
-          label="Recommended next habit"
+          label="Следующая привычка"
           value={recommendedNextHabit(result.weakestRiskArea)}
         />
       </dl>
-      <div className="result-badges" aria-label="Final badges">
+      <div className="result-badges" aria-label="Итоговые бейджи">
         {result.badges.map((badge) => (
-          <span key={badge}>{badge.replaceAll("_", " ")}</span>
+          <span key={badge}>{formatBadge(badge)}</span>
         ))}
       </div>
       <div className="result-share-actions">
         <button onClick={handleCopy} type="button">
-          Copy Share
+          Скопировать итог
         </button>
         <span aria-live="polite">{copyStatus}</span>
       </div>
-      <textarea aria-label="Share text" readOnly value={shareText} />
+      <textarea aria-label="Текст для отправки" readOnly value={shareText} />
     </section>
   );
 }
@@ -70,4 +70,25 @@ function ResultMetric({ label, value }: { label: string; value: number | string 
       <dd>{value}</dd>
     </div>
   );
+}
+
+const BADGE_LABELS: Record<string, string> = {
+  clean_approval_trail: "Чистый след решений",
+  data_minimizer: "Минимум данных",
+  eval_gate_preserved: "Eval сохранён",
+  least_privilege_manager: "Минимум прав",
+  least_privilege_operator: "Минимум прав",
+  pressure_resisted: "Давление выдержано",
+  safe_yes: "Безопасное да",
+  scope_before_delete: "Сначала область",
+};
+
+function formatBadge(badge: string) {
+  if (BADGE_LABELS[badge]) {
+    return BADGE_LABELS[badge];
+  }
+  return badge
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }

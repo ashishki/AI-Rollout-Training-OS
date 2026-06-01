@@ -15,12 +15,12 @@ describe("BadgeToast", () => {
       />
     );
 
-    const toast = screen.getByLabelText("Badge earned");
+    const toast = screen.getByLabelText("Получен бейдж");
     expect(toast).toHaveClass("badge-toast");
-    expect(toast).toHaveTextContent("Scope Before Delete");
-    expect(screen.queryByLabelText("Decision controls")).not.toBeInTheDocument();
+    expect(toast).toHaveTextContent("Сначала область");
+    expect(screen.queryByLabelText("Кнопки решения")).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Dismiss" }));
+    fireEvent.click(screen.getByRole("button", { name: "Скрыть" }));
 
     expect(onDismiss).toHaveBeenCalledOnce();
   });

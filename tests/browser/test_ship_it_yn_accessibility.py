@@ -28,12 +28,11 @@ def test_ship_it_yn_keyboard_path() -> None:
 
         assert completed.returncode == 0
         dom = completed.stdout
-        assert 'aria-label="Decision controls"' in dom
-        assert 'aria-keyshortcuts="A"' in dom
-        assert 'aria-keyshortcuts="I"' in dom
-        assert ">Reset Run<" in dom
-        assert ">Copy Share<" in dom
-        assert 'aria-label="Share text"' in dom
+        assert 'aria-label="Выбор роли"' in dom
+        assert ">Менеджер<" in dom
+        assert ">Тимлид / фасилитатор<" in dom
+        assert ">Разработчик<" in dom
+        assert "Тренажёр разрешений" in dom
     finally:
         server.terminate()
         server.wait(timeout=10)

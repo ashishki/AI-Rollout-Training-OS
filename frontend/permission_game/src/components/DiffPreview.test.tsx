@@ -1,15 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import scenarios from "../data/shipItYnScenarios.json";
-import type { PermissionGameScenario } from "../game/scenarioTypes";
+import { ROLE_PACKS } from "../game/rolePacks";
 import { DiffPreview } from "./DiffPreview";
 
-const typedScenarios = scenarios as PermissionGameScenario[];
+const managerScenario = ROLE_PACKS[0].scenarios[0];
 
 describe("DiffPreview", () => {
   it("opens an accessible drawer with artifacts and highlighted risk", () => {
-    const scenario = typedScenarios[0];
+    const scenario = managerScenario;
     const onClose = vi.fn();
 
     render(
@@ -21,14 +20,14 @@ describe("DiffPreview", () => {
       />
     );
 
-    expect(screen.getByRole("dialog", { name: "Inspect drawer" })).toBeVisible();
-    expect(screen.getByText("Cleanup preview")).toBeVisible();
-    expect(screen.getByText(/migration backup directory/)).toBeVisible();
+    expect(screen.getByRole("dialog", { name: "Панель проверки" })).toBeVisible();
+    expect(screen.getByText("Варианты доступа")).toBeVisible();
+    expect(screen.getByText(/обезличенную выборку/)).toBeVisible();
     expect(
-      screen.getByText("Hidden risk revealed: destructive_filesystem")
-    ).toHaveAttribute("data-risk-category", "destructive_filesystem");
+      screen.getByText("Найден скрытый риск: log_exposure")
+    ).toHaveAttribute("data-risk-category", "log_exposure");
 
-    fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    fireEvent.click(screen.getByRole("button", { name: "Закрыть" }));
 
     expect(onClose).toHaveBeenCalledOnce();
   });

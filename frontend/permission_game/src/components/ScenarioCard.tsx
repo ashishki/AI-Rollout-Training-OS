@@ -7,12 +7,12 @@ type ScenarioCardProps = {
 
 export function ScenarioCard({ scenario, totalLevels }: ScenarioCardProps) {
   return (
-    <article aria-label="Scenario card" className="scenario-card">
+    <article aria-label="Карточка сценария" className="scenario-card">
       <div className="terminal-region-header">
         <span>
-          Level {scenario.level} / {totalLevels}
+          Уровень {scenario.level} / {totalLevels}
         </span>
-        <span>{scenario.permissionBoundary}</span>
+        <span>{BOUNDARY_LABELS[scenario.permissionBoundary]}</span>
       </div>
       <p className="mt-4 text-sm font-semibold text-terminal-action">
         {scenario.agentName}
@@ -23,12 +23,15 @@ export function ScenarioCard({ scenario, totalLevels }: ScenarioCardProps) {
       </p>
 
       <dl className="mt-5 grid gap-3 sm:grid-cols-2">
-        <Metadata label="Tool" value={scenario.toolCall.type} />
-        <Metadata label="Surface" value={scenario.toolCall.surface} />
-        <Metadata label="Scope" value={scenario.toolCall.scope} />
-        <Metadata label="Request" value={scenario.toolCall.permissionRequest} />
-        <Metadata label="Risk" value={scenario.riskCategory} />
-        <Metadata label="Boundary" value={scenario.permissionBoundary} />
+        <Metadata label="Инструмент" value={scenario.toolCall.type} />
+        <Metadata label="Поверхность" value={scenario.toolCall.surface} />
+        <Metadata label="Область" value={scenario.toolCall.scope} />
+        <Metadata label="Запрос" value={scenario.toolCall.permissionRequest} />
+        <Metadata label="Риск" value={RISK_LABELS[scenario.riskCategory]} />
+        <Metadata
+          label="Граница"
+          value={BOUNDARY_LABELS[scenario.permissionBoundary]}
+        />
       </dl>
 
       <div className="mt-5 space-y-3">
@@ -37,7 +40,7 @@ export function ScenarioCard({ scenario, totalLevels }: ScenarioCardProps) {
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-sm font-semibold">{item.label}</h2>
               <span className="scenario-context-trust">
-                {item.trusted ? "trusted" : "untrusted"}
+                {item.trusted ? "доверенный" : "внешний"}
               </span>
             </div>
             <p className="mt-2 text-sm leading-6 text-terminal-muted">
@@ -58,3 +61,26 @@ function Metadata({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
+const BOUNDARY_LABELS = {
+  allowed: "можно",
+  needs_approval: "нужно согласование",
+  blocked: "заблокировать",
+  unknown: "нужен контекст",
+};
+
+const RISK_LABELS = {
+  secrets: "секреты",
+  destructive_filesystem: "удаление файлов",
+  diff_misrepresentation: "diff выглядит проще, чем есть",
+  test_deletion: "удаление тестов",
+  indirect_prompt_injection: "внешняя инструкция",
+  overbroad_permission: "слишком широкие права",
+  eval_bypass: "обход eval",
+  dependency_install: "зависимость",
+  ci_edit: "CI",
+  network_access: "сеть",
+  log_exposure: "логи и данные",
+  scope_creep: "расползание области",
+  context_contamination: "грязный контекст",
+};

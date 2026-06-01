@@ -11,17 +11,19 @@ describe("AuditTrail", () => {
         events={[
           {
             id: "decision-1",
-            label: "Selected approve",
-            detail: "Blocked broad request with password=super-secret omitted",
+            label: "Выбрано: разрешить",
+            detail: "Запрос остановлен: password=super-secret скрыт",
           },
         ]}
       />
     );
 
-    expect(screen.getByLabelText("Audit trail")).toBeVisible();
-    expect(screen.getByText("Audit gap: decision made before inspection.")).toBeVisible();
-    expect(screen.getByText("Selected approve")).toBeVisible();
-    expect(screen.getByText(/with \[redacted\] omitted/)).toBeVisible();
+    expect(screen.getByLabelText("След проверки")).toBeVisible();
+    expect(
+      screen.getByText("Пробел аудита: решение принято до проверки доказательств.")
+    ).toBeVisible();
+    expect(screen.getByText("Выбрано: разрешить")).toBeVisible();
+    expect(screen.getByText(/Запрос остановлен: \[redacted\] скрыт/)).toBeVisible();
     expect(screen.queryByText(/super-secret/)).not.toBeInTheDocument();
   });
 });

@@ -1,24 +1,23 @@
 import { render, screen } from "@testing-library/react";
 
-import scenarios from "../data/shipItYnScenarios.json";
-import type { PermissionGameScenario } from "../game/scenarioTypes";
+import { ROLE_PACKS } from "../game/rolePacks";
 import { ScenarioCard } from "./ScenarioCard";
 
-const typedScenarios = scenarios as PermissionGameScenario[];
+const managerScenario = ROLE_PACKS[0].scenarios[0];
 
 describe("ScenarioCard", () => {
   it("displays agent request, tool metadata, context, risk, and progress", () => {
-    render(<ScenarioCard scenario={typedScenarios[0]} totalLevels={7} />);
+    render(<ScenarioCard scenario={managerScenario} totalLevels={4} />);
 
-    expect(screen.getByLabelText("Scenario card")).toBeVisible();
-    expect(screen.getByText("Level 1 / 7")).toBeVisible();
-    expect(screen.getByText("PatchPilot")).toBeVisible();
-    expect(screen.getByText(/Approve cleanup across the project/)).toBeVisible();
-    expect(screen.getByText("filesystem_change")).toBeVisible();
-    expect(screen.getByText("unscoped_cleanup")).toBeVisible();
-    expect(screen.getByText("delete")).toBeVisible();
-    expect(screen.getByText("destructive_filesystem")).toBeVisible();
-    expect(screen.getByText("proposed cleanup")).toBeVisible();
-    expect(screen.getByText(/SIMULATED cleanup preview/)).toBeVisible();
+    expect(screen.getByLabelText("Карточка сценария")).toBeVisible();
+    expect(screen.getByText("Уровень 1 / 4")).toBeVisible();
+    expect(screen.getByText("AssistPilot")).toBeVisible();
+    expect(screen.getByText(/прочитать все тикеты поддержки/)).toBeVisible();
+    expect(screen.getByText("доступ к данным")).toBeVisible();
+    expect(screen.getByText("все тикеты")).toBeVisible();
+    expect(screen.getByText("читать")).toBeVisible();
+    expect(screen.getByText("логи и данные")).toBeVisible();
+    expect(screen.getByText("срочная встреча")).toBeVisible();
+    expect(screen.getByText(/персональные данные/)).toBeVisible();
   });
 });
