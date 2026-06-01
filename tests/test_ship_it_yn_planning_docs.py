@@ -66,4 +66,7 @@ def test_task_graph_sets_ship_it_yn_next_implementation_work() -> None:
         "Current phase: Phase 21 - Workshop, Analytics, And Buyer Validation" in state
     )
     assert "PHASE18-SCENARIO-SCORING" in state
-    assert "Active next task: T105: Ship It? Y/N Buyer Demo Readiness Review" in state
+    assert (
+        "Active next task: Manual buyer demos (human-owned evidence collection)"
+        in state
+    )

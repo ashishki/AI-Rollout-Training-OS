@@ -8,6 +8,7 @@ Append-only. One row per review cycle.
 
 | Cycle | Phase | Date | Scope | Stop-Ship | P0 | P1 | P2 |
 |-------|-------|------|-------|-----------|----|----|----|
+| SHIP-IT-YN-BUYER-DEMO-READINESS | Phase 21 | 2026-06-01 | Ship It? Y/N buyer demo readiness review after T98-T104 | No | 0 | 0 | 0 |
 | SHIP-IT-YN-CLAIM-BOUNDARY | Phase 21 | 2026-06-01 | Ship It? Y/N claim boundary and security review after T99-T103 | No | 0 | 0 | 0 |
 | SHIP-IT-YN-UX-READINESS | Phase 20 | 2026-06-01 | Ship It? Y/N UX readiness review after T92-T97 | No | 0 | 0 | 1 |
 | PHASE19-REACT-VITE-GAME | Phase 19 | 2026-06-01 | Ship It? Y/N React/Vite playable game review after T85-T91 | No | 0 | 0 | 1 |
@@ -34,6 +35,7 @@ Append-only. One row per review cycle.
 
 | Cycle | File | Phase | Health |
 |-------|------|-------|--------|
+| SHIP-IT-YN-BUYER-DEMO-READINESS | `docs/audit/SHIP_IT_YN_BUYER_DEMO_READINESS_REVIEW.md` | Phase 21 | SHOW_BUYER_DEMOS |
 | SHIP-IT-YN-CLAIM-BOUNDARY | `docs/audit/SHIP_IT_YN_CLAIM_BOUNDARY_REVIEW.md` | Phase 21 | CLAIM_BOUNDARY_PASS |
 | SHIP-IT-YN-UX-READINESS | `docs/audit/SHIP_IT_YN_UX_READINESS_REVIEW.md` | Phase 20 | SHOW_PUBLIC_DEMO |
 | PHASE19-REACT-VITE-GAME | `docs/audit/PHASE19_REACT_VITE_GAME_REVIEW.md` | Phase 19 | PASS |

@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T105 - Ship It? Y/N Buyer Demo Readiness Review
+
+- Scope: `docs/audit/SHIP_IT_YN_BUYER_DEMO_READINESS_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_buyer_demo_readiness.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 21 needed a final readiness decision before manual buyer demos.
+- Decisions applied: `docs/product_maturity_task_graph.md#t105-ship-it-yn-buyer-demo-readiness-review`, `docs/audit/SHIP_IT_YN_CLAIM_BOUNDARY_REVIEW.md#decision`, `docs/ship_it_yn_buyer_feedback.md#manual-demo-feedback-template`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_ship_it_yn_buyer_demo_readiness.py -q` passed with 2 tests.
+- Follow-ups: Manual buyer demos using `docs/ship_it_yn_buyer_feedback.md`, then review observed evidence after three demos.
+- Notes for next agent: The readiness decision is `SHOW_BUYER_DEMOS`. This is not PMF, paid conversion, compliance approval, certified safety, production readiness, incident reduction, customer adoption, or real agent execution safety evidence.
+
 ### 2026-06-01 - T104 - Claim Boundary And Security Review
 
 - Scope: `docs/audit/SHIP_IT_YN_CLAIM_BOUNDARY_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_claim_boundary_review.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

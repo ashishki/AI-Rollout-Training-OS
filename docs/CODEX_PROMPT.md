@@ -26,7 +26,7 @@ Full historical prompt archived at
   `SHIP-IT-YN-UX-READINESS`. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 239 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 241 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -114,10 +114,11 @@ the simulator works as a focused demo/workshop experience.
 - `T102: Buyer Feedback Loop` completed on 2026-06-01.
 - `T103: AI-Assisted Scenario Authoring Workflow` completed on 2026-06-01.
 - `T104: Claim Boundary And Security Review` completed on 2026-06-01.
+- `T105: Ship It? Y/N Buyer Demo Readiness Review` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T105: Ship It? Y/N Buyer Demo Readiness Review.
+Active next task: Manual buyer demos (human-owned evidence collection).
 
 ## Open Findings
 
@@ -181,6 +182,7 @@ Active next task: T105: Ship It? Y/N Buyer Demo Readiness Review.
 | 2026-06-01 | T102: Buyer Feedback Loop | Added manual demo buyer feedback template and evidence log separating buyer-observed evidence from founder/operator assumptions while blocking PMF, paid-conversion, compliance, and production-readiness claims. Next implementation task is T103. |
 | 2026-06-01 | T103: AI-Assisted Scenario Authoring Workflow | Added a safe AI-assisted scenario-pack authoring workflow with prompt boundaries, human review, schema validation, safety tests, blocked live scoring usage, and Dev/Support/Ops/Data/Internal Tools pack examples. Next implementation task is T104. |
 | 2026-06-01 | T104: Claim Boundary And Security Review | Added claim-boundary/security audit for the public game, workshop pack, team summary, local analytics, buyer feedback, and scenario authoring workflow; blocked unsupported compliance, certified safety, production readiness, incident reduction, PMF, and paid-conversion claims. Next implementation task is T105. |
+| 2026-06-01 | T105: Ship It? Y/N Buyer Demo Readiness Review | Recorded SHOW_BUYER_DEMOS decision citing game route, scenario coverage, scoring, browser evidence, facilitator pack, safe team summary, buyer feedback template, and claim-boundary review while blocking PMF and paid-conversion claims. Next loop is human-owned manual buyer demo evidence collection. |
 
 ## Rules
 
