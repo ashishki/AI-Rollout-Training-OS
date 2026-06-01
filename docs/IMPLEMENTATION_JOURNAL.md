@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T91 - Final Result And Share Card
+
+- Scope: `frontend/permission_game/src/components/ResultScreen.tsx`, `frontend/permission_game/src/components/ResultScreen.test.tsx`, `frontend/permission_game/src/game/shareText.ts`, `frontend/permission_game/src/game/shareText.test.ts`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 19 needed the final report and safe share card before serving the built game from FastAPI.
+- Decisions applied: `docs/product_maturity_task_graph.md#t91-final-result-and-share-card`, `docs/ship_it_yn_frontend_architecture.md#state-model`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`.
+- Follow-ups: Phase 19 deep review before `T92: FastAPI Static Game Route`.
+- Notes for next agent: Share text is redacted and browser-copyable through `copyShareText(...)`. The result screen is not yet wired to a completed session route.
+
 ### 2026-06-01 - T90 - Consequence Panel And Badge Toasts
 
 - Scope: `frontend/permission_game/src/components/ConsequencePanel.tsx`, `frontend/permission_game/src/components/ConsequencePanel.test.tsx`, `frontend/permission_game/src/components/BadgeToast.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/data/shipItYnScenarios.json`, `frontend/permission_game/src/game/scenarioTypes.ts`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

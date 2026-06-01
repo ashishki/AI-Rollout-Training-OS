@@ -36,6 +36,8 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/components/ConsequencePanel.test.tsx",
         "src/components/RiskMeters.tsx",
         "src/components/RiskMeters.test.tsx",
+        "src/components/ResultScreen.tsx",
+        "src/components/ResultScreen.test.tsx",
         "src/components/ScenarioCard.tsx",
         "src/components/ScenarioCard.test.tsx",
         "src/components/TerminalLayout.tsx",
@@ -43,6 +45,8 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/components/TerminalLog.tsx",
         "src/styles.css",
         "src/game/scenarioTypes.ts",
+        "src/game/shareText.ts",
+        "src/game/shareText.test.ts",
         "src/data/shipItYnScenarios.json",
     ]:
         assert (FRONTEND_DIR / required).exists()
