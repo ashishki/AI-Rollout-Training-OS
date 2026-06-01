@@ -21,7 +21,7 @@ Full historical prompt archived at
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
   complete through T78; Phase 18 implementation and deep review are complete
   through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation is
-  complete through T88. Local browser demo route remains
+  complete through T89. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
 - Baseline: 214 passing tests (`.venv/bin/python -m pytest -q`, local Docker
@@ -95,10 +95,11 @@ the simulator works as a focused demo/workshop experience.
 - `T86: Terminal Layout Shell` completed on 2026-06-01.
 - `T87: Scenario Card And Decision Controls` completed on 2026-06-01.
 - `T88: Inspect Diff And Hidden Risk Reveal` completed on 2026-06-01.
+- `T89: Risk Meters And Audit Trail` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T89: Risk Meters And Audit Trail.
+Active next task: T90: Consequence Panel And Badge Toasts.
 
 ## Open Findings
 
@@ -145,6 +146,7 @@ Active next task: T89: Risk Meters And Audit Trail.
 | 2026-06-01 | T86: Terminal Layout Shell | Added responsive terminal shell with decision history, active scenario, action controls, risk meters, audit trail, shell tests, and LMS chrome guard. Next implementation task is T87. |
 | 2026-06-01 | T87: Scenario Card And Decision Controls | Added scenario card, typed agent request/tool/context data, decision controls with mouse and keyboard shortcuts, and component tests. Next implementation task is T88. |
 | 2026-06-01 | T88: Inspect Diff And Hidden Risk Reveal | Added inspect drawer with artifact/risk reveal and scoring audit-trail quality distinction for blind versus inspected decisions. Next implementation task is T89. |
+| 2026-06-01 | T89: Risk Meters And Audit Trail | Added dedicated risk meter and audit trail components with stable meter rows, decision-driven audit quality, audit-gap flagging, and sensitive-detail redaction. Next implementation task is T90. |
 
 ## Rules
 

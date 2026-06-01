@@ -1,6 +1,8 @@
 import { TerminalLog } from "./TerminalLog";
 import { DecisionButtons } from "./DecisionButtons";
 import { DiffPreview } from "./DiffPreview";
+import { AuditTrail, type AuditTrailEvent } from "./AuditTrail";
+import { RiskMeters, type RiskMeterValues } from "./RiskMeters";
 import { ScenarioCard } from "./ScenarioCard";
 import { useState } from "react";
 import type { GameChoiceId } from "../game/scenarioTypes";
@@ -10,18 +12,45 @@ type TerminalLayoutProps = {
   scenarios: PermissionGameScenarioSummary[];
 };
 
-const meterRows = [
-  ["Velocity", "42", "terminal-meter-fill-safe"],
-  ["Blast radius", "18", "terminal-meter-fill-risk"],
-  ["Eval confidence", "64", "terminal-meter-fill-action"],
-  ["Audit trail", "51", "terminal-meter-fill-warn"],
-] as const;
+const initialMeterValues: RiskMeterValues = {
+  velocity: 42,
+  blastRadius: 18,
+  trust: 50,
+  evalConfidence: 64,
+  auditTrail: 51,
+};
 
 export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   const activeScenario = scenarios[0];
   const [selectedDecision, setSelectedDecision] = useState<string | null>(null);
   const [isInspectOpen, setIsInspectOpen] = useState(false);
   const [inspectedArtifactIds, setInspectedArtifactIds] = useState<string[]>([]);
+  const auditTrailQuality = inspectedArtifactIds.length > 0 ? "inspected" : "blind";
+  const meterValues = selectedDecision
+    ? {
+        ...initialMeterValues,
+        auditTrail: auditTrailQuality === "inspected" ? 68 : 39,
+      }
+    : initialMeterValues;
+  const auditEvents: AuditTrailEvent[] = [
+    {
+      id: "scenario-loaded",
+      label: "Scenario loaded",
+      detail: activeScenario.id,
+    },
+    ...(selectedDecision
+      ? [
+          {
+            id: "decision-selected",
+            label: `Selected ${selectedDecision}`,
+            detail:
+              auditTrailQuality === "inspected"
+                ? `Inspected ${inspectedArtifactIds.join(", ")}`
+                : "Decision recorded before inspection",
+          },
+        ]
+      : []),
+  ];
 
   function handleDecision(choice: GameChoiceId) {
     setSelectedDecision(choice);
@@ -60,34 +89,11 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
             <span>meters</span>
             <span>draft</span>
           </div>
-          <div className="mt-4 space-y-4">
-            {meterRows.map(([label, value, fillClass]) => (
-              <div key={label}>
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span>{label}</span>
-                  <span className="text-terminal-muted">{value}</span>
-                </div>
-                <div className="terminal-meter-track">
-                  <span className={fillClass} style={{ width: `${value}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 rounded border border-terminal-line bg-terminal-bg p-3">
-            <h2 className="text-sm font-semibold uppercase text-terminal-muted">
-              Audit Trail
-            </h2>
-            <p className="mt-3 text-sm leading-6">
-              {selectedDecision
-                ? `Selected decision: ${selectedDecision}`
-                : "Scenario loaded. Awaiting first decision."}
-            </p>
-            {inspectedArtifactIds.length > 0 ? (
-              <p className="mt-2 text-sm text-terminal-muted">
-                Inspected: {inspectedArtifactIds.join(", ")}
-              </p>
-            ) : null}
-          </div>
+          <RiskMeters values={meterValues} />
+          <AuditTrail
+            auditTrailQuality={auditTrailQuality}
+            events={auditEvents}
+          />
         </aside>
       </div>
     </main>

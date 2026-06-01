@@ -228,3 +228,49 @@ select {
 .terminal-meter-fill-warn {
   background: #e8b84a;
 }
+
+.risk-meter-stack {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.risk-meter-row {
+  min-height: 3rem;
+}
+
+.audit-trail {
+  margin-top: 1.5rem;
+  border: 1px solid #263241;
+  border-radius: 6px;
+  background: #0b0f14;
+  padding: 0.75rem;
+}
+
+.audit-gap {
+  margin-top: 0.75rem;
+  border-left: 3px solid #e8b84a;
+  padding-left: 0.75rem;
+  color: #ffd98a;
+  font-size: 0.875rem;
+}
+
+.audit-event-row {
+  border: 1px solid #263241;
+  border-radius: 6px;
+  padding: 0.65rem;
+}
+
+.audit-event-row span {
+  display: block;
+  color: #e6edf3;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.audit-event-row p {
+  margin: 0.3rem 0 0;
+  color: #9aa7b5;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
