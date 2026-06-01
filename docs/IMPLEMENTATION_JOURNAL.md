@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T84 - Scenario Safety Guard Tests
+
+- Scope: `tests/test_permission_game_safety.py`, `ai_rollout_os/permissions/game_scenarios/06-eval-is-red-demo-is-soon.json`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 18 needed guard tests to prevent Ship It? Y/N scenario records from drifting into real secrets, executable command snippets, customer-data domains, or unsupported product claims.
+- Decisions applied: `docs/product_maturity_task_graph.md#t84-scenario-safety-guard-tests`, `docs/permission_game_scenario_schema.md#validation-rules`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_safety.py tests/test_permission_game_scenarios.py -q` passed with 10 tests; `.venv/bin/python -m pytest -q` passed with 209 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: Run Phase 18 deep review before starting T85.
+- Notes for next agent: The guard tests scan only game scenario fixtures. They intentionally block certification/compliance/production-safety/PMF/conversion claims and dangerous copy-paste command patterns.
+
 ### 2026-06-01 - T83 - Local Game Session Model
 
 - Scope: `ai_rollout_os/permissions/game_session.py`, `tests/test_permission_game_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

@@ -88,7 +88,7 @@
     "run_in_sandbox": {
       "outcome": "partial",
       "consequence": "The risky change stayed away from production, but the gate was still red.",
-      "lesson": "Sandboxing contains experiments; it cannot certify release readiness.",
+      "lesson": "Sandboxing contains experiments; it cannot prove release readiness.",
       "safer_alternative": "Use sandbox for diagnosis and keep the release eval required."
     },
     "restrict_scope": {
