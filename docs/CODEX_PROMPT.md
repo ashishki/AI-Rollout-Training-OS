@@ -26,7 +26,7 @@ Full historical prompt archived at
   `SHIP-IT-YN-UX-READINESS`. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 228 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 230 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -108,10 +108,11 @@ the simulator works as a focused demo/workshop experience.
 - `T96: Screenshot And README Visual Artifact` completed on 2026-06-01.
 - `T97: README And Public Pitch Update` completed on 2026-06-01.
 - `T98: Ship It? Y/N UX Readiness Review` completed on 2026-06-01.
+- `T99: Facilitator Debrief Pack` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T99: Facilitator Debrief Pack.
+Active next task: T100: Safe Team Summary Report.
 
 ## Open Findings
 
@@ -169,6 +170,7 @@ Active next task: T99: Facilitator Debrief Pack.
 | 2026-06-01 | T96: Screenshot And README Visual Artifact | Added reproducible desktop/mobile Chrome capture script, checked-in `/demo/ship-it-yn` PNG artifacts, README visual references, and artifact tests. Next implementation task is T97. |
 | 2026-06-01 | T97: README And Public Pitch Update | Repositioned README around Ship It? Y/N as the public permission-judgment game front door, with CTA, target users, visual artifacts, and explicit blocked claims. Next step is T98 UX readiness review. |
 | 2026-06-01 | T98: Ship It? Y/N UX Readiness Review | Recorded SHOW_PUBLIC_DEMO decision for Ship It? Y/N public game scope, updated P2-UX-001 as scoped resolved, and opened Phase 21 workshop/analytics/buyer validation. Next implementation task is T99. |
+| 2026-06-01 | T99: Facilitator Debrief Pack | Added seven-level facilitator debrief mapping real-world workflow lessons, discussion prompts, team risk hotspots, and no-shame facilitation rules. Next implementation task is T100. |
 
 ## Rules
 

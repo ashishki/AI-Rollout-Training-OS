@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T99 - Facilitator Debrief Pack
+
+- Scope: `docs/ship_it_yn_facilitator_pack.md`, `tests/test_ship_it_yn_workshop_pack.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 21 needs a workshop runbook before aggregate team summaries and analytics.
+- Decisions applied: `docs/product_maturity_task_graph.md#t99-facilitator-debrief-pack`, `docs/ship_it_yn_ai_development_plan.md`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_ship_it_yn_workshop_pack.py -q` passed with 2 tests; `.venv/bin/ruff check tests/test_ship_it_yn_workshop_pack.py` and `.venv/bin/ruff format --check tests/test_ship_it_yn_workshop_pack.py` passed.
+- Follow-ups: `T100: Safe Team Summary Report`.
+- Notes for next agent: The facilitator pack maps all seven levels to lessons, prompts, and aggregate team hotspots. It explicitly avoids personal shame leaderboards and individual ranking.
+
 ### 2026-06-01 - T98 - Ship It? Y/N UX Readiness Review
 
 - Scope: `docs/audit/SHIP_IT_YN_UX_READINESS_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_readiness_review.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
