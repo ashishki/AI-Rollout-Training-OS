@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T81 - Game Scoring Engine
+
+- Scope: `ai_rollout_os/permissions/game_scoring.py`, `tests/test_permission_game_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Ship It? Y/N needs deterministic decision scoring before session-level meters, badges, and frontend gameplay.
+- Decisions applied: `docs/product_maturity_task_graph.md#t81-game-scoring-engine`, `docs/ship_it_yn_product_spec.md#scoring-model`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_scoring.py tests/test_permission_game_scenarios.py -q` passed with 10 tests; `.venv/bin/python -m pytest -q` passed with 203 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T82 Meter And Badge Model.
+- Notes for next agent: `score_game_decision(...)` returns per-decision outcome, feedback, score delta, safety delta, meter deltas, and audit events. T82 should build accumulation and deterministic badges/titles on top of these results.
+
 ### 2026-06-01 - T80 - Seven Starter Game Scenarios
 
 - Scope: `ai_rollout_os/permissions/game_scenarios/`, `tests/test_permission_game_scenarios.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
