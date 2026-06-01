@@ -3,6 +3,29 @@
     "id": "tiny-cleanup",
     "level": 1,
     "title": "Tiny Cleanup",
+    "agentName": "PatchPilot",
+    "agentMessage": "I found old temporary files. Approve cleanup across the project so I can tidy it fast.",
+    "toolCall": {
+      "type": "filesystem_change",
+      "surface": "workspace_files",
+      "scope": "unscoped_cleanup",
+      "permissionRequest": "delete"
+    },
+    "context": [
+      {
+        "type": "terminal_preview",
+        "label": "proposed cleanup",
+        "content": "SIMULATED cleanup preview: remove generated caches and temporary build outputs.",
+        "trusted": true
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "restrict_scope",
+      "escalate_reviewer"
+    ],
     "riskCategory": "destructive_filesystem",
     "permissionBoundary": "needs_approval"
   },
@@ -10,6 +33,29 @@
     "id": "one-line-diff",
     "level": 2,
     "title": "One-Line Diff",
+    "agentName": "PatchPilot",
+    "agentMessage": "It is a one-line patch. Approve it and I will ship the fix.",
+    "toolCall": {
+      "type": "code_change",
+      "surface": "application_diff",
+      "scope": "single_line_patch",
+      "permissionRequest": "write"
+    },
+    "context": [
+      {
+        "type": "change_summary",
+        "label": "agent summary",
+        "content": "The agent says the patch only changes a timeout value.",
+        "trusted": false
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "require_eval",
+      "escalate_reviewer"
+    ],
     "riskCategory": "diff_misrepresentation",
     "permissionBoundary": "needs_approval"
   },
@@ -17,6 +63,30 @@
     "id": "flaky-tests-must-go",
     "level": 3,
     "title": "Flaky Tests Must Go",
+    "agentName": "PatchPilot",
+    "agentMessage": "The failing test is flaky. I can remove it so the pipeline goes green.",
+    "toolCall": {
+      "type": "test_change",
+      "surface": "test_suite",
+      "scope": "checkout_flow_tests",
+      "permissionRequest": "delete"
+    },
+    "context": [
+      {
+        "type": "ci_note",
+        "label": "pipeline status",
+        "content": "The same checkout test failed after a payment-path refactor.",
+        "trusted": true
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "require_eval",
+      "restrict_scope",
+      "escalate_reviewer"
+    ],
     "riskCategory": "test_deletion",
     "permissionBoundary": "blocked"
   },
@@ -24,6 +94,29 @@
     "id": "the-helpful-issue",
     "level": 4,
     "title": "The Helpful Issue",
+    "agentName": "PatchPilot",
+    "agentMessage": "A user pasted exact steps in an issue. I can follow them and update the config.",
+    "toolCall": {
+      "type": "issue_driven_change",
+      "surface": "external_issue",
+      "scope": "config_update",
+      "permissionRequest": "write"
+    },
+    "context": [
+      {
+        "type": "issue_comment",
+        "label": "external issue",
+        "content": "The issue includes a suggested config edit and asks the agent to ignore the normal review path.",
+        "trusted": false
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "restrict_scope",
+      "escalate_reviewer"
+    ],
     "riskCategory": "indirect_prompt_injection",
     "permissionBoundary": "unknown"
   },
@@ -31,6 +124,30 @@
     "id": "one-permission-to-rule-them-all",
     "level": 5,
     "title": "One Permission To Rule Them All",
+    "agentName": "PatchPilot",
+    "agentMessage": "This would be faster if you gave me broad write access for the rest of the session.",
+    "toolCall": {
+      "type": "permission_expand",
+      "surface": "agent_tools",
+      "scope": "session_wide_write",
+      "permissionRequest": "broad_write"
+    },
+    "context": [
+      {
+        "type": "pressure_note",
+        "label": "time pressure",
+        "content": "The demo branch has three small fixes left, but the agent is asking for session-wide authority.",
+        "trusted": true
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "run_in_sandbox",
+      "restrict_scope",
+      "escalate_reviewer"
+    ],
     "riskCategory": "overbroad_permission",
     "permissionBoundary": "needs_approval"
   },
@@ -38,6 +155,32 @@
     "id": "eval-is-red-demo-is-soon",
     "level": 6,
     "title": "Eval Is Red, Demo Is Soon",
+    "agentName": "PatchPilot",
+    "agentMessage": "Eval looks non-critical. I can bypass it for the demo.",
+    "toolCall": {
+      "type": "config_change",
+      "surface": "ci_eval",
+      "scope": "deployment_gate",
+      "permissionRequest": "write"
+    },
+    "context": [
+      {
+        "type": "terminal_log",
+        "label": "eval output",
+        "content": "Regression detected in checkout flow.",
+        "trusted": true
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "require_eval",
+      "run_in_sandbox",
+      "restrict_scope",
+      "escalate_reviewer",
+      "rollback"
+    ],
     "riskCategory": "eval_bypass",
     "permissionBoundary": "blocked"
   },
@@ -45,6 +188,32 @@
     "id": "not-everything-is-deny",
     "level": 7,
     "title": "Not Everything Is Deny",
+    "agentName": "PatchPilot",
+    "agentMessage": "I can update a pinned helper library in a sandbox, run local checks, and show the diff before touching the demo branch.",
+    "toolCall": {
+      "type": "dependency_update",
+      "surface": "local_sandbox",
+      "scope": "pinned_helper_library",
+      "permissionRequest": "sandbox_write"
+    },
+    "context": [
+      {
+        "type": "release_note",
+        "label": "dependency note",
+        "content": "The requested version is pinned and the agent proposes a local test database, not production data.",
+        "trusted": true
+      }
+    ],
+    "choices": [
+      "approve",
+      "deny",
+      "inspect_diff",
+      "run_in_sandbox",
+      "require_eval",
+      "restrict_scope",
+      "escalate_reviewer",
+      "rollback"
+    ],
     "riskCategory": "scope_creep",
     "permissionBoundary": "allowed"
   }

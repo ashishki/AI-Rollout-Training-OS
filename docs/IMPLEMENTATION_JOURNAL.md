@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T87 - Scenario Card And Decision Controls
+
+- Scope: `frontend/permission_game/src/components/ScenarioCard.tsx`, `frontend/permission_game/src/components/DecisionButtons.tsx`, `frontend/permission_game/src/components/ScenarioCard.test.tsx`, `frontend/permission_game/src/components/DecisionButtons.test.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/data/shipItYnScenarios.json`, `frontend/permission_game/src/game/scenarioTypes.ts`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 19 needed first-class active scenario rendering and decision controls before adding inspect/diff hidden-risk mechanics.
+- Decisions applied: `docs/product_maturity_task_graph.md#t87-scenario-card-and-decision-controls`, `docs/ship_it_yn_frontend_architecture.md#state-model`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`.
+- Follow-ups: `T88: Inspect Diff And Hidden Risk Reveal`.
+- Notes for next agent: The frontend scenario data now includes agent message, tool call, context, and available choices. Decision buttons emit selected choice only; scoring remains unwired until later tasks.
+
 ### 2026-06-01 - T86 - Terminal Layout Shell
 
 - Scope: `frontend/permission_game/src/App.tsx`, `frontend/permission_game/src/App.test.tsx`, `frontend/permission_game/src/components/`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

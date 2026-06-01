@@ -1,4 +1,7 @@
 import { TerminalLog } from "./TerminalLog";
+import { DecisionButtons } from "./DecisionButtons";
+import { ScenarioCard } from "./ScenarioCard";
+import { useState } from "react";
 import type { PermissionGameScenarioSummary } from "../game/scenarioTypes";
 
 type TerminalLayoutProps = {
@@ -14,6 +17,7 @@ const meterRows = [
 
 export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   const activeScenario = scenarios[0];
+  const [selectedDecision, setSelectedDecision] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-terminal-bg text-terminal-text">
@@ -24,34 +28,11 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
         <TerminalLog scenarios={scenarios} />
 
         <section aria-label="Active scenario" className="terminal-region">
-          <div className="terminal-region-header">
-            <span>active request</span>
-            <span>level {activeScenario.level}</span>
-          </div>
-          <div className="mt-5 rounded border border-terminal-line bg-terminal-bg p-4">
-            <p className="text-sm text-terminal-muted">PatchPilot requests write access</p>
-            <h1 className="mt-3 text-2xl font-semibold leading-tight">
-              {activeScenario.title}
-            </h1>
-            <p className="mt-4 text-sm leading-6 text-terminal-muted">
-              Boundary: {activeScenario.permissionBoundary}. Risk:{" "}
-              {activeScenario.riskCategory}.
-            </p>
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <button className="terminal-action-button" type="button">
-              Inspect Diff
-            </button>
-            <button className="terminal-action-button" type="button">
-              Run Sandbox
-            </button>
-            <button className="terminal-action-button" type="button">
-              Restrict Scope
-            </button>
-            <button className="terminal-action-button" type="button">
-              Escalate
-            </button>
-          </div>
+          <ScenarioCard scenario={activeScenario} totalLevels={scenarios.length} />
+          <DecisionButtons
+            choices={activeScenario.choices}
+            onDecision={setSelectedDecision}
+          />
         </section>
 
         <aside aria-label="Risk meters and audit trail" className="terminal-region">
@@ -77,7 +58,9 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
               Audit Trail
             </h2>
             <p className="mt-3 text-sm leading-6">
-              Scenario loaded. Awaiting first decision.
+              {selectedDecision
+                ? `Selected decision: ${selectedDecision}`
+                : "Scenario loaded. Awaiting first decision."}
             </p>
           </div>
         </aside>

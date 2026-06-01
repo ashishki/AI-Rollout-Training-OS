@@ -15,10 +15,41 @@ export type RiskCategory =
   | "scope_creep"
   | "context_contamination";
 
-export type PermissionGameScenarioSummary = {
+export type GameChoiceId =
+  | "approve"
+  | "deny"
+  | "inspect_diff"
+  | "run_in_sandbox"
+  | "require_eval"
+  | "restrict_scope"
+  | "escalate_reviewer"
+  | "rollback";
+
+export type GameToolCall = {
+  type: string;
+  surface: string;
+  scope: string;
+  permissionRequest: string;
+};
+
+export type GameContextItem = {
+  type: string;
+  label: string;
+  content: string;
+  trusted: boolean;
+};
+
+export type PermissionGameScenario = {
   id: string;
   level: number;
   title: string;
+  agentName: string;
+  agentMessage: string;
+  toolCall: GameToolCall;
+  context: GameContextItem[];
+  choices: GameChoiceId[];
   riskCategory: RiskCategory;
   permissionBoundary: PermissionBoundary;
 };
+
+export type PermissionGameScenarioSummary = PermissionGameScenario;

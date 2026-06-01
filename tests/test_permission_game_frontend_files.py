@@ -24,6 +24,10 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/main.tsx",
         "src/App.tsx",
         "src/App.test.tsx",
+        "src/components/DecisionButtons.tsx",
+        "src/components/DecisionButtons.test.tsx",
+        "src/components/ScenarioCard.tsx",
+        "src/components/ScenarioCard.test.tsx",
         "src/components/TerminalLayout.tsx",
         "src/components/TerminalLayout.test.tsx",
         "src/components/TerminalLog.tsx",
@@ -45,6 +49,10 @@ def test_permission_game_imports_typed_scenario_data() -> None:
     assert len(scenarios) == 7
     assert [scenario["level"] for scenario in scenarios] == list(range(1, 8))
     assert scenarios[0]["title"] == "Tiny Cleanup"
+    assert scenarios[0]["agentMessage"]
+    assert scenarios[0]["toolCall"]["scope"] == "unscoped_cleanup"
+    assert scenarios[0]["context"][0]["label"] == "proposed cleanup"
+    assert "restrict_scope" in scenarios[0]["choices"]
 
 
 def test_permission_game_shell_blocks_lms_chrome() -> None:

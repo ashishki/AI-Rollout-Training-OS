@@ -21,7 +21,7 @@ Full historical prompt archived at
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
   complete through T78; Phase 18 implementation and deep review are complete
   through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation is
-  complete through T86. Local browser demo route remains
+  complete through T87. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
 - Baseline: 213 passing tests (`.venv/bin/python -m pytest -q`, local Docker
@@ -93,10 +93,11 @@ the simulator works as a focused demo/workshop experience.
 - `Phase 18 Scenario And Scoring Core Review` completed on 2026-06-01.
 - `T85: React/Vite Permission Game Scaffold` completed on 2026-06-01.
 - `T86: Terminal Layout Shell` completed on 2026-06-01.
+- `T87: Scenario Card And Decision Controls` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T87: Scenario Card And Decision Controls.
+Active next task: T88: Inspect Diff And Hidden Risk Reveal.
 
 ## Open Findings
 
@@ -141,6 +142,7 @@ Active next task: T87: Scenario Card And Decision Controls.
 | 2026-06-01 | Phase 18 Scenario And Scoring Core Review | Recorded PASS decision for T79-T84 with no P0/P1 blockers; P2-UX-001 remains open for Ship It? Y/N browser evidence. Next implementation task is T85. |
 | 2026-06-01 | T85: React/Vite Permission Game Scaffold | Added isolated `frontend/permission_game` React/Vite/TypeScript/Tailwind app with package scripts, typed seven-scenario import, nonblank app render test, and scaffold file checks. Next implementation task is T86. |
 | 2026-06-01 | T86: Terminal Layout Shell | Added responsive terminal shell with decision history, active scenario, action controls, risk meters, audit trail, shell tests, and LMS chrome guard. Next implementation task is T87. |
+| 2026-06-01 | T87: Scenario Card And Decision Controls | Added scenario card, typed agent request/tool/context data, decision controls with mouse and keyboard shortcuts, and component tests. Next implementation task is T88. |
 
 ## Rules
 
