@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T104 - Claim Boundary And Security Review
+
+- Scope: `docs/audit/SHIP_IT_YN_CLAIM_BOUNDARY_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_claim_boundary_review.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 21 needed a claim/security gate before the buyer demo readiness decision.
+- Decisions applied: `docs/product_maturity_task_graph.md#t104-claim-boundary-and-security-review`, `docs/ship_it_yn_buyer_feedback.md#evidence-log`, `docs/ship_it_yn_scenario_authoring.md#blocked-live-scoring-usage`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_ship_it_yn_claim_boundary_review.py -q` passed with 2 tests.
+- Follow-ups: `T105: Ship It? Y/N Buyer Demo Readiness Review`.
+- Notes for next agent: The review status is `CLAIM_BOUNDARY_PASS`. It permits bounded manual demos while blocking compliance approval, certified safety, production readiness, incident reduction, PMF, paid conversion, customer adoption, autonomous permission approval, and real agent execution safety claims.
+
 ### 2026-06-01 - T103 - AI-Assisted Scenario Authoring Workflow
 
 - Scope: `docs/ship_it_yn_scenario_authoring.md`, `tests/test_ship_it_yn_scenario_authoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
