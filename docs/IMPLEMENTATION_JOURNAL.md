@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T100 - Safe Team Summary Report
+
+- Scope: `ai_rollout_os/permissions/game_summary.py`, `tests/test_ship_it_yn_team_summary.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 21 needed aggregate team reporting after the facilitator debrief pack and before analytics-lite.
+- Decisions applied: `docs/product_maturity_task_graph.md#t100-safe-team-summary-report`, `docs/ship_it_yn_ai_development_plan.md`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_ship_it_yn_team_summary.py -q` passed with 2 tests; `.venv/bin/ruff check ai_rollout_os/permissions/game_summary.py tests/test_ship_it_yn_team_summary.py` and `.venv/bin/ruff format --check ai_rollout_os/permissions/game_summary.py tests/test_ship_it_yn_team_summary.py` passed.
+- Follow-ups: `T101: Analytics Lite For Public Demo`.
+- Notes for next agent: `build_team_game_summary(...)` aggregates only safe labels and counts; it does not preserve raw prompts, code, credentials, customer data, personal identifiers, or participant ranking.
+
 ### 2026-06-01 - T99 - Facilitator Debrief Pack
 
 - Scope: `docs/ship_it_yn_facilitator_pack.md`, `tests/test_ship_it_yn_workshop_pack.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
