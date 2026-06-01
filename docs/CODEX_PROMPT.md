@@ -1,7 +1,7 @@
 # AI Rollout Training OS - Compact Session State
 
 Version: 2.2
-Date: 2026-05-31
+Date: 2026-06-01
 Status: active-pivot
 
 Full historical prompt archived at
@@ -19,11 +19,11 @@ Full historical prompt archived at
 - Active task source: Post-MVP production maturity graph,
   `docs/product_maturity_task_graph.md`.
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
-  complete through T78; Phase 18 implementation starts at T79. Local browser
+  complete through T78; Phase 18 implementation is complete through T79. Local browser
   demo route remains available at `/demo/permission-simulator`, with a captured
   Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 188 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 199 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -83,10 +83,11 @@ the simulator works as a focused demo/workshop experience.
   2026-05-29 with a reproducible public-demo screenshot.
 - `T75-T78 planning package` completed on 2026-05-31 for Ship It? Y/N product
   spec, scenario schema, frontend architecture, and AI development plan.
+- `T79: Game Scenario Pydantic Schema` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T79: Game Scenario Pydantic Schema.
+Active next task: T80: Seven Starter Game Scenarios.
 
 ## Open Findings
 
@@ -122,6 +123,7 @@ Active next task: T79: Game Scenario Pydantic Schema.
 | 2026-05-29 | D-012: Public Static Permission Simulator Demo Route | `/demo/permission-simulator` added for browser demo access without workspace data reads. |
 | 2026-05-29 | P2-UX-001: Permission Simulator Browser Evidence | Captured public demo screenshot with headless Chrome and added a reproducible capture script; broader app-shell browser e2e remains open. |
 | 2026-05-31 | T75-T78 planning package | Added Ship It? Y/N product spec, scenario schema, React/Vite frontend architecture, AI development plan, and Phase 17-21 task graph. Next implementation task is T79. |
+| 2026-06-01 | T79: Game Scenario Pydantic Schema | Added Pydantic scenario models for Ship It? Y/N records with validation coverage for choices, risks, feedback, levels, meters, badges, and facilitator notes. Next implementation task is T80. |
 
 ## Rules
 

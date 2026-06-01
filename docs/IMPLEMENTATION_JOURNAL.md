@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-06-01 - T79 - Game Scenario Pydantic Schema
+
+- Scope: `ai_rollout_os/permissions/game_schema.py`, `tests/test_permission_game_scenarios.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 18 needed a deterministic, data-driven schema before adding the seven Ship It? Y/N starter scenarios and scoring core.
+- Decisions applied: `docs/product_maturity_task_graph.md#t79-game-scenario-pydantic-schema`, `docs/permission_game_scenario_schema.md`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_scenarios.py -q` passed with 6 tests; `.venv/bin/python -m pytest -q` passed with 199 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T80 Seven Starter Game Scenarios.
+- Notes for next agent: Use `PermissionGameScenario` as the authoritative validation contract for T80 fixture records. Do not add scoring behavior, React UI, or live command execution inside the scenario records.
 
 ### 2026-05-31 - T75-T105 Planning - Ship It? Y/N AI Development Roadmap
 

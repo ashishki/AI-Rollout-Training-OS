@@ -1,7 +1,7 @@
 # Evidence Index - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 This file indexes durable proof so agents can retrieve evidence quickly. It is not authoritative by itself. Every row must point to an actual artifact that carries the evidence.
 
@@ -80,6 +80,7 @@ Use this file because the project has active RAG evaluation artifacts, heavy tas
 | D-012 public static permission simulator demo route | decision + frontend + tests | `docs/DECISION_LOG.md`, `frontend/app_shell.py`, `tests/test_permission_ui.py`, `tests/test_permissions_matrix.py` | Public `/demo/permission-simulator` route for browser demo access with static scenario content only, no workspace data reads, deterministic scoring, and explicit design-decision marker in route tests | 2026-05-29 | Yes |
 | P2-UX-001 permission simulator browser evidence | screenshot + script + tests | `docs/audit/artifacts/permission_simulator_demo.png`, `scripts/capture_permission_simulator_demo.py`, `tests/test_permission_demo_browser_artifact.py`, `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md` | Headless Chrome screenshot proof for the public permission simulator demo route, with a reproducible capture script; broader app-shell browser e2e coverage remains open before full UX readiness claims | 2026-05-29 | Yes |
 | T75-T105 Ship It? Y/N AI development roadmap | planning docs + tests | `docs/ship_it_yn_product_spec.md`, `docs/permission_game_scenario_schema.md`, `docs/ship_it_yn_frontend_architecture.md`, `docs/ship_it_yn_ai_development_plan.md`, `docs/product_maturity_task_graph.md`, `tests/test_ship_it_yn_planning_docs.py` | End-to-end next development phases for a polished React/Vite terminal-style permission game: product blueprint, scenario/scoring core, playable UI, browser evidence, workshop analytics, buyer validation, and claim boundaries | 2026-05-31 | Yes |
+| T79 Ship It? Y/N scenario schema | schema + tests | `ai_rollout_os/permissions/game_schema.py`, `tests/test_permission_game_scenarios.py` | Pydantic validation for Ship It? Y/N scenario records covering ids, levels, agent/tool/context fields, inspect artifacts, choice sets, feedback coverage, permission boundaries, risk categories, meters, badges, audit events, and facilitator notes | 2026-06-01 | Yes |
 | T01 project skeleton | tests | `tests/test_health.py`, `tests/test_app_factory.py`, `tests/test_project_metadata.py` | Health endpoint, FastAPI app factory import, pyproject metadata, pytest config, and ruff config | 2026-05-19 | Yes |
 | T02 CI setup | tests | `tests/test_ci_workflow.py`, `.github/workflows/ci.yml` | GitHub Actions install, lint, format, pytest, PostgreSQL pgvector service, safe test env vars, and production-secret guard | 2026-05-19 | Yes |
 | T03 smoke baseline | tests | `tests/test_baseline.py`, `tests/test_codex_prompt_state.py`, `docs/CODEX_PROMPT.md` | Local pytest collection, ruff command viability, and Codex baseline/next-task state | 2026-05-19 | Yes |
