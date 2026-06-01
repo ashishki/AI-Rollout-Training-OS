@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T82 - Meter And Badge Model
+
+- Scope: `ai_rollout_os/permissions/game_scoring.py`, `tests/test_permission_game_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Ship It? Y/N needs session-level meter totals, badges, titles, and share text before adding the local public-demo session model.
+- Decisions applied: `docs/product_maturity_task_graph.md#t82-meter-and-badge-model`, `docs/ship_it_yn_product_spec.md#scoring-model`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_scoring.py -q` passed with 4 tests; `.venv/bin/python -m pytest -q` passed with 205 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T83 Local Game Session Model.
+- Notes for next agent: `summarize_game_session(...)` produces deterministic totals, badges, title, strongest habit, weakest risk area, and share text. Unsafe decisions force a non-rewarding title and remove the clean approval badge.
+
 ### 2026-06-01 - T81 - Game Scoring Engine
 
 - Scope: `ai_rollout_os/permissions/game_scoring.py`, `tests/test_permission_game_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

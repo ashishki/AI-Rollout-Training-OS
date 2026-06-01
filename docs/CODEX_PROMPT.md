@@ -19,11 +19,11 @@ Full historical prompt archived at
 - Active task source: Post-MVP production maturity graph,
   `docs/product_maturity_task_graph.md`.
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
-  complete through T78; Phase 18 implementation is complete through T81. Local browser
+  complete through T78; Phase 18 implementation is complete through T82. Local browser
   demo route remains available at `/demo/permission-simulator`, with a captured
   Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 203 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 205 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -86,10 +86,11 @@ the simulator works as a focused demo/workshop experience.
 - `T79: Game Scenario Pydantic Schema` completed on 2026-06-01.
 - `T80: Seven Starter Game Scenarios` completed on 2026-06-01.
 - `T81: Game Scoring Engine` completed on 2026-06-01.
+- `T82: Meter And Badge Model` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T82: Meter And Badge Model.
+Active next task: T83: Local Game Session Model.
 
 ## Open Findings
 
@@ -128,6 +129,7 @@ Active next task: T82: Meter And Badge Model.
 | 2026-06-01 | T79: Game Scenario Pydantic Schema | Added Pydantic scenario models for Ship It? Y/N records with validation coverage for choices, risks, feedback, levels, meters, badges, and facilitator notes. Next implementation task is T80. |
 | 2026-06-01 | T80: Seven Starter Game Scenarios | Added seven JSON scenario records for Ship It? Y/N and validation coverage for level order, titles, feedback, outcomes, facilitator notes, badges, and audit events. Next implementation task is T81. |
 | 2026-06-01 | T81: Game Scoring Engine | Added deterministic per-decision scoring for Ship It? Y/N outcomes, feedback, score deltas, safety deltas, meter deltas, and audit events. Next implementation task is T82. |
+| 2026-06-01 | T82: Meter And Badge Model | Added deterministic session meter totals, badges, final titles, strongest habit, weakest risk area, and share text that does not reward unsafe speed. Next implementation task is T83. |
 
 ## Rules
 
