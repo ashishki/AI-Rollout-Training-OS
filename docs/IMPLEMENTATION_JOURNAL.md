@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T102 - Buyer Feedback Loop
+
+- Scope: `docs/ship_it_yn_buyer_feedback.md`, `tests/test_ship_it_yn_buyer_feedback.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 21 needed a manual demo feedback loop before claiming buyer readiness or using demo conversations as evidence.
+- Decisions applied: `docs/product_maturity_task_graph.md#t102-buyer-feedback-loop`, `docs/customer_discovery.md#observed-customer-evidence`, `docs/customer_discovery.md#internal-assumptions`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_ship_it_yn_buyer_feedback.py -q` passed with 2 tests.
+- Follow-ups: `T103: AI-Assisted Scenario Authoring Workflow`.
+- Notes for next agent: The template captures buyer role, team agent usage, strongest/weakest scenario, workshop willingness, objections, and next action. The evidence log keeps observed evidence separate from founder/operator assumptions and blocks PMF, paid-conversion, compliance, and production-readiness claims.
+
 ### 2026-06-01 - T101 - Analytics Lite For Public Demo
 
 - Scope: `frontend/permission_game/src/game/analytics.ts`, `frontend/permission_game/src/game/analytics.test.ts`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `tests/browser/test_ship_it_yn_gameplay.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

@@ -12,7 +12,7 @@ active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
 Active phase: Phase 21 - Workshop, Analytics, And Buyer Validation.
-Active next task: `T102: Buyer Feedback Loop`.
+Active next task: `T103: AI-Assisted Scenario Authoring Workflow`.
 Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
 Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
 Development Plan`. Phase 18 implementation and review are complete through
@@ -20,7 +20,7 @@ Development Plan`. Phase 18 implementation and review are complete through
 implementation and review are complete through `T91: Final Result And Share Card`
 and `PHASE19-REACT-VITE-GAME`. Phase 20 implementation is complete through
 `T98: Ship It? Y/N UX Readiness Review` and `SHIP-IT-YN-UX-READINESS`.
-Phase 21 implementation is complete through `T101: Analytics Lite For Public Demo`.
+Phase 21 implementation is complete through `T102: Buyer Feedback Loop`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and
