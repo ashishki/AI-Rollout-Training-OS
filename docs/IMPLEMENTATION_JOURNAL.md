@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T95 - Full Public Game Browser E2E
+
+- Scope: `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/styles.css`, `tests/browser/test_ship_it_yn_gameplay.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 20 needed browser-level proof that the public Ship It? Y/N route can be played end to end before capturing durable README artifacts.
+- Decisions applied: `docs/product_maturity_task_graph.md#t95-full-public-game-browser-e2e`, `docs/ship_it_yn_frontend_architecture.md#browser-evidence`
+- Evidence collected: `.venv/bin/python -m pytest tests/browser/test_ship_it_yn_gameplay.py -q` passed with 2 Chrome DevTools browser tests; `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`.
+- Follow-ups: `T96: Screenshot And README Visual Artifact`.
+- Notes for next agent: The gameplay browser test drives the public `/demo/ship-it-yn` route through all seven levels and checks loaded resources stay on the local same-origin app; T96 should create durable screenshot artifacts rather than relying on test-time temporary images.
+
 ### 2026-06-01 - T94 - Motion And Accessibility Pass
 
 - Scope: `frontend/permission_game/src/styles.css`, `frontend/permission_game/src/components/ResultScreen.tsx`, `frontend/permission_game/src/components/ResultScreen.test.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/game/accessibility.test.ts`, `tests/browser/test_ship_it_yn_accessibility.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

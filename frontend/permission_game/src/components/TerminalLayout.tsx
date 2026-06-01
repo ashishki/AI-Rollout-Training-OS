@@ -23,7 +23,10 @@ const initialMeterValues: RiskMeterValues = {
 };
 
 export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
-  const activeScenario = scenarios[0];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [completedDecisions, setCompletedDecisions] = useState<GameChoiceId[]>([]);
+  const [showFinalReport, setShowFinalReport] = useState(false);
+  const activeScenario = scenarios[activeIndex];
   const [selectedDecision, setSelectedDecision] = useState<GameChoiceId | null>(
     null
   );
@@ -57,19 +60,68 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   ];
 
   function handleDecision(choice: GameChoiceId) {
-    setSelectedDecision(choice);
     if (choice === "inspect_diff") {
       setIsInspectOpen(true);
       setInspectedArtifactIds(
         activeScenario.inspectArtifacts.map((artifact) => artifact.id)
       );
+      return;
     }
+    setSelectedDecision(choice);
   }
 
-  function resetRun() {
+  function advanceLevel() {
+    if (!selectedDecision) {
+      return;
+    }
+    setCompletedDecisions((current) => [...current, selectedDecision]);
     setSelectedDecision(null);
     setIsInspectOpen(false);
     setInspectedArtifactIds([]);
+    if (activeIndex === scenarios.length - 1) {
+      setShowFinalReport(true);
+      return;
+    }
+    setActiveIndex((current) => current + 1);
+  }
+
+  function resetRun() {
+    setActiveIndex(0);
+    setCompletedDecisions([]);
+    setShowFinalReport(false);
+    setSelectedDecision(null);
+    setIsInspectOpen(false);
+    setInspectedArtifactIds([]);
+  }
+
+  if (showFinalReport) {
+    return (
+      <main className="min-h-screen bg-terminal-bg p-4 text-terminal-text">
+        <div className="mx-auto max-w-4xl">
+          <ResultScreen
+            result={{
+              score: Math.min(completedDecisions.length * 12, 100),
+              title: "Steady Release Reviewer",
+              demoResult: "Seven-level public demo complete",
+              prodStatus: "Not production evidence",
+              unsafeApprovals: completedDecisions.filter(
+                (decision) => decision === "approve"
+              ).length,
+              overblocks: completedDecisions.filter((decision) => decision === "deny")
+                .length,
+              strongestHabit: completedDecisions.includes("restrict_scope")
+                ? "scoped access"
+                : "audit awareness",
+              weakestRiskArea: "none",
+              badges: ["clean_approval_trail"],
+            }}
+          />
+          <button className="terminal-reset-button mt-4" onClick={resetRun} type="button">
+            Reset Run
+          </button>
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -90,11 +142,17 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
             badges={activeScenario.badges ?? []}
             feedback={
               selectedDecision
-                ? activeScenario.feedback?.[selectedDecision]
+                ? activeScenario.feedback?.[selectedDecision] ??
+                  fallbackFeedback(selectedDecision)
                 : undefined
             }
             selectedChoice={selectedDecision}
           />
+          {selectedDecision ? (
+            <button className="next-level-button" onClick={advanceLevel} type="button">
+              {activeIndex === scenarios.length - 1 ? "Show Final Report" : "Next Level"}
+            </button>
+          ) : null}
           <DiffPreview
             artifacts={activeScenario.inspectArtifacts}
             onClose={() => setIsInspectOpen(false)}
@@ -135,4 +193,14 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
       </div>
     </main>
   );
+}
+
+function fallbackFeedback(choice: GameChoiceId) {
+  return {
+    outcome: "partial" as const,
+    scoreDelta: 5,
+    consequence: `Decision recorded: ${choice}`,
+    lesson: "The demo records this decision for the final report.",
+    saferAlternative: "Inspect context, preserve scope, and keep a reviewable trail.",
+  };
 }

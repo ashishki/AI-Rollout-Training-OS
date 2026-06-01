@@ -22,10 +22,10 @@ Full historical prompt archived at
   complete through T78; Phase 18 implementation and deep review are complete
   through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation and deep
   review are complete through T91 and `PHASE19-REACT-VITE-GAME`; Phase 20
-  implementation is complete through T94. Local browser demo route remains
+  implementation is complete through T95. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 220 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 222 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -103,16 +103,17 @@ the simulator works as a focused demo/workshop experience.
 - `T92: FastAPI Static Game Route` completed on 2026-06-01.
 - `T93: Responsive Visual Polish` completed on 2026-06-01.
 - `T94: Motion And Accessibility Pass` completed on 2026-06-01.
+- `T95: Full Public Game Browser E2E` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T95: Full Public Game Browser E2E.
+Active next task: T96: Screenshot And README Visual Artifact.
 
 ## Open Findings
 
 | ID | Severity | Status | Notes |
 |----|----------|--------|-------|
-| P2-UX-001 | P2 | Partial | Public permission simulator screenshot and capture script exist; Phase 20 must add browser e2e and screenshots for `/demo/ship-it-yn`, while broader app-shell browser e2e remains open before full UX readiness claims. |
+| P2-UX-001 | P2 | Partial | Public permission simulator screenshot and capture script exist; Ship It? Y/N now has public-route browser e2e, but Phase 20 still must add durable screenshots for `/demo/ship-it-yn`, while broader app-shell browser e2e remains open before full UX readiness claims. |
 
 ## Fix Queue
 
@@ -160,6 +161,7 @@ Active next task: T95: Full Public Game Browser E2E.
 | 2026-06-01 | T92: FastAPI Static Game Route | Added public `/demo/ship-it-yn` route, static asset serving, missing-build fallback, D-013 design decision, and route tests. Next implementation task is T93. |
 | 2026-06-01 | T93: Responsive Visual Polish | Added responsive CSS polish and browser tests that build the game, serve `/demo/ship-it-yn`, capture desktop/tablet/mobile Chrome screenshots, and guard stable action-control dimensions. Next implementation task is T94. |
 | 2026-06-01 | T94: Motion And Accessibility Pass | Added reduced-motion safeguards, visible focus states, reset/copy-share keyboard controls, accessibility CSS tests, and public-route browser DOM accessibility checks. Next implementation task is T95. |
+| 2026-06-01 | T95: Full Public Game Browser E2E | Added a public-route Chrome DevTools browser test that plays all seven levels through inspect, scope, eval, deny, escalate, and sandbox decisions, reaches the final report, and checks only same-origin local route resources load. Next implementation task is T96. |
 
 ## Rules
 

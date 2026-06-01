@@ -142,6 +142,17 @@ textarea:focus-visible,
   color: #e6edf3;
 }
 
+.next-level-button {
+  margin-top: 1rem;
+  min-height: 3rem;
+  width: 100%;
+  border: 1px solid #45c486;
+  border-radius: 6px;
+  background: #132e22;
+  color: #e6edf3;
+  font-weight: 800;
+}
+
 .decision-control-grid {
   display: grid;
   align-items: stretch;
