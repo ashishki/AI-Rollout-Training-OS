@@ -274,3 +274,71 @@ select {
   font-size: 0.8125rem;
   line-height: 1.5;
 }
+
+.consequence-panel {
+  margin-top: 1rem;
+  min-height: 11rem;
+  border: 1px solid #263241;
+  border-radius: 8px;
+  background: #0b0f14;
+  padding: 1rem;
+}
+
+.consequence-panel h2 {
+  margin: 0.75rem 0 0;
+  color: #e6edf3;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.consequence-panel p {
+  color: #9aa7b5;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.consequence-panel[data-outcome="correct"] {
+  border-color: #45c486;
+}
+
+.consequence-panel[data-outcome="unsafe"] {
+  border-color: #f06a6a;
+}
+
+.safer-alternative {
+  margin-top: 1rem;
+  border-left: 3px solid #5aa7ff;
+  padding-left: 0.75rem;
+}
+
+.safer-alternative span {
+  color: #5aa7ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-toast {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid #45c486;
+  border-radius: 6px;
+  background: #132e22;
+  padding: 0.75rem;
+}
+
+.badge-toast span {
+  color: #9be0bc;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-toast strong {
+  color: #e6edf3;
+  font-size: 0.875rem;
+  text-align: right;
+}

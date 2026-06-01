@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T90 - Consequence Panel And Badge Toasts
+
+- Scope: `frontend/permission_game/src/components/ConsequencePanel.tsx`, `frontend/permission_game/src/components/ConsequencePanel.test.tsx`, `frontend/permission_game/src/components/BadgeToast.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/data/shipItYnScenarios.json`, `frontend/permission_game/src/game/scenarioTypes.ts`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 19 needed visible outcome feedback, safer alternatives, lessons, and earned badges after decisions.
+- Decisions applied: `docs/product_maturity_task_graph.md#t90-consequence-panel-and-badge-toasts`, `docs/ship_it_yn_frontend_architecture.md#ux-layout`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`.
+- Follow-ups: `T91: Final Result And Share Card`.
+- Notes for next agent: Feedback is currently wired for the active starter scenario in the frontend data. T91 should build final session result presentation on top of the existing summary model.
+
 ### 2026-06-01 - T89 - Risk Meters And Audit Trail
 
 - Scope: `frontend/permission_game/src/components/RiskMeters.tsx`, `frontend/permission_game/src/components/RiskMeters.test.tsx`, `frontend/permission_game/src/components/AuditTrail.tsx`, `frontend/permission_game/src/components/AuditTrail.test.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

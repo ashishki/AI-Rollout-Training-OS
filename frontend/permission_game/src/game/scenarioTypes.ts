@@ -47,6 +47,15 @@ export type GameInspectArtifact = {
   revealsRisk: RiskCategory;
 };
 
+export type GameFeedbackOutcome = "correct" | "partial" | "unsafe" | "overblock";
+
+export type GameChoiceFeedback = {
+  outcome: GameFeedbackOutcome;
+  consequence: string;
+  lesson: string;
+  saferAlternative: string;
+};
+
 export type PermissionGameScenario = {
   id: string;
   level: number;
@@ -57,6 +66,8 @@ export type PermissionGameScenario = {
   context: GameContextItem[];
   inspectArtifacts: GameInspectArtifact[];
   choices: GameChoiceId[];
+  feedback?: Partial<Record<GameChoiceId, GameChoiceFeedback>>;
+  badges?: string[];
   riskCategory: RiskCategory;
   permissionBoundary: PermissionBoundary;
 };

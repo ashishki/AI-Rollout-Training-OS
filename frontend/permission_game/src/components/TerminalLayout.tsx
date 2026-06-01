@@ -2,6 +2,7 @@ import { TerminalLog } from "./TerminalLog";
 import { DecisionButtons } from "./DecisionButtons";
 import { DiffPreview } from "./DiffPreview";
 import { AuditTrail, type AuditTrailEvent } from "./AuditTrail";
+import { ConsequencePanel } from "./ConsequencePanel";
 import { RiskMeters, type RiskMeterValues } from "./RiskMeters";
 import { ScenarioCard } from "./ScenarioCard";
 import { useState } from "react";
@@ -22,7 +23,9 @@ const initialMeterValues: RiskMeterValues = {
 
 export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   const activeScenario = scenarios[0];
-  const [selectedDecision, setSelectedDecision] = useState<string | null>(null);
+  const [selectedDecision, setSelectedDecision] = useState<GameChoiceId | null>(
+    null
+  );
   const [isInspectOpen, setIsInspectOpen] = useState(false);
   const [inspectedArtifactIds, setInspectedArtifactIds] = useState<string[]>([]);
   const auditTrailQuality = inspectedArtifactIds.length > 0 ? "inspected" : "blind";
@@ -75,6 +78,15 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
           <DecisionButtons
             choices={activeScenario.choices}
             onDecision={handleDecision}
+          />
+          <ConsequencePanel
+            badges={activeScenario.badges ?? []}
+            feedback={
+              selectedDecision
+                ? activeScenario.feedback?.[selectedDecision]
+                : undefined
+            }
+            selectedChoice={selectedDecision}
           />
           <DiffPreview
             artifacts={activeScenario.inspectArtifacts}
