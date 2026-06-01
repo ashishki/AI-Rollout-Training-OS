@@ -8,6 +8,7 @@ Append-only. One row per review cycle.
 
 | Cycle | Phase | Date | Scope | Stop-Ship | P0 | P1 | P2 |
 |-------|-------|------|-------|-----------|----|----|----|
+| SHIP-IT-YN-UX-READINESS | Phase 20 | 2026-06-01 | Ship It? Y/N UX readiness review after T92-T97 | No | 0 | 0 | 1 |
 | PHASE19-REACT-VITE-GAME | Phase 19 | 2026-06-01 | Ship It? Y/N React/Vite playable game review after T85-T91 | No | 0 | 0 | 1 |
 | PHASE18-SCENARIO-SCORING | Phase 18 | 2026-06-01 | Ship It? Y/N scenario and scoring core review after T79-T84 | No | 0 | 0 | 1 |
 | PERMISSION-SIMULATOR-READINESS | Phase 16 | 2026-05-29 | Permission simulator readiness review after T69-T73 | No | 0 | 0 | 1 |
@@ -32,6 +33,7 @@ Append-only. One row per review cycle.
 
 | Cycle | File | Phase | Health |
 |-------|------|-------|--------|
+| SHIP-IT-YN-UX-READINESS | `docs/audit/SHIP_IT_YN_UX_READINESS_REVIEW.md` | Phase 20 | SHOW_PUBLIC_DEMO |
 | PHASE19-REACT-VITE-GAME | `docs/audit/PHASE19_REACT_VITE_GAME_REVIEW.md` | Phase 19 | PASS |
 | PHASE18-SCENARIO-SCORING | `docs/audit/PHASE18_SCENARIO_SCORING_CORE_REVIEW.md` | Phase 18 | PASS |
 | PERMISSION-SIMULATOR-READINESS | `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md` | Phase 16 | SHOW_DEMO |

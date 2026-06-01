@@ -9,7 +9,7 @@ Full historical prompt archived at
 
 ## Current State
 
-- Current phase: Phase 20 - Browser Polish And Public Demo Evidence.
+- Current phase: Phase 21 - Workshop, Analytics, And Buyer Validation.
 - Active pivot: polished React/Vite permission mini-game built on the Agent
   Permission Training Simulator.
 - Reference direction: beautiful, convenient, showable, monetizable
@@ -22,10 +22,11 @@ Full historical prompt archived at
   complete through T78; Phase 18 implementation and deep review are complete
   through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation and deep
   review are complete through T91 and `PHASE19-REACT-VITE-GAME`; Phase 20
-  implementation is complete through T97. Local browser demo route remains
+  implementation and UX readiness review are complete through T98 and
+  `SHIP-IT-YN-UX-READINESS`. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 226 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 228 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -106,16 +107,17 @@ the simulator works as a focused demo/workshop experience.
 - `T95: Full Public Game Browser E2E` completed on 2026-06-01.
 - `T96: Screenshot And README Visual Artifact` completed on 2026-06-01.
 - `T97: README And Public Pitch Update` completed on 2026-06-01.
+- `T98: Ship It? Y/N UX Readiness Review` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T98: Ship It? Y/N UX Readiness Review.
+Active next task: T99: Facilitator Debrief Pack.
 
 ## Open Findings
 
 | ID | Severity | Status | Notes |
 |----|----------|--------|-------|
-| P2-UX-001 | P2 | Partial | Public permission simulator screenshot and capture script exist; Ship It? Y/N now has public-route browser e2e and durable desktop/mobile screenshots, while broader app-shell browser e2e remains open before full UX readiness claims. |
+| P2-UX-001 | P2 | Scoped Resolved | Resolved for Ship It? Y/N public game scope by browser e2e, durable screenshots, and README artifacts; broader app-shell browser e2e remains open before full-platform UX readiness claims. |
 
 ## Fix Queue
 
@@ -166,6 +168,7 @@ Active next task: T98: Ship It? Y/N UX Readiness Review.
 | 2026-06-01 | T95: Full Public Game Browser E2E | Added a public-route Chrome DevTools browser test that plays all seven levels through inspect, scope, eval, deny, escalate, and sandbox decisions, reaches the final report, and checks only same-origin local route resources load. Next implementation task is T96. |
 | 2026-06-01 | T96: Screenshot And README Visual Artifact | Added reproducible desktop/mobile Chrome capture script, checked-in `/demo/ship-it-yn` PNG artifacts, README visual references, and artifact tests. Next implementation task is T97. |
 | 2026-06-01 | T97: README And Public Pitch Update | Repositioned README around Ship It? Y/N as the public permission-judgment game front door, with CTA, target users, visual artifacts, and explicit blocked claims. Next step is T98 UX readiness review. |
+| 2026-06-01 | T98: Ship It? Y/N UX Readiness Review | Recorded SHOW_PUBLIC_DEMO decision for Ship It? Y/N public game scope, updated P2-UX-001 as scoped resolved, and opened Phase 21 workshop/analytics/buyer validation. Next implementation task is T99. |
 
 ## Rules
 

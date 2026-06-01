@@ -11,15 +11,15 @@ This file remains the canonical MVP implementation graph for T01-T24. Current
 active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
-Active phase: Phase 20 - Browser Polish And Public Demo Evidence.
-Active next task: `T98: Ship It? Y/N UX Readiness Review`.
+Active phase: Phase 21 - Workshop, Analytics, And Buyer Validation.
+Active next task: `T99: Facilitator Debrief Pack`.
 Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
 Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
 Development Plan`. Phase 18 implementation and review are complete through
 `T84: Scenario Safety Guard Tests` and `PHASE18-SCENARIO-SCORING`. Phase 19
 implementation and review are complete through `T91: Final Result And Share Card`
 and `PHASE19-REACT-VITE-GAME`. Phase 20 implementation is complete through
-`T97: README And Public Pitch Update`.
+`T98: Ship It? Y/N UX Readiness Review` and `SHIP-IT-YN-UX-READINESS`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and
