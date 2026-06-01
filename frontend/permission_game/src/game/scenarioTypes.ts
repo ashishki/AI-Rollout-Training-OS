@@ -51,6 +51,7 @@ export type GameFeedbackOutcome = "correct" | "partial" | "unsafe" | "overblock"
 
 export type GameChoiceFeedback = {
   outcome: GameFeedbackOutcome;
+  scoreDelta: number;
   consequence: string;
   lesson: string;
   saferAlternative: string;

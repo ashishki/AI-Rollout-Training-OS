@@ -38,30 +38,35 @@
     "feedback": {
       "approve": {
         "outcome": "unsafe",
+        "scoreDelta": -25,
         "consequence": "The cleanup removed files outside the visible task scope.",
         "lesson": "Destructive filesystem actions need explicit scope before approval.",
         "saferAlternative": "Approve only a named generated-output path after inspecting the preview."
       },
       "deny": {
         "outcome": "partial",
+        "scoreDelta": 5,
         "consequence": "No files were lost, but harmless generated output stayed behind.",
         "lesson": "Deny protects safety, but scoped cleanup can preserve speed.",
         "saferAlternative": "Ask for a path-limited cleanup preview before approving."
       },
       "inspect_diff": {
         "outcome": "partial",
+        "scoreDelta": 5,
         "consequence": "The broad scope became visible before anything was deleted.",
         "lesson": "Inspection is the first step, not the final permission.",
         "saferAlternative": "Inspect, then restrict the cleanup to generated output."
       },
       "restrict_scope": {
         "outcome": "correct",
+        "scoreDelta": 15,
         "consequence": "Only generated cache files were removed, with a clear audit trail.",
         "lesson": "Scope turns a risky destructive request into bounded work.",
         "saferAlternative": "Limit cleanup to the listed generated cache path."
       },
       "escalate_reviewer": {
         "outcome": "partial",
+        "scoreDelta": 5,
         "consequence": "A reviewer caught the broad deletion scope before approval.",
         "lesson": "Escalation is safe, but simple scope control may be faster.",
         "saferAlternative": "Escalate if the agent cannot produce a narrow preview."

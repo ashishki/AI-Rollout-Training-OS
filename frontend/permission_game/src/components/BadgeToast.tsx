@@ -1,9 +1,10 @@
 type BadgeToastProps = {
   badges: string[];
+  onDismiss?: () => void;
   visible: boolean;
 };
 
-export function BadgeToast({ badges, visible }: BadgeToastProps) {
+export function BadgeToast({ badges, onDismiss, visible }: BadgeToastProps) {
   if (!visible || badges.length === 0) {
     return null;
   }
@@ -12,6 +13,9 @@ export function BadgeToast({ badges, visible }: BadgeToastProps) {
     <aside aria-label="Badge earned" className="badge-toast">
       <span>Badge earned</span>
       <strong>{formatBadge(badges[0])}</strong>
+      <button onClick={onDismiss} type="button">
+        Dismiss
+      </button>
     </aside>
   );
 }

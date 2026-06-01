@@ -31,6 +31,7 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/components/AuditTrail.tsx",
         "src/components/AuditTrail.test.tsx",
         "src/components/BadgeToast.tsx",
+        "src/components/BadgeToast.test.tsx",
         "src/components/ConsequencePanel.tsx",
         "src/components/ConsequencePanel.test.tsx",
         "src/components/RiskMeters.tsx",
@@ -65,6 +66,7 @@ def test_permission_game_imports_typed_scenario_data() -> None:
         "artifact-tiny-cleanup-preview"
     )
     assert scenarios[0]["feedback"]["restrict_scope"]["outcome"] == "correct"
+    assert scenarios[0]["feedback"]["restrict_scope"]["scoreDelta"] == 15
     assert scenarios[0]["badges"] == ["scope_before_delete"]
     assert "restrict_scope" in scenarios[0]["choices"]
 

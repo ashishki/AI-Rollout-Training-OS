@@ -330,6 +330,11 @@ select {
   padding: 0.75rem;
 }
 
+.score-change {
+  color: #9be0bc;
+  font-weight: 700;
+}
+
 .badge-toast span {
   color: #9be0bc;
   font-size: 0.75rem;
@@ -341,4 +346,13 @@ select {
   color: #e6edf3;
   font-size: 0.875rem;
   text-align: right;
+}
+
+.badge-toast button {
+  border: 1px solid #45c486;
+  border-radius: 4px;
+  background: transparent;
+  padding: 0.2rem 0.45rem;
+  color: #9be0bc;
+  font-size: 0.75rem;
 }

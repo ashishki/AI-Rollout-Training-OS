@@ -23,9 +23,10 @@ describe("ConsequencePanel", () => {
       "data-outcome",
       "correct"
     );
-    expect(screen.getByText(/Only generated cache files were removed/)).toBeVisible();
-    expect(screen.getByText(/Scope turns a risky destructive request/)).toBeVisible();
-    expect(screen.getByText(/Limit cleanup to the listed/)).toBeVisible();
+    const panel = screen.getByLabelText("Consequence panel");
+    expect(panel).toHaveTextContent(
+      /outcome\s*correct\s*Only generated cache files were removed.*Score change: \+15.*Scope turns a risky destructive request.*Safer path.*Limit cleanup to the listed/s
+    );
     expect(screen.getByLabelText("Badge earned")).toHaveTextContent(
       "Scope Before Delete"
     );

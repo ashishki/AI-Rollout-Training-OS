@@ -5,12 +5,14 @@ type ConsequencePanelProps = {
   selectedChoice: GameChoiceId | null;
   feedback?: GameChoiceFeedback;
   badges: string[];
+  onDismissBadge?: () => void;
 };
 
 export function ConsequencePanel({
   selectedChoice,
   feedback,
   badges,
+  onDismissBadge,
 }: ConsequencePanelProps) {
   if (!selectedChoice || !feedback) {
     return (
@@ -32,12 +34,21 @@ export function ConsequencePanel({
         <span>{feedback.outcome}</span>
       </div>
       <h2>{feedback.consequence}</h2>
+      <p className="score-change">Score change: {formatScoreDelta(feedback.scoreDelta)}</p>
       <p>{feedback.lesson}</p>
       <div className="safer-alternative">
         <span>Safer path</span>
         <p>{feedback.saferAlternative}</p>
       </div>
-      <BadgeToast badges={badges} visible={feedback.outcome === "correct"} />
+      <BadgeToast
+        badges={badges}
+        onDismiss={onDismissBadge}
+        visible={feedback.outcome === "correct"}
+      />
     </section>
   );
+}
+
+function formatScoreDelta(scoreDelta: number) {
+  return scoreDelta > 0 ? `+${scoreDelta}` : `${scoreDelta}`;
 }
