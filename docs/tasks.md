@@ -12,11 +12,11 @@ active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
 Active phase: Phase 18 - Scenario And Scoring Core.
-Active next task: `T83: Local Game Session Model`.
+Active next task: `T84: Scenario Safety Guard Tests`.
 Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
 Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
 Development Plan`. Phase 18 implementation is complete through
-`T82: Meter And Badge Model`.
+`T83: Local Game Session Model`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and

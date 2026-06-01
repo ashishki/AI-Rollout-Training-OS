@@ -19,11 +19,11 @@ Full historical prompt archived at
 - Active task source: Post-MVP production maturity graph,
   `docs/product_maturity_task_graph.md`.
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
-  complete through T78; Phase 18 implementation is complete through T82. Local browser
+  complete through T78; Phase 18 implementation is complete through T83. Local browser
   demo route remains available at `/demo/permission-simulator`, with a captured
   Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 205 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 207 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -87,10 +87,11 @@ the simulator works as a focused demo/workshop experience.
 - `T80: Seven Starter Game Scenarios` completed on 2026-06-01.
 - `T81: Game Scoring Engine` completed on 2026-06-01.
 - `T82: Meter And Badge Model` completed on 2026-06-01.
+- `T83: Local Game Session Model` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T83: Local Game Session Model.
+Active next task: T84: Scenario Safety Guard Tests.
 
 ## Open Findings
 
@@ -130,6 +131,7 @@ Active next task: T83: Local Game Session Model.
 | 2026-06-01 | T80: Seven Starter Game Scenarios | Added seven JSON scenario records for Ship It? Y/N and validation coverage for level order, titles, feedback, outcomes, facilitator notes, badges, and audit events. Next implementation task is T81. |
 | 2026-06-01 | T81: Game Scoring Engine | Added deterministic per-decision scoring for Ship It? Y/N outcomes, feedback, score deltas, safety deltas, meter deltas, and audit events. Next implementation task is T82. |
 | 2026-06-01 | T82: Meter And Badge Model | Added deterministic session meter totals, badges, final titles, strongest habit, weakest risk area, and share text that does not reward unsafe speed. Next implementation task is T83. |
+| 2026-06-01 | T83: Local Game Session Model | Added public-safe localStorage session projection with session id, scenario order, decision outcomes, inspected artifact ids, elapsed time, meter totals, badges, and final report fields while excluding raw/private data. Next implementation task is T84. |
 
 ## Rules
 

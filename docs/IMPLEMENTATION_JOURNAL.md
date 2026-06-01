@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T83 - Local Game Session Model
+
+- Scope: `ai_rollout_os/permissions/game_session.py`, `tests/test_permission_game_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: The public Ship It? Y/N demo needs a localStorage-safe session state before frontend implementation.
+- Decisions applied: `docs/product_maturity_task_graph.md#t83-local-game-session-model`, `docs/ship_it_yn_frontend_architecture.md`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_scoring.py -q` passed with 6 tests; `.venv/bin/python -m pytest -q` passed with 207 tests; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T84 Scenario Safety Guard Tests, then Phase 18 deep review before Phase 19.
+- Notes for next agent: `build_public_game_session_state(...)` emits only public-safe local session fields and intentionally excludes raw prompt, raw artifact content, actor/workspace identifiers, credentials, and customer data.
+
 ### 2026-06-01 - T82 - Meter And Badge Model
 
 - Scope: `ai_rollout_os/permissions/game_scoring.py`, `tests/test_permission_game_scoring.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

@@ -6,6 +6,7 @@ from ai_rollout_os.permissions.game_scoring import (
     score_game_decision,
     summarize_game_session,
 )
+from ai_rollout_os.permissions.game_session import build_public_game_session_state
 
 GAME_SCENARIO_DIR = Path("ai_rollout_os/permissions/game_scenarios")
 
@@ -122,6 +123,85 @@ def test_badges_and_titles_are_deterministic() -> None:
     assert "clean_approval_trail" not in unsafe_summary.badges
     assert unsafe_summary.unsafe_approvals == 1
     assert unsafe_summary.weakest_risk_area == "eval-is-red-demo-is-soon"
+
+
+def test_game_session_summary_has_public_safe_fields() -> None:
+    results = [
+        score_game_decision(
+            load_game_scenario("01-tiny-cleanup.json"), "restrict_scope"
+        ),
+        score_game_decision(
+            load_game_scenario("06-eval-is-red-demo-is-soon.json"), "require_eval"
+        ),
+    ]
+
+    state = build_public_game_session_state(
+        session_id="ship-it-demo-session-1",
+        scenario_order=["tiny-cleanup", "eval-is-red-demo-is-soon"],
+        decision_results=results,
+        inspected_artifacts_by_scenario={
+            "tiny-cleanup": ["artifact-tiny-cleanup-preview"],
+            "eval-is-red-demo-is-soon": ["artifact-eval-bypass"],
+        },
+        elapsed_seconds=142,
+    ).to_public_dict()
+
+    assert state["session_id"] == "ship-it-demo-session-1"
+    assert state["scenario_order"] == ["tiny-cleanup", "eval-is-red-demo-is-soon"]
+    assert state["elapsed_seconds"] == 142
+    assert state["decisions"] == [
+        {
+            "scenario_id": "tiny-cleanup",
+            "selected_decision": "restrict_scope",
+            "outcome": "correct",
+            "inspected_artifact_ids": ["artifact-tiny-cleanup-preview"],
+        },
+        {
+            "scenario_id": "eval-is-red-demo-is-soon",
+            "selected_decision": "require_eval",
+            "outcome": "correct",
+            "inspected_artifact_ids": ["artifact-eval-bypass"],
+        },
+    ]
+    assert state["meter_totals"]["audit_trail"] == -3
+    assert "eval_gate_preserved" in state["badges"]
+    assert state["final_report"]["title"]
+    assert state["final_report"]["share_text"].startswith("Ship It? Y/N score:")
+
+
+def test_game_session_summary_excludes_sensitive_fields() -> None:
+    result = score_game_decision(
+        load_game_scenario("04-the-helpful-issue.json"), "restrict_scope"
+    )
+
+    state = build_public_game_session_state(
+        session_id="ship-it-demo-session-2",
+        scenario_order=["the-helpful-issue"],
+        decision_results=[result],
+        inspected_artifacts_by_scenario={
+            "the-helpful-issue": ["artifact-helpful-issue"]
+        },
+        elapsed_seconds=39,
+    ).to_public_dict()
+
+    serialized = json.dumps(state, sort_keys=True)
+
+    for forbidden in [
+        "actor_id",
+        "workspace_id",
+        "customer",
+        "credential",
+        "password",
+        "raw_prompt",
+        "local_file",
+        "agent_message",
+        "tool_call",
+        "content",
+        "consequence",
+        "lesson",
+        "safer_alternative",
+    ]:
+        assert forbidden not in serialized
 
 
 def load_game_scenario(filename: str) -> PermissionGameScenario:
