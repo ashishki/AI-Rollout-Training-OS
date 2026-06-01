@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T101 - Analytics Lite For Public Demo
+
+- Scope: `frontend/permission_game/src/game/analytics.ts`, `frontend/permission_game/src/game/analytics.test.ts`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `tests/browser/test_ship_it_yn_gameplay.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 21 needed local/session analytics for demo improvement without server-side tracking or personal data collection.
+- Decisions applied: `docs/product_maturity_task_graph.md#t101-analytics-lite-for-public-demo`, `docs/ship_it_yn_frontend_architecture.md#state-model`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; `.venv/bin/python -m pytest tests/browser/test_ship_it_yn_gameplay.py -q` passed with 3 browser tests.
+- Follow-ups: `T102: Buyer Feedback Loop`.
+- Notes for next agent: Analytics are stored only in localStorage under `ship-it-yn-analytics-v1` as aggregate counts/buckets. Browser coverage checks that no tracking, analytics, collect, Segment, Amplitude, PostHog, or Google Analytics network calls are made.
+
 ### 2026-06-01 - T100 - Safe Team Summary Report
 
 - Scope: `ai_rollout_os/permissions/game_summary.py`, `tests/test_ship_it_yn_team_summary.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

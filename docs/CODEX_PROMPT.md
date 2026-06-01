@@ -26,7 +26,7 @@ Full historical prompt archived at
   `SHIP-IT-YN-UX-READINESS`. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 232 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 233 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -110,10 +110,11 @@ the simulator works as a focused demo/workshop experience.
 - `T98: Ship It? Y/N UX Readiness Review` completed on 2026-06-01.
 - `T99: Facilitator Debrief Pack` completed on 2026-06-01.
 - `T100: Safe Team Summary Report` completed on 2026-06-01.
+- `T101: Analytics Lite For Public Demo` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T101: Analytics Lite For Public Demo.
+Active next task: T102: Buyer Feedback Loop.
 
 ## Open Findings
 
@@ -173,6 +174,7 @@ Active next task: T101: Analytics Lite For Public Demo.
 | 2026-06-01 | T98: Ship It? Y/N UX Readiness Review | Recorded SHOW_PUBLIC_DEMO decision for Ship It? Y/N public game scope, updated P2-UX-001 as scoped resolved, and opened Phase 21 workshop/analytics/buyer validation. Next implementation task is T99. |
 | 2026-06-01 | T99: Facilitator Debrief Pack | Added seven-level facilitator debrief mapping real-world workflow lessons, discussion prompts, team risk hotspots, and no-shame facilitation rules. Next implementation task is T100. |
 | 2026-06-01 | T100: Safe Team Summary Report | Added aggregate-only team summary service for risk hotspots, unsafe approvals, overblocks, and recommended habits while excluding raw prompts, code, credentials, customer data, personal identifiers, and rankings. Next implementation task is T101. |
+| 2026-06-01 | T101: Analytics Lite For Public Demo | Added local-only browser analytics for aggregate session counts, risk-category outcomes, time-to-decision buckets, inspected artifact buckets, and final scores; browser tests verify no tracking network calls or personal identifiers. Next implementation task is T102. |
 
 ## Rules
 

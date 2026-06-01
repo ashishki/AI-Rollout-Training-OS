@@ -92,6 +92,50 @@ def test_public_ship_it_yn_has_no_external_execution() -> None:
         server.wait(timeout=10)
 
 
+def test_public_ship_it_yn_has_no_tracking_network_calls() -> None:
+    _ensure_frontend_build()
+    app_port = _free_port()
+    debug_port = _free_port()
+    server = _start_server(app_port)
+    browser = _start_browser(app_port, debug_port)
+    try:
+        _wait_for_url(f"http://127.0.0.1:{app_port}/health")
+        client = _DevToolsClient.from_debug_port(
+            debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
+        )
+        _wait_for_text(client, "Tiny Cleanup")
+        resources = client.evaluate(
+            "performance.getEntriesByType('resource').map((entry) => entry.name)"
+        )["result"]["value"]
+        analytics_snapshot = client.evaluate(
+            "localStorage.getItem('ship-it-yn-analytics-v1')"
+        )["result"]["value"]
+
+        forbidden_fragments = [
+            "/analytics",
+            "/track",
+            "/collect",
+            "segment",
+            "amplitude",
+            "posthog",
+            "google-analytics",
+        ]
+        assert all(
+            fragment not in resource
+            for resource in resources
+            for fragment in forbidden_fragments
+        )
+        assert analytics_snapshot
+        assert "sessionsStarted" in analytics_snapshot
+        for forbidden in ["actor_id", "workspace_id", "learner", "email", "customer"]:
+            assert forbidden not in analytics_snapshot
+    finally:
+        browser.terminate()
+        server.terminate()
+        browser.wait(timeout=10)
+        server.wait(timeout=10)
+
+
 def _click_text(client: "_DevToolsClient", label: str) -> None:
     expression = f"""
     (() => {{

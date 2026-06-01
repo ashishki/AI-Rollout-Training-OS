@@ -6,7 +6,11 @@ import { ConsequencePanel } from "./ConsequencePanel";
 import { ResultScreen } from "./ResultScreen";
 import { RiskMeters, type RiskMeterValues } from "./RiskMeters";
 import { ScenarioCard } from "./ScenarioCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  recordAnalyticsDecision,
+  startAnalyticsSession,
+} from "../game/analytics";
 import type { GameChoiceId } from "../game/scenarioTypes";
 import type { PermissionGameScenarioSummary } from "../game/scenarioTypes";
 
@@ -27,6 +31,7 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   const [completedDecisions, setCompletedDecisions] = useState<GameChoiceId[]>([]);
   const [showFinalReport, setShowFinalReport] = useState(false);
   const activeScenario = scenarios[activeIndex];
+  const [scenarioStartedAt, setScenarioStartedAt] = useState(() => Date.now());
   const [selectedDecision, setSelectedDecision] = useState<GameChoiceId | null>(
     null
   );
@@ -59,6 +64,13 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
       : []),
   ];
 
+  useEffect(() => {
+    const storage = analyticsStorage();
+    if (storage) {
+      startAnalyticsSession(storage);
+    }
+  }, []);
+
   function handleDecision(choice: GameChoiceId) {
     if (choice === "inspect_diff") {
       setIsInspectOpen(true);
@@ -74,19 +86,37 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
     if (!selectedDecision) {
       return;
     }
+    const isFinalLevel = activeIndex === scenarios.length - 1;
+    const completedDecisionCount = completedDecisions.length + 1;
+    const feedback =
+      activeScenario.feedback?.[selectedDecision] ?? fallbackFeedback(selectedDecision);
+    const storage = analyticsStorage();
+    if (storage) {
+      recordAnalyticsDecision(storage, {
+        riskCategory: activeScenario.riskCategory,
+        outcome: feedback.outcome,
+        elapsedMs: Date.now() - scenarioStartedAt,
+        inspectedArtifactCount: inspectedArtifactIds.length,
+        finalScore: isFinalLevel
+          ? Math.min(completedDecisionCount * 12, 100)
+          : undefined,
+      });
+    }
     setCompletedDecisions((current) => [...current, selectedDecision]);
     setSelectedDecision(null);
     setIsInspectOpen(false);
     setInspectedArtifactIds([]);
-    if (activeIndex === scenarios.length - 1) {
+    if (isFinalLevel) {
       setShowFinalReport(true);
       return;
     }
     setActiveIndex((current) => current + 1);
+    setScenarioStartedAt(Date.now());
   }
 
   function resetRun() {
     setActiveIndex(0);
+    setScenarioStartedAt(Date.now());
     setCompletedDecisions([]);
     setShowFinalReport(false);
     setSelectedDecision(null);
@@ -203,4 +233,11 @@ function fallbackFeedback(choice: GameChoiceId) {
     lesson: "The demo records this decision for the final report.",
     saferAlternative: "Inspect context, preserve scope, and keep a reviewable trail.",
   };
+}
+
+function analyticsStorage() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  return window.localStorage;
 }
