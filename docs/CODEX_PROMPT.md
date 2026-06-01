@@ -9,7 +9,7 @@ Full historical prompt archived at
 
 ## Current State
 
-- Current phase: Phase 19 - React/Vite Playable Game.
+- Current phase: Phase 20 - Browser Polish And Public Demo Evidence.
 - Active pivot: polished React/Vite permission mini-game built on the Agent
   Permission Training Simulator.
 - Reference direction: beautiful, convenient, showable, monetizable
@@ -20,11 +20,11 @@ Full historical prompt archived at
   `docs/product_maturity_task_graph.md`.
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
   complete through T78; Phase 18 implementation and deep review are complete
-  through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation is
-  complete through T91 and needs a deep review before Phase 20. Local browser demo route remains
+  through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation and deep
+  review are complete through T91 and `PHASE19-REACT-VITE-GAME`. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 214 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 215 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -98,10 +98,11 @@ the simulator works as a focused demo/workshop experience.
 - `T89: Risk Meters And Audit Trail` completed on 2026-06-01.
 - `T90: Consequence Panel And Badge Toasts` completed on 2026-06-01.
 - `T91: Final Result And Share Card` completed on 2026-06-01.
+- `Phase 19 React/Vite Playable Game Review` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: Phase 19 Deep Review before T92.
+Active next task: T92: FastAPI Static Game Route.
 
 ## Open Findings
 
@@ -151,6 +152,7 @@ Active next task: Phase 19 Deep Review before T92.
 | 2026-06-01 | T89: Risk Meters And Audit Trail | Added dedicated risk meter and audit trail components with stable meter rows, decision-driven audit quality, audit-gap flagging, and sensitive-detail redaction. Next implementation task is T90. |
 | 2026-06-01 | T90: Consequence Panel And Badge Toasts | Added consequence panel and badge toast components that render outcome, consequence, lesson, safer path, and earned badge feedback after decisions. Next implementation task is T91. |
 | 2026-06-01 | T91: Final Result And Share Card | Added final report screen and safe share-text helper with score, title, status, hotspots, habits, badges, recommended next habit, and browser copy support. Next step is Phase 19 deep review. |
+| 2026-06-01 | Phase 19 React/Vite Playable Game Review | Recorded PASS decision for T85-T91 with no P0/P1 blockers; P2-UX-001 remains open for Ship It? Y/N browser evidence. Next implementation task is T92. |
 
 ## Rules
 
