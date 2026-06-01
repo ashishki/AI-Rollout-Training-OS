@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T96 - Screenshot And README Visual Artifact
+
+- Scope: `README.md`, `docs/audit/artifacts/ship_it_yn_desktop.png`, `docs/audit/artifacts/ship_it_yn_mobile.png`, `scripts/capture_ship_it_yn_demo.py`, `tests/test_permission_game_browser_artifacts.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 20 needed durable, checked-in visual proof for the public Ship It? Y/N route before public pitch copy work.
+- Decisions applied: `docs/product_maturity_task_graph.md#t96-screenshot-and-readme-visual-artifact`, `docs/ship_it_yn_frontend_architecture.md#browser-evidence`
+- Evidence collected: `SHIP_IT_YN_DEMO_URL=http://127.0.0.1:8765/demo/ship-it-yn .venv/bin/python scripts/capture_ship_it_yn_demo.py` produced desktop and mobile PNGs from a live FastAPI route; visual inspection confirmed nonblank desktop and mobile captures.
+- Follow-ups: `T97: README And Public Pitch Update`.
+- Notes for next agent: The screenshot script assumes a built `frontend/permission_game/dist` and a running local server unless `SHIP_IT_YN_DEMO_URL` points elsewhere; T97 should improve public copy without claiming production readiness, certification, compliance approval, PMF, or customer conversion.
+
 ### 2026-06-01 - T95 - Full Public Game Browser E2E
 
 - Scope: `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/styles.css`, `tests/browser/test_ship_it_yn_gameplay.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

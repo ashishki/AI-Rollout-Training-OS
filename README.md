@@ -36,6 +36,18 @@ V1 - Agent Permission Training Simulator.
 
 Существующий backend, audit, retrieval и manager-approval контур остаются полезной базой для будущего governed rollout product, но они не должны уводить v1 обратно в generic course или LMS.
 
+## Public demo: Ship It? Y/N
+
+Ship It? Y/N - публичная React/Vite мини-игра для тренировки permission judgment на семи уровнях. Локальный маршрут: `/demo/ship-it-yn`.
+
+Desktop browser artifact:
+
+![Ship It Y/N desktop demo](docs/audit/artifacts/ship_it_yn_desktop.png)
+
+Mobile browser artifact:
+
+![Ship It Y/N mobile demo](docs/audit/artifacts/ship_it_yn_mobile.png)
+
 ## Гипотеза
 
 Мы проверяем не то, "повышает ли AI продуктивность вообще". Проверяем более узкую гипотезу:
@@ -106,18 +118,17 @@ V1 - Agent Permission Training Simulator.
 
 ## Текущий план реализации
 
-MVP foundation описан в `docs/tasks.md`. Текущая активная работа идет по Post-MVP production maturity graph в `docs/product_maturity_task_graph.md`, Phase 16.
+MVP foundation описан в `docs/tasks.md`. Текущая активная работа идет по Post-MVP production maturity graph в `docs/product_maturity_task_graph.md`, Phase 20.
 
 Разработка должна идти в nonstop loop: Codex выполняет задачу, проверяет, делает review pass, обновляет state, проходит phase boundary checks и сразу берет следующую задачу. Между фазами нет ручной паузы, если проверки прошли и нет P0/P1 blockers. Остановка допустима только на реальном blocker, требуемом human decision или явной команде pause.
 
 Активный блок:
 
-1. `T69: Permission Simulator Product Reframe`
-2. `T70: Permission Scenario Library`
-3. `T71: Simulator Decision And Scoring Engine`
-4. `T72: Visual Simulator Prototype`
-5. `T73: Workshop And Demo Pack`
-6. `T74: Permission Simulator Readiness Review`
+1. `T92: FastAPI Static Game Route`
+2. `T93: Responsive Visual Polish`
+3. `T94: Motion And Accessibility Pass`
+4. `T95: Full Public Game Browser E2E`
+5. `T96: Screenshot And README Visual Artifact`
 
 ## Критерий полезности v1
 
