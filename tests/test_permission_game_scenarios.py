@@ -1,8 +1,21 @@
+import json
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 from ai_rollout_os.permissions.game_schema import PermissionGameScenario
 from pydantic import ValidationError
+
+GAME_SCENARIO_DIR = Path("ai_rollout_os/permissions/game_scenarios")
+EXPECTED_STARTER_LEVELS = {
+    1: "Tiny Cleanup",
+    2: "One-Line Diff",
+    3: "Flaky Tests Must Go",
+    4: "The Helpful Issue",
+    5: "One Permission To Rule Them All",
+    6: "Eval Is Red, Demo Is Soon",
+    7: "Not Everything Is Deny",
+}
 
 
 def test_game_scenario_schema_validates_required_fields() -> None:
@@ -62,6 +75,60 @@ def test_game_scenario_schema_rejects_invalid_records(mutation, error_match) -> 
 
     with pytest.raises(ValidationError, match=error_match):
         PermissionGameScenario.model_validate(record)
+
+
+def test_seven_ship_it_yn_scenarios_exist() -> None:
+    scenarios = load_game_scenarios()
+
+    assert len(scenarios) == 7
+    assert {scenario.level: scenario.title for scenario in scenarios} == (
+        EXPECTED_STARTER_LEVELS
+    )
+    assert [scenario.level for scenario in scenarios] == list(range(1, 8))
+    assert {scenario.id for scenario in scenarios} == {
+        "tiny-cleanup",
+        "one-line-diff",
+        "flaky-tests-must-go",
+        "the-helpful-issue",
+        "one-permission-to-rule-them-all",
+        "eval-is-red-demo-is-soon",
+        "not-everything-is-deny",
+    }
+
+
+def test_game_scenarios_have_feedback_for_every_choice() -> None:
+    scenarios = load_game_scenarios()
+
+    for scenario in scenarios:
+        choices = set(scenario.choices)
+        assert choices == set(scenario.feedback)
+        assert scenario.best_choices
+        assert scenario.unsafe_choices
+        assert scenario.facilitator_notes
+        assert scenario.audit_events
+        assert scenario.badges
+
+        for choice in scenario.best_choices:
+            assert scenario.feedback[choice].outcome == "correct"
+        for choice in scenario.acceptable_choices:
+            assert scenario.feedback[choice].outcome == "partial"
+        for choice in scenario.unsafe_choices:
+            assert scenario.feedback[choice].outcome == "unsafe"
+        for choice in scenario.overblock_choices:
+            assert scenario.feedback[choice].outcome == "overblock"
+
+        for choice, feedback in scenario.feedback.items():
+            assert choice in choices
+            assert feedback.consequence
+            assert feedback.lesson
+            assert feedback.safer_alternative
+
+
+def load_game_scenarios() -> list[PermissionGameScenario]:
+    return [
+        PermissionGameScenario.model_validate(json.loads(path.read_text()))
+        for path in sorted(GAME_SCENARIO_DIR.glob("*.json"))
+    ]
 
 
 def valid_game_scenario_record() -> dict:

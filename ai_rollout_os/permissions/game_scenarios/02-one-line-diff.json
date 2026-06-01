@@ -1,0 +1,100 @@
+{
+  "id": "one-line-diff",
+  "level": 2,
+  "title": "One-Line Diff",
+  "agent_name": "PatchPilot",
+  "agent_message": "It is a one-line patch. Approve it and I will ship the fix.",
+  "tool_call": {
+    "type": "code_change",
+    "surface": "application_diff",
+    "scope": "single_line_patch",
+    "permission_request": "write"
+  },
+  "context": [
+    {
+      "type": "change_summary",
+      "label": "agent summary",
+      "content": "The agent says the patch only changes a timeout value.",
+      "trusted": false
+    }
+  ],
+  "inspect_artifacts": [
+    {
+      "id": "artifact-one-line-diff",
+      "label": "Diff preview",
+      "kind": "diff",
+      "content": "One visible line changes a timeout, while a nearby default widens retry behavior.",
+      "reveals_risk": "diff_misrepresentation"
+    }
+  ],
+  "choices": [
+    "approve",
+    "deny",
+    "inspect_diff",
+    "require_eval",
+    "escalate_reviewer"
+  ],
+  "best_choices": [
+    "inspect_diff",
+    "require_eval"
+  ],
+  "acceptable_choices": [
+    "escalate_reviewer"
+  ],
+  "unsafe_choices": [
+    "approve"
+  ],
+  "overblock_choices": [
+    "deny"
+  ],
+  "permission_boundary": "needs_approval",
+  "risk_category": "diff_misrepresentation",
+  "meters": {
+    "velocity": -5,
+    "blast_radius": 28,
+    "trust": -18,
+    "eval_confidence": 18,
+    "audit_trail": 15
+  },
+  "feedback": {
+    "approve": {
+      "outcome": "unsafe",
+      "consequence": "The tiny patch changed behavior beyond the summary.",
+      "lesson": "Small diffs can still cross a permission boundary.",
+      "safer_alternative": "Inspect the diff and require a focused eval before ship."
+    },
+    "deny": {
+      "outcome": "overblock",
+      "consequence": "The fix stopped even though a bounded review path existed.",
+      "lesson": "Safety is not blanket refusal; it is verified permission.",
+      "safer_alternative": "Inspect the line and require the relevant test or eval."
+    },
+    "inspect_diff": {
+      "outcome": "correct",
+      "consequence": "The hidden behavior change was visible before approval.",
+      "lesson": "Never approve a diff solely from an agent summary.",
+      "safer_alternative": "Inspect the diff, then require a relevant validation run."
+    },
+    "require_eval": {
+      "outcome": "correct",
+      "consequence": "The behavior change had to prove itself before release.",
+      "lesson": "A one-line patch still deserves evidence.",
+      "safer_alternative": "Run the smallest eval that covers the changed behavior."
+    },
+    "escalate_reviewer": {
+      "outcome": "partial",
+      "consequence": "A reviewer slowed the ship path but added a second set of eyes.",
+      "lesson": "Escalation helps when diff semantics are ambiguous.",
+      "safer_alternative": "Escalate with the diff and requested eval attached."
+    }
+  },
+  "badges": [
+    "diff_reader"
+  ],
+  "audit_events": [
+    "inspected_claimed_one_line_diff"
+  ],
+  "facilitator_notes": [
+    "Ask players when a one-line change still deserves tests, review, or rollback planning."
+  ]
+}

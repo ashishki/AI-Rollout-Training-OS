@@ -1,0 +1,108 @@
+{
+  "id": "flaky-tests-must-go",
+  "level": 3,
+  "title": "Flaky Tests Must Go",
+  "agent_name": "PatchPilot",
+  "agent_message": "The failing test is flaky. I can remove it so the pipeline goes green.",
+  "tool_call": {
+    "type": "test_change",
+    "surface": "test_suite",
+    "scope": "checkout_flow_tests",
+    "permission_request": "delete"
+  },
+  "context": [
+    {
+      "type": "ci_note",
+      "label": "pipeline status",
+      "content": "The same checkout test failed after a payment-path refactor.",
+      "trusted": true
+    }
+  ],
+  "inspect_artifacts": [
+    {
+      "id": "artifact-flaky-test-diff",
+      "label": "Test diff",
+      "kind": "diff",
+      "content": "The proposed patch removes assertions around payment retry behavior.",
+      "reveals_risk": "test_deletion"
+    }
+  ],
+  "choices": [
+    "approve",
+    "deny",
+    "inspect_diff",
+    "require_eval",
+    "restrict_scope",
+    "escalate_reviewer"
+  ],
+  "best_choices": [
+    "require_eval",
+    "escalate_reviewer"
+  ],
+  "acceptable_choices": [
+    "inspect_diff",
+    "restrict_scope"
+  ],
+  "unsafe_choices": [
+    "approve"
+  ],
+  "overblock_choices": [
+    "deny"
+  ],
+  "permission_boundary": "blocked",
+  "risk_category": "test_deletion",
+  "meters": {
+    "velocity": -10,
+    "blast_radius": 42,
+    "trust": -15,
+    "eval_confidence": 35,
+    "audit_trail": 18
+  },
+  "feedback": {
+    "approve": {
+      "outcome": "unsafe",
+      "consequence": "The pipeline went green by deleting the evidence.",
+      "lesson": "Removing a failing test is not the same as fixing the risk.",
+      "safer_alternative": "Require reproduction, quarantine with a reviewer note, or fix the behavior."
+    },
+    "deny": {
+      "outcome": "overblock",
+      "consequence": "The deletion was stopped, but the team got no path to diagnose the failure.",
+      "lesson": "A plain deny can preserve risk without creating progress.",
+      "safer_alternative": "Require reproduction evidence and a scoped quarantine plan."
+    },
+    "inspect_diff": {
+      "outcome": "partial",
+      "consequence": "The removed payment assertions were visible before merge.",
+      "lesson": "Inspection catches test deletion, but the failing behavior still needs a decision.",
+      "safer_alternative": "Inspect, then require a reproduction or reviewer-approved quarantine."
+    },
+    "require_eval": {
+      "outcome": "correct",
+      "consequence": "The failure had to be reproduced or explained before the gate moved.",
+      "lesson": "Eval discipline matters when the proposed fix is deleting evidence.",
+      "safer_alternative": "Keep the test, reproduce the failure, and fix or quarantine with owner approval."
+    },
+    "restrict_scope": {
+      "outcome": "partial",
+      "consequence": "The agent could only draft a quarantine note, not remove coverage silently.",
+      "lesson": "Scope can turn a deletion request into a reviewable investigation.",
+      "safer_alternative": "Limit the agent to diagnosis and a proposed quarantine plan."
+    },
+    "escalate_reviewer": {
+      "outcome": "correct",
+      "consequence": "A reviewer had to sign off before any test coverage changed.",
+      "lesson": "Deleting tests is a human-owned quality boundary.",
+      "safer_alternative": "Escalate with failure history and proposed diagnosis steps."
+    }
+  },
+  "badges": [
+    "test_gate_guardian"
+  ],
+  "audit_events": [
+    "blocked_test_deletion_without_reproduction"
+  ],
+  "facilitator_notes": [
+    "Ask players how their team distinguishes flaky-test repair from coverage removal."
+  ]
+}

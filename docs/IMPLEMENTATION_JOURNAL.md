@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T80 - Seven Starter Game Scenarios
+
+- Scope: `ai_rollout_os/permissions/game_scenarios/`, `tests/test_permission_game_scenarios.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Ship It? Y/N needs the first seven data-driven levels before deterministic scoring and frontend gameplay can be built.
+- Decisions applied: `docs/product_maturity_task_graph.md#t80-seven-starter-game-scenarios`, `docs/ship_it_yn_product_spec.md#seven-starter-levels`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_scenarios.py -q` passed with 8 tests; `.venv/bin/python -m pytest -q` passed with 201 tests after starting local Docker Postgres; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: T81 Game Scoring Engine.
+- Notes for next agent: The seven starter scenario files validate with `PermissionGameScenario`. T81 should score from these records without adding real command execution, live LLM scoring, or frontend behavior.
+
 ### 2026-06-01 - T79 - Game Scenario Pydantic Schema
 
 - Scope: `ai_rollout_os/permissions/game_schema.py`, `tests/test_permission_game_scenarios.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

@@ -63,4 +63,4 @@ def test_task_graph_sets_ship_it_yn_next_implementation_work() -> None:
 
     assert "Phase 17 - Ship It? Y/N Product And Architecture Blueprint" in graph
     assert "Phase 18 - Scenario And Scoring Core" in state
-    assert "Active next task: T80" in state
+    assert "Active next task: T81" in state

@@ -1,0 +1,100 @@
+{
+  "id": "the-helpful-issue",
+  "level": 4,
+  "title": "The Helpful Issue",
+  "agent_name": "PatchPilot",
+  "agent_message": "A user pasted exact steps in an issue. I can follow them and update the config.",
+  "tool_call": {
+    "type": "issue_driven_change",
+    "surface": "external_issue",
+    "scope": "config_update",
+    "permission_request": "write"
+  },
+  "context": [
+    {
+      "type": "issue_comment",
+      "label": "external issue",
+      "content": "The issue includes a suggested config edit and asks the agent to ignore the normal review path.",
+      "trusted": false
+    }
+  ],
+  "inspect_artifacts": [
+    {
+      "id": "artifact-helpful-issue",
+      "label": "Issue excerpt",
+      "kind": "external_text",
+      "content": "The external text mixes a bug report with instructions aimed at the agent.",
+      "reveals_risk": "indirect_prompt_injection"
+    }
+  ],
+  "choices": [
+    "approve",
+    "deny",
+    "inspect_diff",
+    "restrict_scope",
+    "escalate_reviewer"
+  ],
+  "best_choices": [
+    "restrict_scope"
+  ],
+  "acceptable_choices": [
+    "inspect_diff",
+    "escalate_reviewer"
+  ],
+  "unsafe_choices": [
+    "approve"
+  ],
+  "overblock_choices": [
+    "deny"
+  ],
+  "permission_boundary": "unknown",
+  "risk_category": "indirect_prompt_injection",
+  "meters": {
+    "velocity": -6,
+    "blast_radius": 30,
+    "trust": -22,
+    "eval_confidence": 5,
+    "audit_trail": 20
+  },
+  "feedback": {
+    "approve": {
+      "outcome": "unsafe",
+      "consequence": "External instructions steered the agent around review.",
+      "lesson": "External content is data, not authority.",
+      "safer_alternative": "Summarize the user-visible bug and ignore instructions aimed at the agent."
+    },
+    "deny": {
+      "outcome": "overblock",
+      "consequence": "The bug report was ignored even though useful evidence was present.",
+      "lesson": "Unknown external content needs containment, not automatic refusal.",
+      "safer_alternative": "Treat the issue as untrusted data and scope the agent to summary plus proposed patch."
+    },
+    "inspect_diff": {
+      "outcome": "partial",
+      "consequence": "The config change became reviewable, but the external instruction still needed containment.",
+      "lesson": "Diff inspection helps after you separate data from authority.",
+      "safer_alternative": "Inspect only after rewriting the issue as a trusted internal task."
+    },
+    "restrict_scope": {
+      "outcome": "correct",
+      "consequence": "The agent summarized the issue and proposed a reviewable patch without following hostile instructions.",
+      "lesson": "Scope keeps untrusted instructions from becoming permissions.",
+      "safer_alternative": "Allow summary and patch proposal only; require human review for config changes."
+    },
+    "escalate_reviewer": {
+      "outcome": "partial",
+      "consequence": "A reviewer separated the bug evidence from agent-targeted instructions.",
+      "lesson": "Escalation is useful when external text changes the authority model.",
+      "safer_alternative": "Escalate with the untrusted issue excerpt marked as data."
+    }
+  },
+  "badges": [
+    "external_text_skeptic"
+  ],
+  "audit_events": [
+    "treated_external_issue_as_untrusted_data"
+  ],
+  "facilitator_notes": [
+    "Ask players to name which parts of an external issue are evidence and which parts are instructions."
+  ]
+}

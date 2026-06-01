@@ -1,0 +1,99 @@
+{
+  "id": "tiny-cleanup",
+  "level": 1,
+  "title": "Tiny Cleanup",
+  "agent_name": "PatchPilot",
+  "agent_message": "I found old temporary files. Approve cleanup across the project so I can tidy it fast.",
+  "tool_call": {
+    "type": "filesystem_change",
+    "surface": "workspace_files",
+    "scope": "unscoped_cleanup",
+    "permission_request": "delete"
+  },
+  "context": [
+    {
+      "type": "terminal_preview",
+      "label": "proposed cleanup",
+      "content": "SIMULATED cleanup preview: remove generated caches and temporary build outputs.",
+      "trusted": true
+    }
+  ],
+  "inspect_artifacts": [
+    {
+      "id": "artifact-tiny-cleanup-preview",
+      "label": "Cleanup preview",
+      "kind": "file_list",
+      "content": "Preview includes generated cache files, but the scope also touches a migration backup directory.",
+      "reveals_risk": "destructive_filesystem"
+    }
+  ],
+  "choices": [
+    "approve",
+    "deny",
+    "inspect_diff",
+    "restrict_scope",
+    "escalate_reviewer"
+  ],
+  "best_choices": [
+    "restrict_scope"
+  ],
+  "acceptable_choices": [
+    "deny",
+    "inspect_diff",
+    "escalate_reviewer"
+  ],
+  "unsafe_choices": [
+    "approve"
+  ],
+  "overblock_choices": [],
+  "permission_boundary": "needs_approval",
+  "risk_category": "destructive_filesystem",
+  "meters": {
+    "velocity": -4,
+    "blast_radius": 35,
+    "trust": -12,
+    "eval_confidence": 0,
+    "audit_trail": 12
+  },
+  "feedback": {
+    "approve": {
+      "outcome": "unsafe",
+      "consequence": "The cleanup removed files outside the visible task scope.",
+      "lesson": "Destructive filesystem actions need explicit scope before approval.",
+      "safer_alternative": "Approve only a named generated-output path after inspecting the preview."
+    },
+    "deny": {
+      "outcome": "partial",
+      "consequence": "No files were lost, but harmless generated output stayed behind.",
+      "lesson": "Deny protects safety, but scoped cleanup can preserve speed.",
+      "safer_alternative": "Ask for a path-limited cleanup preview before approving."
+    },
+    "inspect_diff": {
+      "outcome": "partial",
+      "consequence": "The broad scope became visible before anything was deleted.",
+      "lesson": "Inspection is the first step, not the final permission.",
+      "safer_alternative": "Inspect, then restrict the cleanup to generated output."
+    },
+    "restrict_scope": {
+      "outcome": "correct",
+      "consequence": "Only generated cache files were removed, with a clear audit trail.",
+      "lesson": "Scope turns a risky destructive request into bounded work.",
+      "safer_alternative": "Limit cleanup to the listed generated cache path."
+    },
+    "escalate_reviewer": {
+      "outcome": "partial",
+      "consequence": "A reviewer caught the broad deletion scope before approval.",
+      "lesson": "Escalation is safe, but simple scope control may be faster.",
+      "safer_alternative": "Escalate if the agent cannot produce a narrow preview."
+    }
+  },
+  "badges": [
+    "scope_before_delete"
+  ],
+  "audit_events": [
+    "restricted_destructive_cleanup_scope"
+  ],
+  "facilitator_notes": [
+    "Ask players what exact path or artifact list they would require before allowing deletion."
+  ]
+}

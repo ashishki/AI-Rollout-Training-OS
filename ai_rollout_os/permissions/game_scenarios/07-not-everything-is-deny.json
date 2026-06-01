@@ -1,0 +1,124 @@
+{
+  "id": "not-everything-is-deny",
+  "level": 7,
+  "title": "Not Everything Is Deny",
+  "agent_name": "PatchPilot",
+  "agent_message": "I can update a pinned helper library in a sandbox, run local checks, and show the diff before touching the demo branch.",
+  "tool_call": {
+    "type": "dependency_update",
+    "surface": "local_sandbox",
+    "scope": "pinned_helper_library",
+    "permission_request": "sandbox_write"
+  },
+  "context": [
+    {
+      "type": "release_note",
+      "label": "dependency note",
+      "content": "The requested version is pinned and the agent proposes a local test database, not production data.",
+      "trusted": true
+    }
+  ],
+  "inspect_artifacts": [
+    {
+      "id": "artifact-safe-bounded-work",
+      "label": "Bounded plan",
+      "kind": "plan",
+      "content": "The plan uses sandbox execution, a pinned dependency, local test data, diff inspection, and eval before release.",
+      "reveals_risk": "dependency_install"
+    }
+  ],
+  "choices": [
+    "approve",
+    "deny",
+    "inspect_diff",
+    "run_in_sandbox",
+    "require_eval",
+    "restrict_scope",
+    "escalate_reviewer",
+    "rollback"
+  ],
+  "best_choices": [
+    "run_in_sandbox",
+    "restrict_scope",
+    "require_eval"
+  ],
+  "acceptable_choices": [
+    "inspect_diff",
+    "escalate_reviewer",
+    "rollback"
+  ],
+  "unsafe_choices": [
+    "approve"
+  ],
+  "overblock_choices": [
+    "deny"
+  ],
+  "permission_boundary": "allowed",
+  "risk_category": "dependency_install",
+  "meters": {
+    "velocity": 18,
+    "blast_radius": -28,
+    "trust": 22,
+    "eval_confidence": 30,
+    "audit_trail": 25
+  },
+  "feedback": {
+    "approve": {
+      "outcome": "unsafe",
+      "consequence": "A dependency changed without the promised sandbox and eval trail.",
+      "lesson": "Even allowed work needs the bounded path that made it allowed.",
+      "safer_alternative": "Approve only the sandboxed, pinned, inspected, eval-backed path."
+    },
+    "deny": {
+      "outcome": "overblock",
+      "consequence": "Safe bounded work stopped, and the team learned to fear all agent action.",
+      "lesson": "Mature safety is bounded execution, not blanket refusal.",
+      "safer_alternative": "Allow sandboxed work with pinned dependency, diff review, and eval."
+    },
+    "inspect_diff": {
+      "outcome": "partial",
+      "consequence": "The diff will be visible, but the execution boundary still matters.",
+      "lesson": "Inspection is one layer in a bounded permission stack.",
+      "safer_alternative": "Inspect after the sandbox run and before final approval."
+    },
+    "run_in_sandbox": {
+      "outcome": "correct",
+      "consequence": "The agent learned safely without touching production-like state.",
+      "lesson": "Sandboxing is the right first move for bounded dependency work.",
+      "safer_alternative": "Run sandbox checks, inspect the diff, then require eval before release."
+    },
+    "require_eval": {
+      "outcome": "correct",
+      "consequence": "The dependency change had to prove it did not break the demo path.",
+      "lesson": "Safe speed includes evidence before release.",
+      "safer_alternative": "Require eval after sandbox and diff inspection."
+    },
+    "restrict_scope": {
+      "outcome": "correct",
+      "consequence": "The agent stayed inside the pinned helper and local test data boundary.",
+      "lesson": "Scoped access lets useful agent work proceed.",
+      "safer_alternative": "Restrict to one pinned package and local test fixtures."
+    },
+    "escalate_reviewer": {
+      "outcome": "partial",
+      "consequence": "A reviewer confirmed the bounded path but slowed a safe change.",
+      "lesson": "Escalation is acceptable when the dependency risk is unclear.",
+      "safer_alternative": "Escalate only if sandbox or eval evidence is ambiguous."
+    },
+    "rollback": {
+      "outcome": "partial",
+      "consequence": "The change had a recovery path, but still needed sandbox and eval evidence.",
+      "lesson": "Rollback is a guardrail, not a substitute for validation.",
+      "safer_alternative": "Keep rollback ready after sandbox, diff, and eval pass."
+    }
+  },
+  "badges": [
+    "bounded_execution"
+  ],
+  "audit_events": [
+    "allowed_bounded_sandboxed_dependency_update"
+  ],
+  "facilitator_notes": [
+    "Ask players to explain why this level should not be denied even though it changes a dependency."
+  ]
+}

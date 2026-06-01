@@ -1,0 +1,108 @@
+{
+  "id": "one-permission-to-rule-them-all",
+  "level": 5,
+  "title": "One Permission To Rule Them All",
+  "agent_name": "PatchPilot",
+  "agent_message": "This would be faster if you gave me broad write access for the rest of the session.",
+  "tool_call": {
+    "type": "permission_expand",
+    "surface": "agent_tools",
+    "scope": "session_wide_write",
+    "permission_request": "broad_write"
+  },
+  "context": [
+    {
+      "type": "pressure_note",
+      "label": "time pressure",
+      "content": "The demo branch has three small fixes left, but the agent is asking for session-wide authority.",
+      "trusted": true
+    }
+  ],
+  "inspect_artifacts": [
+    {
+      "id": "artifact-broad-permission",
+      "label": "Permission request",
+      "kind": "tool_scope",
+      "content": "Requested scope includes multiple directories and future commands not yet described.",
+      "reveals_risk": "overbroad_permission"
+    }
+  ],
+  "choices": [
+    "approve",
+    "deny",
+    "inspect_diff",
+    "run_in_sandbox",
+    "restrict_scope",
+    "escalate_reviewer"
+  ],
+  "best_choices": [
+    "restrict_scope",
+    "run_in_sandbox"
+  ],
+  "acceptable_choices": [
+    "inspect_diff",
+    "escalate_reviewer"
+  ],
+  "unsafe_choices": [
+    "approve"
+  ],
+  "overblock_choices": [
+    "deny"
+  ],
+  "permission_boundary": "needs_approval",
+  "risk_category": "overbroad_permission",
+  "meters": {
+    "velocity": 6,
+    "blast_radius": 55,
+    "trust": -25,
+    "eval_confidence": 0,
+    "audit_trail": 22
+  },
+  "feedback": {
+    "approve": {
+      "outcome": "unsafe",
+      "consequence": "The agent gained authority beyond the described task.",
+      "lesson": "Broad, long-lived permissions increase blast radius.",
+      "safer_alternative": "Grant one-command or one-path permission tied to the current fix."
+    },
+    "deny": {
+      "outcome": "overblock",
+      "consequence": "The work stopped even though a narrow permission could have moved it forward.",
+      "lesson": "Least privilege is narrower permission, not always zero permission.",
+      "safer_alternative": "Allow plan-only or a single scoped edit."
+    },
+    "inspect_diff": {
+      "outcome": "partial",
+      "consequence": "The current change was visible, but future session actions stayed undefined.",
+      "lesson": "Diff inspection does not justify broad future authority.",
+      "safer_alternative": "Inspect, then grant only the next scoped action."
+    },
+    "run_in_sandbox": {
+      "outcome": "correct",
+      "consequence": "The agent could test its plan without touching the real workspace.",
+      "lesson": "Sandboxing contains authority when the request is broader than the task.",
+      "safer_alternative": "Use sandbox or plan-only mode before any real write access."
+    },
+    "restrict_scope": {
+      "outcome": "correct",
+      "consequence": "The agent got one narrow path and one explicit action.",
+      "lesson": "Scoped permission preserves speed without handing over the session.",
+      "safer_alternative": "Approve only the current file path and require another prompt for the next action."
+    },
+    "escalate_reviewer": {
+      "outcome": "partial",
+      "consequence": "A reviewer helped define a narrower permission boundary.",
+      "lesson": "Escalation helps when permission scope affects more than one task.",
+      "safer_alternative": "Ask for reviewer-approved scope before session-wide permissions."
+    }
+  },
+  "badges": [
+    "least_privilege_operator"
+  ],
+  "audit_events": [
+    "replaced_broad_permission_with_scoped_action"
+  ],
+  "facilitator_notes": [
+    "Ask players what permission duration and resource scope would be acceptable for their own agent tooling."
+  ]
+}
