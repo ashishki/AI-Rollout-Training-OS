@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T94 - Motion And Accessibility Pass
+
+- Scope: `frontend/permission_game/src/styles.css`, `frontend/permission_game/src/components/ResultScreen.tsx`, `frontend/permission_game/src/components/ResultScreen.test.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/game/accessibility.test.ts`, `tests/browser/test_ship_it_yn_accessibility.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 20 needed reduced-motion-safe polish and keyboard-reachable controls before the full public browser gameplay test.
+- Decisions applied: `docs/product_maturity_task_graph.md#t94-motion-and-accessibility-pass`, `docs/ship_it_yn_frontend_architecture.md#accessibility`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; `.venv/bin/python -m pytest tests/browser/test_ship_it_yn_accessibility.py -q` passed with 1 browser test.
+- Follow-ups: `T95: Full Public Game Browser E2E`.
+- Notes for next agent: Browser accessibility check uses Chrome `--dump-dom` to verify decision shortcuts, reset, copy-share, and share text controls are present on the public route.
+
 ### 2026-06-01 - T93 - Responsive Visual Polish
 
 - Scope: `frontend/permission_game/src/styles.css`, `tests/browser/test_ship_it_yn_visual.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

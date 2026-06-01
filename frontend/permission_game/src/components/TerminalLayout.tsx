@@ -3,6 +3,7 @@ import { DecisionButtons } from "./DecisionButtons";
 import { DiffPreview } from "./DiffPreview";
 import { AuditTrail, type AuditTrailEvent } from "./AuditTrail";
 import { ConsequencePanel } from "./ConsequencePanel";
+import { ResultScreen } from "./ResultScreen";
 import { RiskMeters, type RiskMeterValues } from "./RiskMeters";
 import { ScenarioCard } from "./ScenarioCard";
 import { useState } from "react";
@@ -65,6 +66,12 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
     }
   }
 
+  function resetRun() {
+    setSelectedDecision(null);
+    setIsInspectOpen(false);
+    setInspectedArtifactIds([]);
+  }
+
   return (
     <main className="min-h-screen bg-terminal-bg text-terminal-text">
       <div
@@ -99,12 +106,30 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
         <aside aria-label="Risk meters and audit trail" className="terminal-region">
           <div className="terminal-region-header">
             <span>meters</span>
-            <span>draft</span>
+            <button className="terminal-reset-button" onClick={resetRun} type="button">
+              Reset Run
+            </button>
           </div>
           <RiskMeters values={meterValues} />
           <AuditTrail
             auditTrailQuality={auditTrailQuality}
             events={auditEvents}
+          />
+          <ResultScreen
+            result={{
+              score: selectedDecision ? 15 : 0,
+              title: selectedDecision ? "Permission Apprentice" : "Practice Run",
+              demoResult: "Local demo only",
+              prodStatus: "Not production evidence",
+              unsafeApprovals: 0,
+              overblocks: 0,
+              strongestHabit:
+                auditTrailQuality === "inspected"
+                  ? "inspection discipline"
+                  : "audit awareness",
+              weakestRiskArea: activeScenario.riskCategory,
+              badges: activeScenario.badges ?? [],
+            }}
           />
         </aside>
       </div>

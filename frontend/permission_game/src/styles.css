@@ -30,6 +30,10 @@ select {
   font: inherit;
 }
 
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
 .terminal-region {
   min-height: 18rem;
   min-width: 0;
@@ -120,6 +124,22 @@ select {
 .terminal-action-button:focus-visible {
   outline: 2px solid #5aa7ff;
   outline-offset: 2px;
+}
+
+button:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #5aa7ff;
+  outline-offset: 2px;
+}
+
+.terminal-reset-button {
+  min-height: 2rem;
+  border: 1px solid #263241;
+  border-radius: 4px;
+  background: #0b0f14;
+  padding: 0.25rem 0.55rem;
+  color: #e6edf3;
 }
 
 .decision-control-grid {
@@ -355,6 +375,7 @@ select {
   border-radius: 6px;
   background: #132e22;
   padding: 0.75rem;
+  animation: soft-pop 140ms ease-out;
 }
 
 .score-change {
@@ -457,6 +478,59 @@ select {
   color: #e6edf3;
   padding: 0.75rem;
   resize: vertical;
+}
+
+.result-share-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.result-share-actions button {
+  min-height: 2.5rem;
+  border: 1px solid #5aa7ff;
+  border-radius: 6px;
+  background: #0b2236;
+  padding: 0.45rem 0.75rem;
+  color: #e6edf3;
+  font-weight: 700;
+}
+
+.result-share-actions span {
+  color: #9aa7b5;
+  font-size: 0.875rem;
+}
+
+@keyframes soft-pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .consequence-panel[data-outcome="correct"],
+  .diff-preview-drawer {
+    transition:
+      border-color 140ms ease-out,
+      background-color 140ms ease-out;
+  }
 }
 
 @media (max-width: 767px) {

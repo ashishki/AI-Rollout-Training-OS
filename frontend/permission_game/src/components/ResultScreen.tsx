@@ -1,4 +1,6 @@
 import { buildShareText, recommendedNextHabit } from "../game/shareText";
+import { useState } from "react";
+import { copyShareText } from "../game/shareText";
 
 export type FinalResult = {
   score: number;
@@ -18,6 +20,12 @@ type ResultScreenProps = {
 
 export function ResultScreen({ result }: ResultScreenProps) {
   const shareText = buildShareText(result);
+  const [copyStatus, setCopyStatus] = useState("Ready to copy");
+
+  async function handleCopy() {
+    await copyShareText(shareText);
+    setCopyStatus("Copied");
+  }
 
   return (
     <section aria-label="Final report" className="result-screen">
@@ -43,6 +51,12 @@ export function ResultScreen({ result }: ResultScreenProps) {
         {result.badges.map((badge) => (
           <span key={badge}>{badge.replaceAll("_", " ")}</span>
         ))}
+      </div>
+      <div className="result-share-actions">
+        <button onClick={handleCopy} type="button">
+          Copy Share
+        </button>
+        <span aria-live="polite">{copyStatus}</span>
       </div>
       <textarea aria-label="Share text" readOnly value={shareText} />
     </section>

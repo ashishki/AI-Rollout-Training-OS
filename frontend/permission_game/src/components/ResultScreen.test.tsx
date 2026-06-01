@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import { ResultScreen } from "./ResultScreen";
 
@@ -37,5 +37,34 @@ describe("ResultScreen", () => {
     expect(screen.getByLabelText("Share text")).toHaveValue(
       "Ship It? Y/N score: 82/100 | Title: Least Privilege Operator | Unsafe approvals: 0 | Overblocks: 1 | Strongest habit: scoped access | Next habit: practice eval bypass boundaries"
     );
+  });
+
+  it("keeps the share action keyboard reachable", async () => {
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
+    });
+    render(
+      <ResultScreen
+        result={{
+          score: 82,
+          title: "Least Privilege Operator",
+          demoResult: "Demo-ready practice run",
+          prodStatus: "Not production evidence",
+          unsafeApprovals: 0,
+          overblocks: 1,
+          strongestHabit: "scoped access",
+          weakestRiskArea: "eval_bypass",
+          badges: ["least_privilege_operator"],
+        }}
+      />
+    );
+
+    const button = screen.getByRole("button", { name: "Copy Share" });
+    button.focus();
+    fireEvent.click(button);
+
+    expect(button).toHaveFocus();
+    expect(navigator.clipboard.writeText).toHaveBeenCalledOnce();
+    expect(await screen.findByText("Copied")).toBeVisible();
   });
 });
