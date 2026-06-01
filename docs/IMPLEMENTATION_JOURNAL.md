@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T85 - React/Vite Permission Game Scaffold
+
+- Scope: `.gitignore`, `frontend/permission_game/`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 19 needed an isolated React/Vite/TypeScript/Tailwind app before implementing the terminal layout and game controls.
+- Decisions applied: `docs/product_maturity_task_graph.md#t85-reactvite-permission-game-scaffold`, `docs/ship_it_yn_frontend_architecture.md`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; `.venv/bin/python -m pytest tests/test_permission_game_frontend_files.py tests/test_ship_it_yn_planning_docs.py -q` passed with 7 tests.
+- Follow-ups: `T86: Terminal Layout Shell`.
+- Notes for next agent: The scaffold imports a typed seven-scenario summary JSON and renders a nonblank app root. It does not yet implement terminal regions, gameplay state, or the FastAPI static route.
+
 ### 2026-06-01 - Phase 18 Review - Scenario And Scoring Core
 
 - Scope: `docs/audit/PHASE18_SCENARIO_SCORING_CORE_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_phase18_review.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

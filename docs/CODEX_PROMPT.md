@@ -20,10 +20,11 @@ Full historical prompt archived at
   `docs/product_maturity_task_graph.md`.
 - Phase status: Phase 16 readiness review complete; Phase 17 planning docs are
   complete through T78; Phase 18 implementation and deep review are complete
-  through T84 and `PHASE18-SCENARIO-SCORING`. Local browser demo route remains
+  through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation is
+  complete through T85. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 210 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 212 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -90,10 +91,11 @@ the simulator works as a focused demo/workshop experience.
 - `T83: Local Game Session Model` completed on 2026-06-01.
 - `T84: Scenario Safety Guard Tests` completed on 2026-06-01.
 - `Phase 18 Scenario And Scoring Core Review` completed on 2026-06-01.
+- `T85: React/Vite Permission Game Scaffold` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T85: React/Vite Permission Game Scaffold.
+Active next task: T86: Terminal Layout Shell.
 
 ## Open Findings
 
@@ -136,6 +138,7 @@ Active next task: T85: React/Vite Permission Game Scaffold.
 | 2026-06-01 | T83: Local Game Session Model | Added public-safe localStorage session projection with session id, scenario order, decision outcomes, inspected artifact ids, elapsed time, meter totals, badges, and final report fields while excluding raw/private data. Next implementation task is T84. |
 | 2026-06-01 | T84: Scenario Safety Guard Tests | Added scenario safety tests for secret-like values, real customer-data domains, copy-paste dangerous commands, and unsupported certification/compliance/production-safety/PMF/conversion claims. Next step is Phase 18 deep review. |
 | 2026-06-01 | Phase 18 Scenario And Scoring Core Review | Recorded PASS decision for T79-T84 with no P0/P1 blockers; P2-UX-001 remains open for Ship It? Y/N browser evidence. Next implementation task is T85. |
+| 2026-06-01 | T85: React/Vite Permission Game Scaffold | Added isolated `frontend/permission_game` React/Vite/TypeScript/Tailwind app with package scripts, typed seven-scenario import, nonblank app render test, and scaffold file checks. Next implementation task is T86. |
 
 ## Rules
 

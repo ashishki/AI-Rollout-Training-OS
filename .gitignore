@@ -10,5 +10,6 @@ venv/
 .env.*
 dist/
 build/
+node_modules/
+*.tsbuildinfo
 *.egg-info/
-
