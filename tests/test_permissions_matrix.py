@@ -46,6 +46,10 @@ def test_public_routes_cite_design_decision() -> None:
         "/demo/permission-simulator/decisions": (
             "D-012 static public permission simulator demo"
         ),
+        "/demo/ship-it-yn": "D-013 static public Ship It YN game route",
+        "/demo/ship-it-yn/assets/{asset_path:path}": (
+            "D-013 static public Ship It YN game route"
+        ),
     }
 
 

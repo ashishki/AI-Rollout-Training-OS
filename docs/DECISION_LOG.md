@@ -1,7 +1,7 @@
 # Decision Log - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-05-29
+Last updated: 2026-06-01
 
 This file is a retrieval index. Canonical documents win on conflict.
 
@@ -30,6 +30,7 @@ This file is a retrieval index. Canonical documents win on conflict.
 | D-010 | 2026-05-22 | Active | Prioritize a solo/small-team public-source rollout showcase before further enterprise or GA expansion. | The operator has limited corporate access, so the next useful proof is a claim-safe mini-cohort and role-pack demo that can support the Lead Response SLA Agent showcase. | `docs/product_maturity_task_graph.md#phase-15---solo-showcase-and-small-team-rollout`, `docs/open_source_research_protocol.md` | none |
 | D-011 | 2026-05-23 | Active | Defer browser automation and screenshots for the solo showcase; use Markdown/API artifacts for this pass. | The showcase is an internal support artifact, not GA-grade UX proof. P2-UX-001 remains open until browser automation exists. | `docs/solo_showcase_plan.md#ux-demo-gap-decision` | none |
 | D-012 | 2026-05-29 | Active | Add a public static permission simulator demo route with no workspace data access. | The Phase 16 next action is to show the demo in a browser; the authenticated app route remains protected, while `/demo/permission-simulator` exposes only static seed content and deterministic scoring for local/manual demo use. | `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md#next-action`, `frontend/app_shell.py` | none |
+| D-013 | 2026-06-01 | Active | Add a public static Ship It? Y/N game route with no workspace data access. | Phase 20 needs the React/Vite build to be reachable in a browser before browser e2e and screenshot evidence can be collected; `/demo/ship-it-yn` serves only static build assets or a clear local missing-build message. | `docs/audit/PHASE19_REACT_VITE_GAME_REVIEW.md#decision`, `frontend/app_shell.py` | none |
 
 ## Retrieval Notes
 

@@ -12,13 +12,14 @@ active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
 Active phase: Phase 20 - Browser Polish And Public Demo Evidence.
-Active next task: `T92: FastAPI Static Game Route`.
+Active next task: `T93: Responsive Visual Polish`.
 Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
 Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
 Development Plan`. Phase 18 implementation and review are complete through
 `T84: Scenario Safety Guard Tests` and `PHASE18-SCENARIO-SCORING`. Phase 19
 implementation and review are complete through `T91: Final Result And Share Card`
-and `PHASE19-REACT-VITE-GAME`.
+and `PHASE19-REACT-VITE-GAME`. Phase 20 implementation is complete through
+`T92: FastAPI Static Game Route`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and

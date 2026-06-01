@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T92 - FastAPI Static Game Route
+
+- Scope: `frontend/app_shell.py`, `tests/test_permission_game_public_demo.py`, `tests/test_permissions_matrix.py`, `docs/DECISION_LOG.md`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 20 needed the built React/Vite Ship It? Y/N game reachable from FastAPI before browser e2e and screenshot evidence.
+- Decisions applied: `docs/product_maturity_task_graph.md#t92-fastapi-static-game-route`, `docs/DECISION_LOG.md#decision-index`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_public_demo.py tests/test_permissions_matrix.py -q` passed with 5 tests; `npm run build` passed in `frontend/permission_game`; `.venv/bin/ruff check` passed; `.venv/bin/ruff format --check` passed.
+- Follow-ups: `T93: Responsive Visual Polish`.
+- Notes for next agent: `/demo/ship-it-yn` serves only static Vite build assets and returns a clear missing-build message when `dist/index.html` is absent. It does not read workspace data.
+
 ### 2026-06-01 - Phase 19 Review - React/Vite Playable Game
 
 - Scope: `docs/audit/PHASE19_REACT_VITE_GAME_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_phase19_review.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

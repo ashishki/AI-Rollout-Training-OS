@@ -1,6 +1,7 @@
 from collections.abc import Generator
 from datetime import date
 from html import escape
+from pathlib import Path
 from urllib.parse import parse_qs
 
 from ai_rollout_os.auth.dependencies import get_settings_from_app
@@ -34,12 +35,13 @@ from ai_rollout_os.training.guardrail_service import GuardrailService
 from ai_rollout_os.training.schemas import MissionCreate, RolePackCreate
 from ai_rollout_os.training.service import RolePackService
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 router = APIRouter()
+SHIP_IT_YN_DIST_DIR = Path("frontend/permission_game/dist")
 APP_SHELL = Depends(require_permission("app.shell.view"))
 OPERATOR_VIEW = Depends(require_permission("app.operator.view"))
 LEARNER_VIEW = Depends(require_permission("app.learner.view"))
@@ -177,6 +179,37 @@ async def submit_public_permission_demo_decision(request: Request) -> HTMLRespon
 
 submit_public_permission_demo_decision.public_design_decision = (
     "D-012 static public permission simulator demo"
+)
+
+
+@router.get("/demo/ship-it-yn", response_class=HTMLResponse)
+def public_ship_it_yn_demo() -> HTMLResponse:
+    index_path = SHIP_IT_YN_DIST_DIR / "index.html"
+    if not index_path.exists():
+        return HTMLResponse(_ship_it_yn_missing_build_html())
+
+    html = index_path.read_text(encoding="utf-8")
+    html = html.replace('"/assets/', '"/demo/ship-it-yn/assets/')
+    html = html.replace("'/assets/", "'/demo/ship-it-yn/assets/")
+    return HTMLResponse(html)
+
+
+public_ship_it_yn_demo.public_design_decision = (
+    "D-013 static public Ship It YN game route"
+)
+
+
+@router.get("/demo/ship-it-yn/assets/{asset_path:path}")
+def public_ship_it_yn_asset(asset_path: str) -> FileResponse:
+    asset_root = (SHIP_IT_YN_DIST_DIR / "assets").resolve()
+    asset = (asset_root / asset_path).resolve()
+    if asset_root not in asset.parents or not asset.is_file():
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return FileResponse(asset)
+
+
+public_ship_it_yn_asset.public_design_decision = (
+    "D-013 static public Ship It YN game route"
 )
 
 
@@ -1089,6 +1122,18 @@ def _safe_error_response(exc: Exception) -> HTMLResponse:
         ),
         status_code=status_code,
     )
+
+
+def _ship_it_yn_missing_build_html() -> str:
+    return """
+    <main data-ship-it-yn-missing-build="true">
+      <h1>Ship It? Y/N build missing</h1>
+      <p>
+        Run <code>cd frontend/permission_game && npm run build</code>
+        to create the public demo bundle.
+      </p>
+    </main>
+    """
 
 
 async def _form_values(request: Request) -> dict[str, str]:
