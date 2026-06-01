@@ -1,10 +1,20 @@
-# AI Rollout Training OS
+# Ship It? Y/N - AI Permission Judgment Game
 
-AI Rollout Training OS сейчас сфокусирован на v1-продукте **Agent Permission Training Simulator**: визуальном тренажере, который учит команды быстро и безопасно оценивать запросы AI agents.
+**Ship It? Y/N** is the public front door for AI Rollout Training OS: a browser-based permission judgment game for teams adopting Cursor, Codex, Claude Code, and other agentic coding tools.
 
-Пользователь видит реалистичный agent request, выбирает approve, deny, ask for clarification, run in sandbox или escalate to reviewer, затем получает consequence, risk explanation, safer alternative и score. Главная задача v1 - натренировать permission judgment вокруг allowed, needs approval, blocked и unknown, а не строить общий LMS.
+It is not a generic LMS, not a compliance certificate, and not a real agent runner. The game teaches one narrow habit: deciding whether an AI agent request should be approved, denied, scoped down, sandboxed, evaluated, escalated, or inspected before action.
 
-Более широкий rollout/training OS остается контекстом и будущей платформенной рамкой, но текущая активная работа - Phase 16 Visual Permission Simulator Pivot. Детальный план: `docs/PROJECT_PLAN.md`.
+Local demo route: `/demo/ship-it-yn`
+
+Primary CTA: build the React/Vite game, start FastAPI, and open `http://127.0.0.1:8000/demo/ship-it-yn`.
+
+```bash
+cd frontend/permission_game
+npm install
+npm run build
+cd ../..
+.venv/bin/uvicorn ai_rollout_os.main:app --host 127.0.0.1 --port 8000
+```
 
 Reference integration: `docs/entropy_core_gensyn_integration.md`.
 
@@ -19,6 +29,13 @@ Reference integration: `docs/entropy_core_gensyn_integration.md`.
 - когда запрос неполный и нужно уточнение или escalation.
 
 Цель v1 - дать команде короткий, визуальный и showable тренажер: scenario card -> decision -> consequence -> lesson. Первый monetizable artifact - workshop/demo pack для команд, которые внедряют AI agents и хотят снизить unsafe approvals без тяжелой платформенной продажи.
+
+## Для кого
+
+- Engineering team leads who need a fast way to discuss AI agent permission risk.
+- AI rollout facilitators running a workshop or team demo.
+- Developers using agentic coding tools who want practice before approving broad actions.
+- Security or platform reviewers who want a concrete conversation starter, not another policy PDF.
 
 ## Что строим в v1
 
@@ -40,6 +57,8 @@ V1 - Agent Permission Training Simulator.
 
 Ship It? Y/N - публичная React/Vite мини-игра для тренировки permission judgment на семи уровнях. Локальный маршрут: `/demo/ship-it-yn`.
 
+Try the local demo: `http://127.0.0.1:8000/demo/ship-it-yn`.
+
 Desktop browser artifact:
 
 ![Ship It Y/N desktop demo](docs/audit/artifacts/ship_it_yn_desktop.png)
@@ -47,6 +66,16 @@ Desktop browser artifact:
 Mobile browser artifact:
 
 ![Ship It Y/N mobile demo](docs/audit/artifacts/ship_it_yn_mobile.png)
+
+## Blocked claims
+
+The public demo is intentionally bounded:
+
+- No certified safety claim.
+- No compliance approval claim.
+- No production readiness claim.
+- No PMF, paid conversion, or customer adoption claim.
+- No autonomous execution or real privileged-action approval claim.
 
 ## Гипотеза
 

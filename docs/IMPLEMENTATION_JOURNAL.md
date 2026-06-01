@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T97 - README And Public Pitch Update
+
+- Scope: `README.md`, `tests/test_permission_game_marketing.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 20 needed README first-screen copy that makes Ship It? Y/N the public front door without overclaiming LMS, compliance, or real-agent execution readiness.
+- Decisions applied: `docs/product_maturity_task_graph.md#t97-readme-and-public-pitch-update`, `docs/ship_it_yn_product_spec.md`
+- Evidence collected: `.venv/bin/python -m pytest tests/test_permission_game_marketing.py -q` passed with 2 marketing-copy tests; `.venv/bin/ruff check tests/test_permission_game_marketing.py` and `.venv/bin/ruff format --check tests/test_permission_game_marketing.py` passed.
+- Follow-ups: `T98: Ship It? Y/N UX Readiness Review`.
+- Notes for next agent: README now has the local CTA, target users, desktop/mobile artifact links, and blocked claims; T98 should judge readiness using evidence, not add new pitch claims.
+
 ### 2026-06-01 - T96 - Screenshot And README Visual Artifact
 
 - Scope: `README.md`, `docs/audit/artifacts/ship_it_yn_desktop.png`, `docs/audit/artifacts/ship_it_yn_mobile.png`, `scripts/capture_ship_it_yn_demo.py`, `tests/test_permission_game_browser_artifacts.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

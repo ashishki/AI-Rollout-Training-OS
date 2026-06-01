@@ -110,7 +110,7 @@ def _wait_for_text(client: "_DevToolsClient", text: str) -> None:
     deadline = time.time() + 15
     expression = f"document.body.innerText.includes({json.dumps(text)})"
     while time.time() < deadline:
-        if client.evaluate(expression)["result"]["value"] is True:
+        if client.evaluate(expression)["result"].get("value") is True:
             return
         time.sleep(0.2)
     raise AssertionError(f"Browser page did not render expected text: {text}")

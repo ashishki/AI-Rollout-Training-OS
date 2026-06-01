@@ -22,10 +22,10 @@ Full historical prompt archived at
   complete through T78; Phase 18 implementation and deep review are complete
   through T84 and `PHASE18-SCENARIO-SCORING`; Phase 19 implementation and deep
   review are complete through T91 and `PHASE19-REACT-VITE-GAME`; Phase 20
-  implementation is complete through T96. Local browser demo route remains
+  implementation is complete through T97. Local browser demo route remains
   available at `/demo/permission-simulator`, with a captured Chrome screenshot at
   `docs/audit/artifacts/permission_simulator_demo.png`.
-- Baseline: 224 passing tests (`.venv/bin/python -m pytest -q`, local Docker
+- Baseline: 226 passing tests (`.venv/bin/python -m pytest -q`, local Docker
   Postgres with test credentials).
 - Lint baseline: `.venv/bin/ruff check` passes; `.venv/bin/ruff format --check`
   passes.
@@ -105,10 +105,11 @@ the simulator works as a focused demo/workshop experience.
 - `T94: Motion And Accessibility Pass` completed on 2026-06-01.
 - `T95: Full Public Game Browser E2E` completed on 2026-06-01.
 - `T96: Screenshot And README Visual Artifact` completed on 2026-06-01.
+- `T97: README And Public Pitch Update` completed on 2026-06-01.
 
 ## Next Task
 
-Active next task: T97: README And Public Pitch Update.
+Active next task: T98: Ship It? Y/N UX Readiness Review.
 
 ## Open Findings
 
@@ -164,6 +165,7 @@ Active next task: T97: README And Public Pitch Update.
 | 2026-06-01 | T94: Motion And Accessibility Pass | Added reduced-motion safeguards, visible focus states, reset/copy-share keyboard controls, accessibility CSS tests, and public-route browser DOM accessibility checks. Next implementation task is T95. |
 | 2026-06-01 | T95: Full Public Game Browser E2E | Added a public-route Chrome DevTools browser test that plays all seven levels through inspect, scope, eval, deny, escalate, and sandbox decisions, reaches the final report, and checks only same-origin local route resources load. Next implementation task is T96. |
 | 2026-06-01 | T96: Screenshot And README Visual Artifact | Added reproducible desktop/mobile Chrome capture script, checked-in `/demo/ship-it-yn` PNG artifacts, README visual references, and artifact tests. Next implementation task is T97. |
+| 2026-06-01 | T97: README And Public Pitch Update | Repositioned README around Ship It? Y/N as the public permission-judgment game front door, with CTA, target users, visual artifacts, and explicit blocked claims. Next step is T98 UX readiness review. |
 
 ## Rules
 
