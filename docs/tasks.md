@@ -12,12 +12,12 @@ active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
 Active phase: Phase 19 - React/Vite Playable Game.
-Active next task: `T88: Inspect Diff And Hidden Risk Reveal`.
+Active next task: `T89: Risk Meters And Audit Trail`.
 Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
 Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
 Development Plan`. Phase 18 implementation and review are complete through
 `T84: Scenario Safety Guard Tests` and `PHASE18-SCENARIO-SCORING`. Phase 19
-implementation is complete through `T87: Scenario Card And Decision Controls`.
+implementation is complete through `T88: Inspect Diff And Hidden Risk Reveal`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and

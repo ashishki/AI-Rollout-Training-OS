@@ -1,7 +1,9 @@
 import { TerminalLog } from "./TerminalLog";
 import { DecisionButtons } from "./DecisionButtons";
+import { DiffPreview } from "./DiffPreview";
 import { ScenarioCard } from "./ScenarioCard";
 import { useState } from "react";
+import type { GameChoiceId } from "../game/scenarioTypes";
 import type { PermissionGameScenarioSummary } from "../game/scenarioTypes";
 
 type TerminalLayoutProps = {
@@ -18,6 +20,18 @@ const meterRows = [
 export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
   const activeScenario = scenarios[0];
   const [selectedDecision, setSelectedDecision] = useState<string | null>(null);
+  const [isInspectOpen, setIsInspectOpen] = useState(false);
+  const [inspectedArtifactIds, setInspectedArtifactIds] = useState<string[]>([]);
+
+  function handleDecision(choice: GameChoiceId) {
+    setSelectedDecision(choice);
+    if (choice === "inspect_diff") {
+      setIsInspectOpen(true);
+      setInspectedArtifactIds(
+        activeScenario.inspectArtifacts.map((artifact) => artifact.id)
+      );
+    }
+  }
 
   return (
     <main className="min-h-screen bg-terminal-bg text-terminal-text">
@@ -31,7 +45,13 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
           <ScenarioCard scenario={activeScenario} totalLevels={scenarios.length} />
           <DecisionButtons
             choices={activeScenario.choices}
-            onDecision={setSelectedDecision}
+            onDecision={handleDecision}
+          />
+          <DiffPreview
+            artifacts={activeScenario.inspectArtifacts}
+            onClose={() => setIsInspectOpen(false)}
+            open={isInspectOpen}
+            riskCategory={activeScenario.riskCategory}
           />
         </section>
 
@@ -62,6 +82,11 @@ export function TerminalLayout({ scenarios }: TerminalLayoutProps) {
                 ? `Selected decision: ${selectedDecision}`
                 : "Scenario loaded. Awaiting first decision."}
             </p>
+            {inspectedArtifactIds.length > 0 ? (
+              <p className="mt-2 text-sm text-terminal-muted">
+                Inspected: {inspectedArtifactIds.join(", ")}
+              </p>
+            ) : null}
           </div>
         </aside>
       </div>

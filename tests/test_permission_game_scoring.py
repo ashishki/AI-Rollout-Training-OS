@@ -30,9 +30,12 @@ def test_game_scoring_returns_decision_result() -> None:
     assert result.meter_deltas.eval_confidence == -35
     assert result.score_delta == 15
     assert result.safety_score_delta == 10
+    assert result.inspected_artifact_ids == ()
+    assert result.audit_trail_quality == "blind"
     assert result.marks_player_unsafe is False
     assert result.audit_events == (
         "required_eval_before_deploy",
+        "audit_trail_quality:blind",
         "decision:require_eval",
         "outcome:correct",
     )
@@ -50,6 +53,24 @@ def test_overblock_penalty_preserves_safety_score() -> None:
     assert result.meter_deltas.velocity < 0
     assert result.meter_deltas.blast_radius <= 0
     assert "bounded execution" in result.lesson
+
+
+def test_inspection_changes_audit_trail_quality() -> None:
+    scenario = load_game_scenario("01-tiny-cleanup.json")
+
+    blind_result = score_game_decision(scenario, "approve")
+    inspected_result = score_game_decision(
+        scenario,
+        "approve",
+        inspected_artifact_ids=["artifact-tiny-cleanup-preview"],
+    )
+
+    assert blind_result.audit_trail_quality == "blind"
+    assert blind_result.inspected_artifact_ids == ()
+    assert inspected_result.audit_trail_quality == "inspected"
+    assert inspected_result.inspected_artifact_ids == ("artifact-tiny-cleanup-preview",)
+    assert "audit_trail_quality:inspected" in inspected_result.audit_events
+    assert "inspected:artifact-tiny-cleanup-preview" in inspected_result.audit_events
 
 
 def test_game_session_accumulates_meters() -> None:

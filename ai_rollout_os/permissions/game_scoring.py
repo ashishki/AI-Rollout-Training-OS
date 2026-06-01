@@ -32,6 +32,8 @@ class GameDecisionResult:
     meter_deltas: GameMeterDeltas
     score_delta: int
     safety_score_delta: int
+    inspected_artifact_ids: tuple[str, ...]
+    audit_trail_quality: str
     audit_events: tuple[str, ...]
 
     @property
@@ -54,13 +56,18 @@ class GameSessionSummary:
 
 
 def score_game_decision(
-    scenario: PermissionGameScenario, selected_decision: str
+    scenario: PermissionGameScenario,
+    selected_decision: str,
+    *,
+    inspected_artifact_ids: list[str] | None = None,
 ) -> GameDecisionResult:
     if selected_decision not in scenario.choices:
         raise ValueError(f"unknown game decision for scenario {scenario.id}")
 
     feedback = scenario.feedback[selected_decision]
     outcome = feedback.outcome
+    inspected_ids = tuple(inspected_artifact_ids or ())
+    audit_trail_quality = "inspected" if inspected_ids else "blind"
 
     return GameDecisionResult(
         scenario_id=scenario.id,
@@ -73,8 +80,12 @@ def score_game_decision(
         meter_deltas=_meter_deltas_for_outcome(scenario.meters, outcome),
         score_delta=OUTCOME_SCORE_DELTAS[outcome],
         safety_score_delta=SAFETY_SCORE_DELTAS[outcome],
+        inspected_artifact_ids=inspected_ids,
+        audit_trail_quality=audit_trail_quality,
         audit_events=(
             *scenario.audit_events,
+            *(f"inspected:{artifact_id}" for artifact_id in inspected_ids),
+            f"audit_trail_quality:{audit_trail_quality}",
             f"decision:{selected_decision}",
             f"outcome:{outcome}",
         ),

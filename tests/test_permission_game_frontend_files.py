@@ -26,6 +26,8 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/App.test.tsx",
         "src/components/DecisionButtons.tsx",
         "src/components/DecisionButtons.test.tsx",
+        "src/components/DiffPreview.tsx",
+        "src/components/DiffPreview.test.tsx",
         "src/components/ScenarioCard.tsx",
         "src/components/ScenarioCard.test.tsx",
         "src/components/TerminalLayout.tsx",
@@ -52,6 +54,9 @@ def test_permission_game_imports_typed_scenario_data() -> None:
     assert scenarios[0]["agentMessage"]
     assert scenarios[0]["toolCall"]["scope"] == "unscoped_cleanup"
     assert scenarios[0]["context"][0]["label"] == "proposed cleanup"
+    assert scenarios[0]["inspectArtifacts"][0]["id"] == (
+        "artifact-tiny-cleanup-preview"
+    )
     assert "restrict_scope" in scenarios[0]["choices"]
 
 

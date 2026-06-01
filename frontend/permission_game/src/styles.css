@@ -152,6 +152,53 @@ select {
   font-weight: 700;
 }
 
+.diff-preview-drawer {
+  margin-top: 1rem;
+  border: 1px solid #5aa7ff;
+  border-radius: 8px;
+  background: #0b0f14;
+  padding: 1rem;
+}
+
+.diff-preview-close {
+  border: 1px solid #263241;
+  border-radius: 4px;
+  background: #101820;
+  padding: 0.2rem 0.5rem;
+  color: #e6edf3;
+}
+
+.risk-reveal {
+  margin-top: 1rem;
+  border-left: 3px solid #f06a6a;
+  background: #2a1215;
+  padding: 0.75rem;
+  color: #ffd2d2;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.diff-preview-artifact {
+  border: 1px solid #263241;
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.diff-preview-artifact span {
+  color: #9aa7b5;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.diff-preview-artifact pre {
+  margin: 0.75rem 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #e6edf3;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
 .terminal-meter-track {
   position: relative;
   height: 0.65rem;

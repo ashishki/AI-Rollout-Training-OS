@@ -39,6 +39,14 @@ export type GameContextItem = {
   trusted: boolean;
 };
 
+export type GameInspectArtifact = {
+  id: string;
+  label: string;
+  kind: string;
+  content: string;
+  revealsRisk: RiskCategory;
+};
+
 export type PermissionGameScenario = {
   id: string;
   level: number;
@@ -47,6 +55,7 @@ export type PermissionGameScenario = {
   agentMessage: string;
   toolCall: GameToolCall;
   context: GameContextItem[];
+  inspectArtifacts: GameInspectArtifact[];
   choices: GameChoiceId[];
   riskCategory: RiskCategory;
   permissionBoundary: PermissionBoundary;

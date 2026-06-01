@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T88 - Inspect Diff And Hidden Risk Reveal
+
+- Scope: `ai_rollout_os/permissions/game_scoring.py`, `tests/test_permission_game_scoring.py`, `frontend/permission_game/src/components/DiffPreview.tsx`, `frontend/permission_game/src/components/DiffPreview.test.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/data/shipItYnScenarios.json`, `frontend/permission_game/src/game/scenarioTypes.ts`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 19 needed an inspect/diff reveal mechanic and a scoring distinction between blind approval and approval after inspection.
+- Decisions applied: `docs/product_maturity_task_graph.md#t88-inspect-diff-and-hidden-risk-reveal`, `docs/ship_it_yn_frontend_architecture.md#ux-layout`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; `.venv/bin/python -m pytest tests/test_permission_game_scoring.py tests/test_permission_game_frontend_files.py -q` passed with 10 tests.
+- Follow-ups: `T89: Risk Meters And Audit Trail`.
+- Notes for next agent: `score_game_decision(...)` now accepts optional `inspected_artifact_ids` and records `audit_trail_quality` without changing existing outcome scoring.
+
 ### 2026-06-01 - T87 - Scenario Card And Decision Controls
 
 - Scope: `frontend/permission_game/src/components/ScenarioCard.tsx`, `frontend/permission_game/src/components/DecisionButtons.tsx`, `frontend/permission_game/src/components/ScenarioCard.test.tsx`, `frontend/permission_game/src/components/DecisionButtons.test.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/data/shipItYnScenarios.json`, `frontend/permission_game/src/game/scenarioTypes.ts`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
