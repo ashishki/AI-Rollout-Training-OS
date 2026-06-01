@@ -21,3 +21,92 @@ textarea,
 select {
   font: inherit;
 }
+
+.terminal-region {
+  min-height: 18rem;
+  border: 1px solid #263241;
+  border-radius: 8px;
+  background: #101820;
+  padding: 1rem;
+}
+
+.terminal-region-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 1.5rem;
+  color: #9aa7b5;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.terminal-log-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.5rem;
+  border: 1px solid #263241;
+  border-radius: 6px;
+  background: #0b0f14;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.terminal-log-index {
+  display: inline-flex;
+  width: 2rem;
+  flex: 0 0 2rem;
+  align-items: center;
+  justify-content: center;
+  color: #5aa7ff;
+  font-variant-numeric: tabular-nums;
+}
+
+.terminal-action-button {
+  min-height: 3rem;
+  border: 1px solid #2f5f8d;
+  border-radius: 6px;
+  background: #0b2236;
+  padding: 0.75rem 1rem;
+  color: #e6edf3;
+  font-weight: 700;
+  text-align: left;
+}
+
+.terminal-action-button:focus-visible {
+  outline: 2px solid #5aa7ff;
+  outline-offset: 2px;
+}
+
+.terminal-meter-track {
+  position: relative;
+  height: 0.65rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #0b0f14;
+}
+
+.terminal-meter-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.terminal-meter-fill-safe {
+  background: #45c486;
+}
+
+.terminal-meter-fill-risk {
+  background: #f06a6a;
+}
+
+.terminal-meter-fill-action {
+  background: #5aa7ff;
+}
+
+.terminal-meter-fill-warn {
+  background: #e8b84a;
+}

@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - T86 - Terminal Layout Shell
+
+- Scope: `frontend/permission_game/src/App.tsx`, `frontend/permission_game/src/App.test.tsx`, `frontend/permission_game/src/components/`, `frontend/permission_game/src/styles.css`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: Phase 19 needed stable desktop/mobile terminal regions before adding scenario-specific cards and decision behavior.
+- Decisions applied: `docs/product_maturity_task_graph.md#t86-terminal-layout-shell`, `docs/ship_it_yn_frontend_architecture.md#ux-layout`
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; `.venv/bin/python -m pytest tests/test_permission_game_frontend_files.py -q` passed with 3 tests.
+- Follow-ups: `T87: Scenario Card And Decision Controls`.
+- Notes for next agent: The shell uses fixed semantic regions and placeholder controls only. T87 should replace the placeholder request/control content with scenario card and real decision-control components.
+
 ### 2026-06-01 - T85 - React/Vite Permission Game Scaffold
 
 - Scope: `.gitignore`, `frontend/permission_game/`, `tests/test_permission_game_frontend_files.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

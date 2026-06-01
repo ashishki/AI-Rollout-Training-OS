@@ -24,6 +24,9 @@ def test_permission_game_frontend_scaffold_exists() -> None:
         "src/main.tsx",
         "src/App.tsx",
         "src/App.test.tsx",
+        "src/components/TerminalLayout.tsx",
+        "src/components/TerminalLayout.test.tsx",
+        "src/components/TerminalLog.tsx",
         "src/styles.css",
         "src/game/scenarioTypes.ts",
         "src/data/shipItYnScenarios.json",
@@ -42,3 +45,22 @@ def test_permission_game_imports_typed_scenario_data() -> None:
     assert len(scenarios) == 7
     assert [scenario["level"] for scenario in scenarios] == list(range(1, 8))
     assert scenarios[0]["title"] == "Tiny Cleanup"
+
+
+def test_permission_game_shell_blocks_lms_chrome() -> None:
+    source_text = "\n".join(
+        path.read_text()
+        for path in sorted((FRONTEND_DIR / "src").glob("**/*"))
+        if path.is_file() and path.suffix in {".ts", ".tsx", ".css"}
+    ).lower()
+
+    for forbidden in [
+        "lms",
+        "course",
+        "cohort",
+        "learner dashboard",
+        "operator dashboard",
+        "manager dashboard",
+        "marketing hero",
+    ]:
+        assert forbidden not in source_text
