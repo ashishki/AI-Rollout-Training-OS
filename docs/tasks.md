@@ -11,12 +11,12 @@ This file remains the canonical MVP implementation graph for T01-T24. Current
 active work has moved to the Post-MVP production maturity graph in
 `docs/product_maturity_task_graph.md`.
 
-Active phase: Phase 18 - Scenario And Scoring Core.
-Active next task: Phase 18 Deep Review before `T85: React/Vite Permission Game Scaffold`.
+Active phase: Phase 19 - React/Vite Playable Game.
+Active next task: `T85: React/Vite Permission Game Scaffold`.
 Phase 16 is complete through `T74: Permission Simulator Readiness Review`.
 Phase 17 planning artifacts are complete through `T78: Ship It? Y/N AI
-Development Plan`. Phase 18 implementation is complete through
-`T84: Scenario Safety Guard Tests`.
+Development Plan`. Phase 18 implementation and review are complete through
+`T84: Scenario Safety Guard Tests` and `PHASE18-SCENARIO-SCORING`.
 
 The active v1 product direction is the Agent Permission Training Simulator:
 visual permission scenarios that teach allowed, needs approval, blocked, and

@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - Phase 18 Review - Scenario And Scoring Core
+
+- Scope: `docs/audit/PHASE18_SCENARIO_SCORING_CORE_REVIEW.md`, `docs/audit/AUDIT_INDEX.md`, `tests/test_ship_it_yn_phase18_review.py`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`
+- Why this work happened: The user requested deep review between phases before moving from the Ship It? Y/N scenario/scoring core into the React/Vite playable game.
+- Decisions applied: `docs/product_maturity_task_graph.md#phase-18---scenario-and-scoring-core`, `docs/entropy_core_gensyn_integration.md`
+- Evidence collected: Phase 18 review records PASS for T79-T84 and cites scenario schema, seven starter levels, deterministic scoring, public-safe session state, scenario safety guards, and existing simulator proof receipt wiring.
+- Follow-ups: Start `T85: React/Vite Permission Game Scaffold`.
+- Notes for next agent: Do not reimplement `build_permission_decision_receipt(...)`. Reuse the existing receipt builder when Ship It? Y/N has a result route or final report loop.
+
 ### 2026-06-01 - T84 - Scenario Safety Guard Tests
 
 - Scope: `tests/test_permission_game_safety.py`, `ai_rollout_os/permissions/game_scenarios/06-eval-is-red-demo-is-soon.json`, `docs/CODEX_PROMPT.md`, `docs/tasks.md`, `docs/IMPLEMENTATION_JOURNAL.md`, `docs/EVIDENCE_INDEX.md`

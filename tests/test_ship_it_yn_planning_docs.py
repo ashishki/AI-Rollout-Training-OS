@@ -62,5 +62,6 @@ def test_task_graph_sets_ship_it_yn_next_implementation_work() -> None:
         assert f"## {task}:" in graph
 
     assert "Phase 17 - Ship It? Y/N Product And Architecture Blueprint" in graph
-    assert "Phase 18 - Scenario And Scoring Core" in state
-    assert "Active next task: Phase 18 Deep Review before T85" in state
+    assert "Current phase: Phase 19 - React/Vite Playable Game" in state
+    assert "PHASE18-SCENARIO-SCORING" in state
+    assert "Active next task: T85: React/Vite Permission Game Scaffold" in state

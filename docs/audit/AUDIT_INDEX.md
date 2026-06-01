@@ -8,6 +8,7 @@ Append-only. One row per review cycle.
 
 | Cycle | Phase | Date | Scope | Stop-Ship | P0 | P1 | P2 |
 |-------|-------|------|-------|-----------|----|----|----|
+| PHASE18-SCENARIO-SCORING | Phase 18 | 2026-06-01 | Ship It? Y/N scenario and scoring core review after T79-T84 | No | 0 | 0 | 1 |
 | PERMISSION-SIMULATOR-READINESS | Phase 16 | 2026-05-29 | Permission simulator readiness review after T69-T73 | No | 0 | 0 | 1 |
 | SOLO-ROLLOUT-READINESS | Phase 15 | 2026-05-23 | Solo showcase readiness review after T62-T67 | No | 0 | 0 | 1 |
 | PRODUCTION-READINESS | Phase 14 | 2026-05-21 | Final production readiness review after T59-T60 | Yes | 0 | 0 | 3 |
@@ -30,6 +31,7 @@ Append-only. One row per review cycle.
 
 | Cycle | File | Phase | Health |
 |-------|------|-------|--------|
+| PHASE18-SCENARIO-SCORING | `docs/audit/PHASE18_SCENARIO_SCORING_CORE_REVIEW.md` | Phase 18 | PASS |
 | PERMISSION-SIMULATOR-READINESS | `docs/audit/PERMISSION_SIMULATOR_READINESS_REVIEW.md` | Phase 16 | SHOW_DEMO |
 | SOLO-ROLLOUT-READINESS | `docs/audit/SOLO_ROLLOUT_READINESS_REVIEW.md` | Phase 15 | READY_FOR_INTERNAL_HANDOFF |
 | PRODUCTION-READINESS | `docs/audit/PRODUCTION_READINESS_AUDIT.md` | Phase 14 | NO-GO |
