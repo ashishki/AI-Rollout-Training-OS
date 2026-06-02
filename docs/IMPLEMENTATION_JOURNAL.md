@@ -23,6 +23,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 
 ## Entries
 
+### 2026-06-01 - Ship It? Y/N Visual Energy Pass
+
+- Scope: `frontend/permission_game/src/components/AgentPulse.tsx`, `frontend/permission_game/src/components/MissionTrack.tsx`, `frontend/permission_game/src/components/RoleSelector.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/styles.css`, component/browser tests, README, and `docs/audit/artifacts/ship_it_yn_*.png`
+- Why this work happened: Russian community testing needs the game to feel less static and more playful without weakening the existing permission-decision loop.
+- Decisions applied: add visual energy through local React/CSS/SVG assets only; keep scoring, scenario IDs, analytics boundaries, and no-tracking behavior unchanged.
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; desktop/mobile screenshots were regenerated from the local public route.
+- Follow-ups: Run manual Russian community demos and watch whether players understand the mission map and agent pulse without explanation.
+- Notes for next agent: The visual pass intentionally avoids external assets and third-party design runtime dependencies. `MissionTrack` and `AgentPulse` are decorative/feedback surfaces around the existing loop.
+
 ### 2026-06-01 - Russian Role-Based UX Polish
 
 - Scope: `frontend/permission_game/src/App.tsx`, `frontend/permission_game/src/components/RoleSelector.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/game/rolePacks.ts`, localized game components/tests, browser tests, README, and `docs/audit/artifacts/ship_it_yn_*.png`

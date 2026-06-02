@@ -54,6 +54,9 @@ def test_ship_it_yn_controls_do_not_shift_layout() -> None:
     assert '.terminal-action-button[aria-disabled="true"]' in styles
     assert "outline-offset: 2px;" in styles
     assert "align-items: stretch;" in styles
+    assert ".mission-track {" in styles
+    assert ".agent-pulse {" in styles
+    assert ".role-card-visual {" in styles
 
 
 def _ensure_frontend_build() -> None:

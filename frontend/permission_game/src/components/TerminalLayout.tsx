@@ -6,6 +6,8 @@ import { ConsequencePanel } from "./ConsequencePanel";
 import { ResultScreen } from "./ResultScreen";
 import { RiskMeters, type RiskMeterValues } from "./RiskMeters";
 import { ScenarioCard } from "./ScenarioCard";
+import { AgentPulse } from "./AgentPulse";
+import { MissionTrack } from "./MissionTrack";
 import { useEffect, useState } from "react";
 import {
   recordAnalyticsDecision,
@@ -176,18 +178,27 @@ export function TerminalLayout({
   }
 
   return (
-    <main className="min-h-screen bg-terminal-bg text-terminal-text">
+    <main className="permission-game-shell min-h-screen bg-terminal-bg text-terminal-text">
       <div
         aria-label="Ship It? Y/N игровое поле"
         className="mx-auto grid min-h-screen max-w-7xl gap-4 px-4 py-4 md:px-6 lg:grid-cols-[minmax(15rem,0.8fr)_minmax(22rem,1.4fr)_minmax(16rem,0.9fr)]"
       >
-        <TerminalLog scenarios={scenarios} />
+        <TerminalLog
+          activeIndex={activeIndex}
+          completedCount={completedDecisions.length}
+          scenarios={scenarios}
+        />
 
         <section aria-label="Активный сценарий" className="terminal-region">
           <div className="game-mode-strip">
             <span>{role.shortLabel}</span>
             <p>{role.promise}</p>
           </div>
+          <MissionTrack
+            activeIndex={activeIndex}
+            completedCount={completedDecisions.length}
+            scenarios={scenarios}
+          />
           <ScenarioCard scenario={activeScenario} totalLevels={scenarios.length} />
           <DecisionButtons
             choices={activeScenario.choices}
@@ -228,6 +239,14 @@ export function TerminalLayout({
               </button>
             </div>
           </div>
+          <AgentPulse
+            inspectedArtifactCount={inspectedArtifactIds.length}
+            riskCategory={activeScenario.riskCategory}
+            role={role}
+            selectedDecisionLabel={
+              selectedDecision ? CHOICE_LABELS[selectedDecision] : null
+            }
+          />
           <RiskMeters values={meterValues} />
           <AuditTrail
             auditTrailQuality={auditTrailQuality}

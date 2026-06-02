@@ -19,6 +19,8 @@ describe("TerminalLayout", () => {
     expect(screen.getByLabelText("История решений")).toBeVisible();
     expect(screen.getByLabelText("Активный сценарий")).toBeVisible();
     expect(screen.getByLabelText("Риск-метры и аудит")).toBeVisible();
+    expect(screen.getByLabelText("Карта миссий")).toBeVisible();
+    expect(screen.getByLabelText("Пульс агента")).toBeVisible();
     expect(screen.getByRole("button", { name: /Проверить/ })).toBeVisible();
     expect(screen.getByRole("button", { name: /Сузить область/ })).toBeVisible();
     expect(screen.getByRole("button", { name: /Эскалировать/ })).toBeVisible();

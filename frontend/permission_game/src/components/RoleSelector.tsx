@@ -25,6 +25,11 @@ export function RoleSelector({ roles, onSelectRole }: RoleSelectorProps) {
               onClick={() => onSelectRole(role.id)}
               type="button"
             >
+              <span className="role-card-visual" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
               <span>{role.shortLabel}</span>
               <strong>{role.label}</strong>
               <p>{role.description}</p>
