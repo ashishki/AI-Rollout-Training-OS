@@ -76,14 +76,14 @@ html:focus-within {
 .role-selector {
   display: grid;
   min-height: calc(100vh - 2rem);
-  max-width: 72rem;
+  max-width: 78rem;
   margin: 0 auto;
   align-content: center;
-  gap: 2rem;
+  gap: 1.25rem 2rem;
 }
 
 .role-selector-copy {
-  max-width: 48rem;
+  max-width: 50rem;
 }
 
 .role-kicker {
@@ -95,9 +95,12 @@ html:focus-within {
 
 .role-selector h1 {
   margin: 0.75rem 0 0;
-  max-width: 44rem;
-  font-size: 4.25rem;
-  line-height: 1;
+  max-width: 11ch;
+  color: #f7f3ea;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 5.35rem;
+  font-weight: 500;
+  line-height: 0.9;
 }
 
 .role-selector p {
@@ -112,9 +115,96 @@ html:focus-within {
 }
 
 @media (min-width: 760px) {
+  .role-selector {
+    grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 0.82fr);
+  }
+
+  .role-card-grid {
+    grid-column: 1 / -1;
+  }
+
   .role-card-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.role-stage {
+  position: relative;
+  display: none;
+  min-height: 23rem;
+  overflow: hidden;
+}
+
+@media (min-width: 760px) {
+  .role-stage {
+    display: block;
+  }
+}
+
+.role-stage-tile {
+  position: absolute;
+  width: 8.8rem;
+  aspect-ratio: 1;
+  border: 1px solid #2f5f8d;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgb(69 196 134 / 0.88), rgb(90 167 255 / 0.86)),
+    repeating-linear-gradient(
+      0deg,
+      rgb(11 15 20 / 0.28) 0,
+      rgb(11 15 20 / 0.28) 1px,
+      transparent 1px,
+      transparent 0.75rem
+    );
+  box-shadow: 0 22px 48px rgb(0 0 0 / 0.36);
+}
+
+.tile-a {
+  top: 1.5rem;
+  left: 0.5rem;
+}
+
+.tile-b {
+  top: 5.8rem;
+  right: 1rem;
+  background:
+    linear-gradient(135deg, rgb(232 184 74 / 0.88), rgb(90 167 255 / 0.8)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(11 15 20 / 0.24) 0,
+      rgb(11 15 20 / 0.24) 1px,
+      transparent 1px,
+      transparent 0.75rem
+    );
+}
+
+.tile-c {
+  top: 11.4rem;
+  left: 5.8rem;
+  width: 10.8rem;
+}
+
+.tile-d {
+  top: 15.5rem;
+  right: 6.5rem;
+  width: 6.5rem;
+  background: #f7f3ea;
+}
+
+.tile-e {
+  top: 18.2rem;
+  left: 1.2rem;
+  width: 5.6rem;
+  background: #111820;
+}
+
+.role-stage-line {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.2rem;
+  width: 11rem;
+  height: 1px;
+  background: #f7f3ea;
 }
 
 .role-card {
@@ -131,6 +221,14 @@ html:focus-within {
     transform 160ms ease-out,
     border-color 160ms ease-out,
     background-color 160ms ease-out;
+}
+
+.role-card-index {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #5aa7ff;
+  opacity: 0.7;
 }
 
 .role-card::after {
@@ -151,6 +249,40 @@ html:focus-within {
   border-color: #45c486;
   background: #122231;
   transform: translateY(-0.15rem);
+}
+
+.game-editorial-header {
+  display: grid;
+  gap: 0.65rem;
+  min-height: 11rem;
+  align-content: end;
+  border-bottom: 1px solid #263241;
+  padding: 0.5rem 0 1.25rem;
+}
+
+.game-editorial-header span {
+  color: #45c486;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.game-editorial-header h1 {
+  max-width: 16ch;
+  margin: 0;
+  color: #f7f3ea;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.9rem;
+  font-weight: 500;
+  line-height: 0.92;
+}
+
+.game-editorial-header p {
+  max-width: 56rem;
+  margin: 0;
+  color: #b8c4d2;
+  font-size: 1.02rem;
+  line-height: 1.55;
 }
 
 .role-card-visual {
@@ -985,6 +1117,15 @@ textarea:focus-visible,
     font-size: 2.35rem;
   }
 
+  .game-editorial-header {
+    min-height: 8rem;
+  }
+
+  .game-editorial-header h1 {
+    font-size: 2.15rem;
+    line-height: 1;
+  }
+
   .terminal-region {
     min-height: auto;
     padding: 0.85rem;
@@ -1007,5 +1148,15 @@ textarea:focus-visible,
   .badge-toast {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+  .role-selector h1 {
+    font-size: 4.2rem;
+  }
+
+  .game-editorial-header h1 {
+    font-size: 3rem;
   }
 }

@@ -57,6 +57,8 @@ def test_ship_it_yn_controls_do_not_shift_layout() -> None:
     assert ".mission-track {" in styles
     assert ".agent-pulse {" in styles
     assert ".role-card-visual {" in styles
+    assert ".role-stage {" in styles
+    assert ".game-editorial-header {" in styles
 
 
 def _ensure_frontend_build() -> None:

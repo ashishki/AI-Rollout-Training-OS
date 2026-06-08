@@ -16,50 +16,52 @@ def test_public_ship_it_yn_full_run() -> None:
     app_port = _free_port()
     debug_port = _free_port()
     server = _start_server(app_port)
-    browser = _start_browser(app_port, debug_port)
     try:
         _wait_for_url(f"http://127.0.0.1:{app_port}/health")
-        client = _DevToolsClient.from_debug_port(
-            debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
-        )
-        _wait_for_text(client, "Тренажёр разрешений")
-        _click_text(client, "Разработчик")
-        _wait_for_text(client, "Маленькая уборка")
+        browser = _start_browser(app_port, debug_port)
+        try:
+            client = _DevToolsClient.from_debug_port(
+                debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
+            )
+            _wait_for_text(client, "Тренажёр разрешений")
+            _click_text(client, "Разработчик")
+            _wait_for_text(client, "Маленькая уборка")
 
-        _click_text(client, "Проверить")
-        _click_text(client, "Сузить область")
-        _click_text(client, "Следующий уровень")
-        _click_text(client, "Запросить доказательства")
-        _click_text(client, "Следующий уровень")
-        _click_text(client, "Запретить")
-        _click_text(client, "Следующий уровень")
-        _click_text(client, "Эскалировать")
-        _click_text(client, "Следующий уровень")
-        _click_text(client, "Песочница")
-        _click_text(client, "Следующий уровень")
-        _click_text(client, "Запросить доказательства")
-        _click_text(client, "Следующий уровень")
-        _click_text(client, "Песочница")
-        _click_text(client, "Показать итог")
+            _click_text(client, "Проверить")
+            _click_text(client, "Сузить область")
+            _click_text(client, "Следующий уровень")
+            _click_text(client, "Запросить доказательства")
+            _click_text(client, "Следующий уровень")
+            _click_text(client, "Запретить")
+            _click_text(client, "Следующий уровень")
+            _click_text(client, "Эскалировать")
+            _click_text(client, "Следующий уровень")
+            _click_text(client, "Песочница")
+            _click_text(client, "Следующий уровень")
+            _click_text(client, "Запросить доказательства")
+            _click_text(client, "Следующий уровень")
+            _click_text(client, "Песочница")
+            _click_text(client, "Показать итог")
 
-        body_text = (
-            client.evaluate("document.body.innerText")
-            .get("result", {})
-            .get("value", "")
-        )
-        share_selector = 'textarea[aria-label="Текст для отправки"]'
-        share_text = client.evaluate(
-            f"document.querySelector({json.dumps(share_selector)}).value"
-        )["result"]["value"]
-        assert "Разработчик: демо завершено" in body_text
-        assert "ИТОГ" in body_text
-        assert "84/100" in body_text
-        assert "Скопировать итог" in body_text
-        assert "Ship It? Y/N счёт:" in share_text
+            body_text = (
+                client.evaluate("document.body.innerText")
+                .get("result", {})
+                .get("value", "")
+            )
+            share_selector = 'textarea[aria-label="Текст для отправки"]'
+            share_text = client.evaluate(
+                f"document.querySelector({json.dumps(share_selector)}).value"
+            )["result"]["value"]
+            assert "Разработчик: демо завершено" in body_text
+            assert "ИТОГ" in body_text
+            assert "84/100" in body_text
+            assert "Скопировать итог" in body_text
+            assert "Ship It? Y/N счёт:" in share_text
+        finally:
+            browser.terminate()
+            browser.wait(timeout=10)
     finally:
-        browser.terminate()
         server.terminate()
-        browser.wait(timeout=10)
         server.wait(timeout=10)
 
 
@@ -68,32 +70,34 @@ def test_public_ship_it_yn_has_no_external_execution() -> None:
     app_port = _free_port()
     debug_port = _free_port()
     server = _start_server(app_port)
-    browser = _start_browser(app_port, debug_port)
     try:
         _wait_for_url(f"http://127.0.0.1:{app_port}/health")
-        client = _DevToolsClient.from_debug_port(
-            debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
-        )
-        _wait_for_text(client, "Тренажёр разрешений")
-        _click_text(client, "Менеджер")
-        _wait_for_text(client, "Все тикеты перед встречей")
-        resources = client.evaluate(
-            "performance.getEntriesByType('resource').map((entry) => entry.name)"
-        )["result"]["value"]
-        body_text = client.evaluate("document.body.innerText")["result"]["value"]
+        browser = _start_browser(app_port, debug_port)
+        try:
+            client = _DevToolsClient.from_debug_port(
+                debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
+            )
+            _wait_for_text(client, "Тренажёр разрешений")
+            _click_text(client, "Менеджер")
+            _wait_for_text(client, "Все тикеты перед встречей")
+            resources = client.evaluate(
+                "performance.getEntriesByType('resource').map((entry) => entry.name)"
+            )["result"]["value"]
+            body_text = client.evaluate("document.body.innerText")["result"]["value"]
 
-        assert resources
-        assert all(
-            resource.startswith(f"http://127.0.0.1:{app_port}/")
-            for resource in resources
-        ), resources
-        assert "Bearer " not in body_text
-        assert "file://" not in body_text
-        assert "localhost:" not in body_text
+            assert resources
+            assert all(
+                resource.startswith(f"http://127.0.0.1:{app_port}/")
+                for resource in resources
+            ), resources
+            assert "Bearer " not in body_text
+            assert "file://" not in body_text
+            assert "localhost:" not in body_text
+        finally:
+            browser.terminate()
+            browser.wait(timeout=10)
     finally:
-        browser.terminate()
         server.terminate()
-        browser.wait(timeout=10)
         server.wait(timeout=10)
 
 
@@ -102,44 +106,52 @@ def test_public_ship_it_yn_has_no_tracking_network_calls() -> None:
     app_port = _free_port()
     debug_port = _free_port()
     server = _start_server(app_port)
-    browser = _start_browser(app_port, debug_port)
     try:
         _wait_for_url(f"http://127.0.0.1:{app_port}/health")
-        client = _DevToolsClient.from_debug_port(
-            debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
-        )
-        _wait_for_text(client, "Тренажёр разрешений")
-        _click_text(client, "Менеджер")
-        _wait_for_text(client, "Все тикеты перед встречей")
-        resources = client.evaluate(
-            "performance.getEntriesByType('resource').map((entry) => entry.name)"
-        )["result"]["value"]
-        analytics_snapshot = client.evaluate(
-            "localStorage.getItem('ship-it-yn-analytics-v1')"
-        )["result"]["value"]
+        browser = _start_browser(app_port, debug_port)
+        try:
+            client = _DevToolsClient.from_debug_port(
+                debug_port, f"http://127.0.0.1:{app_port}/demo/ship-it-yn"
+            )
+            _wait_for_text(client, "Тренажёр разрешений")
+            _click_text(client, "Менеджер")
+            _wait_for_text(client, "Все тикеты перед встречей")
+            resources = client.evaluate(
+                "performance.getEntriesByType('resource').map((entry) => entry.name)"
+            )["result"]["value"]
+            analytics_snapshot = client.evaluate(
+                "localStorage.getItem('ship-it-yn-analytics-v1')"
+            )["result"]["value"]
 
-        forbidden_fragments = [
-            "/analytics",
-            "/track",
-            "/collect",
-            "segment",
-            "amplitude",
-            "posthog",
-            "google-analytics",
-        ]
-        assert all(
-            fragment not in resource
-            for resource in resources
-            for fragment in forbidden_fragments
-        )
-        assert analytics_snapshot
-        assert "sessionsStarted" in analytics_snapshot
-        for forbidden in ["actor_id", "workspace_id", "learner", "email", "customer"]:
-            assert forbidden not in analytics_snapshot
+            forbidden_fragments = [
+                "/analytics",
+                "/track",
+                "/collect",
+                "segment",
+                "amplitude",
+                "posthog",
+                "google-analytics",
+            ]
+            assert all(
+                fragment not in resource
+                for resource in resources
+                for fragment in forbidden_fragments
+            )
+            assert analytics_snapshot
+            assert "sessionsStarted" in analytics_snapshot
+            for forbidden in [
+                "actor_id",
+                "workspace_id",
+                "learner",
+                "email",
+                "customer",
+            ]:
+                assert forbidden not in analytics_snapshot
+        finally:
+            browser.terminate()
+            browser.wait(timeout=10)
     finally:
-        browser.terminate()
         server.terminate()
-        browser.wait(timeout=10)
         server.wait(timeout=10)
 
 
@@ -159,7 +171,7 @@ def _click_text(client: "_DevToolsClient", label: str) -> None:
 
 def _wait_for_text(client: "_DevToolsClient", text: str) -> None:
     deadline = time.time() + 15
-    expression = f"document.body.innerText.includes({json.dumps(text)})"
+    expression = f"(document.body.textContent || '').includes({json.dumps(text)})"
     while time.time() < deadline:
         if client.evaluate(expression)["result"].get("value") is True:
             return

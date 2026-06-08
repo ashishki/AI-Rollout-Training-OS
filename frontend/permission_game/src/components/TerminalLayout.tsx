@@ -183,6 +183,12 @@ export function TerminalLayout({
         aria-label="Ship It? Y/N игровое поле"
         className="mx-auto grid min-h-screen max-w-7xl gap-4 px-4 py-4 md:px-6 lg:grid-cols-[minmax(15rem,0.8fr)_minmax(22rem,1.4fr)_minmax(16rem,0.9fr)]"
       >
+        <header className="game-editorial-header lg:col-span-3">
+          <span>{role.label}</span>
+          <h1>{activeScenario.title}</h1>
+          <p>{activeScenario.agentMessage}</p>
+        </header>
+
         <TerminalLog
           activeIndex={activeIndex}
           completedCount={completedDecisions.length}

@@ -117,6 +117,7 @@ the simulator works as a focused demo/workshop experience.
 - `T105: Ship It? Y/N Buyer Demo Readiness Review` completed on 2026-06-01.
 - Russian role-based UX polish completed on 2026-06-01.
 - Ship It? Y/N visual energy pass completed on 2026-06-01.
+- Ship It? Y/N editorial visual pass completed on 2026-06-08.
 
 ## Next Task
 
@@ -187,6 +188,7 @@ Active next task: Manual buyer demos (human-owned evidence collection).
 | 2026-06-01 | T105: Ship It? Y/N Buyer Demo Readiness Review | Recorded SHOW_BUYER_DEMOS decision citing game route, scenario coverage, scoring, browser evidence, facilitator pack, safe team summary, buyer feedback template, and claim-boundary review while blocking PMF and paid-conversion claims. Next loop is human-owned manual buyer demo evidence collection. |
 | 2026-06-01 | Russian Role-Based UX Polish | Added Russian-first role selection for Manager, Team Lead/Facilitator, and Developer modes, manager-friendly non-code scenarios, localized controls/results, refreshed visual styling, and updated desktop/mobile screenshots. Next loop remains human-owned manual buyer demo evidence collection. |
 | 2026-06-01 | Ship It? Y/N Visual Energy Pass | Added local SVG/CSS agent pulse, mission map, role-card signals, animated feedback styling, refreshed screenshots, and targeted tests while preserving deterministic local gameplay and no-tracking boundaries. Next loop remains human-owned manual buyer/community demo evidence collection. |
+| 2026-06-08 | Ship It? Y/N Editorial Visual Pass | Adapted UNKNW-style editorial composition with larger first-screen typography, local motion-stage tiles, and an editorial in-game header while avoiding external media/runtime dependencies and preserving deterministic gameplay, scoring, analytics, and no-tracking boundaries. Next loop remains human-owned manual buyer/community demo evidence collection. |
 
 ## Rules
 

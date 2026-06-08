@@ -1,7 +1,7 @@
 # Implementation Journal - AI Rollout Training OS
 
 Version: 1.0
-Last updated: 2026-06-01
+Last updated: 2026-06-08
 Status: append-only
 
 This file is a retrieval surface and handoff log. Canonical docs remain the authority.
@@ -22,6 +22,15 @@ This file is a retrieval surface and handoff log. Canonical docs remain the auth
 ```
 
 ## Entries
+
+### 2026-06-08 - Ship It? Y/N Editorial Visual Pass
+
+- Scope: `frontend/permission_game/src/components/RoleSelector.tsx`, `frontend/permission_game/src/components/TerminalLayout.tsx`, `frontend/permission_game/src/styles.css`, component/browser tests, README, and `docs/audit/artifacts/ship_it_yn_*.png`
+- Why this work happened: UNKNW creative-retainer work was reviewed as a useful reference for a more editorial, AI-native, motion-forward visual language.
+- Decisions applied: adapt the reference direction without copying it: larger serif first-screen typography, local CSS motion-stage tiles, and an editorial game header; keep all gameplay, scoring, analytics, scenarios, and no-tracking boundaries unchanged.
+- Evidence collected: `npm run typecheck`, `npm run lint`, `npm run test`, and `npm run build` passed in `frontend/permission_game`; desktop/mobile screenshots were regenerated from the local public route.
+- Follow-ups: Run manual Russian community demos and watch whether the editorial first screen improves motivation without hurting comprehension.
+- Notes for next agent: This pass intentionally avoids external media, embedded iframes, third-party design runtime dependencies, and copying UNKNW assets. The reference influenced composition only.
 
 ### 2026-06-01 - Ship It? Y/N Visual Energy Pass
 

@@ -10,21 +10,23 @@ export function RoleSelector({ roles, onSelectRole }: RoleSelectorProps) {
     <main className="role-selector-shell">
       <section aria-label="Выбор роли" className="role-selector">
         <div className="role-selector-copy">
-          <span className="role-kicker">Ship It? Y/N</span>
-          <h1>Тренажёр разрешений для AI-агентов</h1>
+          <span className="role-kicker">Тренажёр разрешений / Ship It? Y/N</span>
+          <h1>AI-агент просит ход. Ты решаешь границу.</h1>
           <p>
-            Выберите роль и попробуйте решить, когда агенту можно дать ход, а
-            когда нужна узкая область, песочница, доказательства или человек-владелец риска.
+            Три режима для русскоязычной команды: проще для менеджера, плотнее
+            для тимлида, глубже для разработчика.
           </p>
         </div>
+        <RoleStage />
         <div className="role-card-grid">
-          {roles.map((role) => (
+          {roles.map((role, index) => (
             <button
               className="role-card"
               key={role.id}
               onClick={() => onSelectRole(role.id)}
               type="button"
             >
+              <span className="role-card-index">0{index + 1}</span>
               <span className="role-card-visual" aria-hidden="true">
                 <i />
                 <i />
@@ -39,5 +41,18 @@ export function RoleSelector({ roles, onSelectRole }: RoleSelectorProps) {
         </div>
       </section>
     </main>
+  );
+}
+
+function RoleStage() {
+  return (
+    <div className="role-stage" aria-hidden="true">
+      <div className="role-stage-tile tile-a" />
+      <div className="role-stage-tile tile-b" />
+      <div className="role-stage-tile tile-c" />
+      <div className="role-stage-tile tile-d" />
+      <div className="role-stage-tile tile-e" />
+      <div className="role-stage-line" />
+    </div>
   );
 }

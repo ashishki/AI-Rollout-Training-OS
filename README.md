@@ -10,8 +10,9 @@ Default player experience is now Russian-first with role selection:
 `Менеджер`, `Тимлид / фасилитатор`, and `Разработчик`. Manager mode uses
 less technical scenarios for buyer/community testing, while Developer mode keeps
 the deeper diff/CI/eval/sandbox flow.
-The current visual pass adds a mission map, animated agent pulse, and clearer
-role-card signals while keeping all demo logic local and deterministic.
+The current visual pass adds an editorial first screen, local motion-stage
+tiles, a mission map, animated agent pulse, and clearer role-card signals while
+keeping all demo logic local and deterministic.
 
 Primary CTA: build the React/Vite game, start FastAPI, and open `http://127.0.0.1:8000/demo/ship-it-yn`.
 
