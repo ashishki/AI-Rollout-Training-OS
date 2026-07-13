@@ -2,18 +2,34 @@ from pathlib import Path
 
 from ai_rollout_os.auth.permissions import PERMISSIONS, ROUTE_PERMISSIONS
 from ai_rollout_os.core.config import get_settings
-from ai_rollout_os.main import create_app
+from ai_rollout_os.main import APPLICATION_ROUTERS, create_app
 from fastapi.routing import APIRoute
 
 PROTECTED_METHODS = {"DELETE", "GET", "PATCH", "POST", "PUT"}
 
 
+def configured_routes() -> list[APIRoute]:
+    return [
+        route
+        for router in APPLICATION_ROUTERS
+        for route in router.routes
+        if isinstance(route, APIRoute)
+    ]
+
+
+def openapi_operations() -> set[tuple[str, str]]:
+    schema = create_app(settings=get_settings({"APP_ENV": "test"})).openapi()
+    return {
+        (method.upper(), path)
+        for path, path_item in schema["paths"].items()
+        for method in path_item
+        if method.upper() in PROTECTED_METHODS
+    }
+
+
 def test_every_route_has_permission() -> None:
-    app = create_app(settings=get_settings({"APP_ENV": "test"}))
     route_permissions = {}
-    for route in app.routes:
-        if not isinstance(route, APIRoute) or route.path == "/health":
-            continue
+    for route in configured_routes():
         if getattr(route.endpoint, "public_design_decision", None):
             continue
         for method in sorted(route.methods & PROTECTED_METHODS):
@@ -32,13 +48,24 @@ def test_every_route_has_permission() -> None:
         assert route_permissions[route_key] == [expected_permission]
 
 
+def test_configured_routes_are_registered_in_openapi() -> None:
+    expected_operations = set(ROUTE_PERMISSIONS)
+    expected_operations.update(
+        (method, route.path.replace(":path}", "}"))
+        for route in configured_routes()
+        if getattr(route.endpoint, "public_design_decision", None)
+        for method in route.methods & PROTECTED_METHODS
+    )
+    expected_operations.add(("GET", "/health"))
+
+    assert openapi_operations() == expected_operations
+
+
 def test_public_routes_cite_design_decision() -> None:
-    app = create_app(settings=get_settings({"APP_ENV": "test"}))
     public_routes = {
         route.path: getattr(route.endpoint, "public_design_decision", None)
-        for route in app.routes
-        if isinstance(route, APIRoute)
-        and getattr(route.endpoint, "public_design_decision", None)
+        for route in configured_routes()
+        if getattr(route.endpoint, "public_design_decision", None)
     }
 
     assert public_routes == {
