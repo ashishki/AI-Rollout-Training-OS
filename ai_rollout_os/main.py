@@ -13,6 +13,18 @@ from ai_rollout_os.training.cohort_routes import router as cohort_router
 from ai_rollout_os.training.guardrail_routes import router as guardrail_router
 from ai_rollout_os.training.routes import router as training_router
 
+APPLICATION_ROUTERS = (
+    cohort_router,
+    document_router,
+    guardrail_router,
+    report_router,
+    reporting_router,
+    review_router,
+    submissions_router,
+    training_router,
+    frontend_router,
+)
+
 
 def create_app(
     settings: Settings | None = None,
@@ -31,15 +43,8 @@ def create_app(
     def health() -> dict[str, str]:
         return {"status": "ok", "service": app_settings.service_name}
 
-    app.include_router(cohort_router)
-    app.include_router(document_router)
-    app.include_router(guardrail_router)
-    app.include_router(report_router)
-    app.include_router(reporting_router)
-    app.include_router(review_router)
-    app.include_router(submissions_router)
-    app.include_router(training_router)
-    app.include_router(frontend_router)
+    for router in APPLICATION_ROUTERS:
+        app.include_router(router)
     return app
 
 
