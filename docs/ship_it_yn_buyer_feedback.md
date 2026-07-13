@@ -9,6 +9,8 @@ proof of PMF, paid conversion, compliance certification, or production safety.
 
 Related artifacts:
 
+- Moderated-session protocol and rubric: `docs/MODERATED_SESSION_PROTOCOL.md`
+- Machine-readable session log: `docs/evidence/moderated_session_log.json`
 - Facilitator pack: `docs/ship_it_yn_facilitator_pack.md`
 - Safe team summary: `ai_rollout_os/permissions/game_summary.py`
 - Local analytics snapshot: browser `localStorage` key

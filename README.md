@@ -4,6 +4,17 @@
 
 It is not a generic LMS, not a compliance certificate, and not a real agent runner. The game teaches one narrow habit: deciding whether an AI agent request should be approved, denied, scoped down, sandboxed, evaluated, escalated, or inspected before action.
 
+Status: local synthetic permission-judgment demo. The repository has `0`
+recorded moderated sessions and no team outcome, adoption, incident-reduction,
+paid-workshop, or production evidence. The broader “Training OS” name is
+historical repository scope; current work is feature-frozen around Ship It? Y/N
+until a consented moderated session is recorded.
+
+Reviewer evidence starts with the
+[moderated-session protocol](docs/MODERATED_SESSION_PROTOCOL.md), the
+[machine-readable empty session log](docs/evidence/moderated_session_log.json),
+and the [claim-boundary review](docs/audit/SHIP_IT_YN_CLAIM_BOUNDARY_REVIEW.md).
+
 Local demo route: `/demo/ship-it-yn`
 
 Default player experience is now Russian-first with role selection:
@@ -18,7 +29,9 @@ Primary CTA: build the React/Vite game, start FastAPI, and open `http://127.0.0.
 
 ```bash
 cd frontend/permission_game
-npm install
+npm ci
+npm run lint
+npm test
 npm run build
 cd ../..
 .venv/bin/uvicorn ai_rollout_os.main:app --host 127.0.0.1 --port 8000
@@ -153,19 +166,13 @@ The public demo is intentionally bounded:
 - Session state: `docs/CODEX_PROMPT.md`
 - Phase 1 audit: `docs/audit/PHASE1_AUDIT.md`
 
-## Текущий план реализации
+## Текущий gate
 
-MVP foundation описан в `docs/tasks.md`. Текущая активная работа идет по Post-MVP production maturity graph в `docs/product_maturity_task_graph.md`, Phase 20.
-
-Разработка должна идти в nonstop loop: Codex выполняет задачу, проверяет, делает review pass, обновляет state, проходит phase boundary checks и сразу берет следующую задачу. Между фазами нет ручной паузы, если проверки прошли и нет P0/P1 blockers. Остановка допустима только на реальном blocker, требуемом human decision или явной команде pause.
-
-Активный блок:
-
-1. `T92: FastAPI Static Game Route`
-2. `T93: Responsive Visual Polish`
-3. `T94: Motion And Accessibility Pass`
-4. `T95: Full Public Game Browser E2E`
-5. `T96: Screenshot And README Visual Artifact`
+Implementation history и прежние task graphs сохранены в `docs/`, но новый
+feature block не активен. Выполнимый maintenance scope — зелёный CI,
+privacy/claim checks и воспроизводимый local demo. Следующий product gate — одна
+реальная consented moderated session по опубликованному rubric. Пока session log
+пуст, нельзя заявлять team learning, buyer validation или workshop readiness.
 
 ## Критерий полезности v1
 

@@ -1,0 +1,15 @@
+{
+  "blocked_claims": {
+    "causal_learning_improvement": false,
+    "compliance_or_certification": false,
+    "customer_adoption": false,
+    "incident_reduction": false,
+    "paid_conversion": false,
+    "production_readiness": false
+  },
+  "external_gate": "consented_real_participant_required",
+  "moderated_session_count": 0,
+  "records": [],
+  "schema_version": "ship-it-moderated-session-log-v1",
+  "updated_at": "2026-07-13"
+}
