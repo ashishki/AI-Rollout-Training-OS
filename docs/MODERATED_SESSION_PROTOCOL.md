@@ -1,6 +1,6 @@
 # Ship It? Y/N Moderated Session Protocol
 
-Updated: 2026-07-13  
+Updated: 2026-07-13
 Status: protocol only; no moderated session recorded
 
 This protocol is the next product-evidence gate for the local synthetic demo.
