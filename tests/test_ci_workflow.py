@@ -10,10 +10,15 @@ def read_workflow() -> str:
 def test_ci_workflow_has_required_steps() -> None:
     workflow = read_workflow()
 
-    assert "uses: actions/checkout@v4" in workflow
-    assert "uses: actions/setup-python@v5" in workflow
+    assert "uses: actions/checkout@v5" in workflow
+    assert "uses: actions/setup-python@v6" in workflow
+    assert "uses: actions/setup-node@v5" in workflow
     assert 'python-version: "3.12"' in workflow
+    assert 'node-version: "22"' in workflow
     assert "pip install -r requirements-dev.txt -e ." in workflow
+    assert "npm ci" in workflow
+    assert "npm audit --audit-level=high" in workflow
+    assert "npm run build" in workflow
     assert "ruff check scripts ai_rollout_os frontend tests migrations" in workflow
     assert (
         "ruff format --check scripts ai_rollout_os frontend tests migrations"

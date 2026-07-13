@@ -2,6 +2,7 @@ import os
 import shutil
 import socket
 import subprocess
+import sys
 import time
 from urllib.request import urlopen
 
@@ -62,7 +63,9 @@ def _start_server(port: int) -> subprocess.Popen:
     env = {**os.environ, "APP_ENV": "test"}
     return subprocess.Popen(
         [
-            ".venv/bin/uvicorn",
+            sys.executable,
+            "-m",
+            "uvicorn",
             "ai_rollout_os.main:app",
             "--host",
             "127.0.0.1",
